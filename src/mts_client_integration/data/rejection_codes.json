@@ -1,0 +1,2542 @@
+{
+  "-100": {
+    "code": -100,
+    "variants": [
+      {
+        "message": "The following mandatory field is missing: `<parameterName>`",
+        "category": "model_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-101": {
+    "code": -101,
+    "variants": [
+      {
+        "message": "Invalid value in field bet.sys is not of expected type",
+        "category": "model_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Client (bookmaker) not found",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-102": {
+    "code": -102,
+    "variants": [
+      {
+        "message": "Invalid value in field bets.selectionRefs.banker is not of expected type",
+        "category": "model_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Cash-out disabled for particular client (bookmaker) or Limit ID",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-103": {
+    "code": -103,
+    "variants": [
+      {
+        "message": "Invalid numeric type for field bet.stk",
+        "category": "model_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Ticket not found",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-104": {
+    "code": -104,
+    "variants": [
+      {
+        "message": "Invalid date format for field \"ts_UTC\", found \"20161616\", expected date format is \"YYYYMMDDHHMMSS\"",
+        "category": "model_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Ticket rejected",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-105": {
+    "code": -105,
+    "variants": [
+      {
+        "message": "Selection ID has invalid format",
+        "category": "model_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-106": {
+    "code": -106,
+    "variants": [
+      {
+        "message": "a) Invalid value in field \"channelId\", found \"Custom\", allowed values are [Internet, Mobile, Retail, SMS, Terminals, call centre]<br>b) Invalid value in field source.terminalID, found \"x\" exceeds maximum allowed length<br>c) Invalid value in field endcustomerID, found \"x\" exceeds maximum allowed length",
+        "category": "model_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-107": {
+    "code": -107,
+    "variants": [
+      {
+        "message": "Value in field `<parameterName>` is out of allowed range, found `<parameterName>`, allowed range is X <--> Y",
+        "category": "model_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-108": {
+    "code": -108,
+    "variants": [
+      {
+        "message": "Ticket contains a bet with duplicate value in field bets.selectionRefs.selectionIndex",
+        "category": "model_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-109": {
+    "code": -109,
+    "variants": [
+      {
+        "message": "Invalid value in field version, found X.Y, allowed values are [1.4, 2.0, 2.1 and 2.2]",
+        "category": "model_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-201": {
+    "code": -201,
+    "variants": [
+      {
+        "message": "The following mandatory field is missing: bets",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Ticket version lower than 3.0",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-202": {
+    "code": -202,
+    "variants": [
+      {
+        "message": "The following mandatory field is missing: selections",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-204": {
+    "code": -204,
+    "variants": [
+      {
+        "message": "The following mandatory field is missing: sender.bookmakerId",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Requested cash-out exceeds the maximum allowed amount",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-205": {
+    "code": -205,
+    "variants": [
+      {
+        "message": "Invalid prefix or incorrect market pattern in field selections.id, Selection: `<Selection URL>`, Match: `<Event ID>`",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-207": {
+    "code": -207,
+    "variants": [
+      {
+        "message": "Values [X] in selectedSystems array are invalid for bet with Y selections incl. Z bankers",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-208": {
+    "code": -208,
+    "variants": [
+      {
+        "message": "Ticket#%s has illegal CCF value of '%s'",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Bet ID not found",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-209": {
+    "code": -209,
+    "variants": [
+      {
+        "message": "The following mandatory field is missing: sender.limitId",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Ticket has been already manually settled",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-210": {
+    "code": -210,
+    "variants": [
+      {
+        "message": "1) Does not match reofferRefId<br>2) Stake does not match re-offered stake.",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Cash-out factor is outside the allowed range of 0-100%",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-211": {
+    "code": -211,
+    "variants": [
+      {
+        "message": "Contains reofferRefId #MTS_Ticket_Version that was not found",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Cash-out factor is lower than existing (when the cash-out factor is lower than the previous one)",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-212": {
+    "code": -212,
+    "variants": [
+      {
+        "message": "Inconsistent bet ids on ticket, either all must be defined, or none.",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Conflicting previous cash-out (bet/ticket level)",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-213": {
+    "code": -213,
+    "variants": [
+      {
+        "message": "Bookmaker is not allowed to have non- Sportradar content in ticket.",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Auto cash-out request contains threshold configuration that is currently not supported.",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-214": {
+    "code": -214,
+    "variants": [
+      {
+        "message": "Ticket has system bet with Non- Sportradar content.",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Auto cash-out request contains unsupported payout configuration.",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-215": {
+    "code": -215,
+    "variants": [
+      {
+        "message": "Ticket's \"lastMatchEndTime\" is older than ticket reception time.",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Auto cash-out value exceeds the maximum allowed payout.",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-216": {
+    "code": -216,
+    "variants": [
+      {
+        "message": "Ticket with Non-Sportradar content has no \"lastMatchEndTime\" field.",
+        "category": "ticket_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Auto cash-out request already fulfilled: current cash-out value meets or exceeds the requested threshold.",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-301": {
+    "code": -301,
+    "variants": [
+      {
+        "message": "Invalid value in field bets.stake.value, found -X, should be a positive value",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Operator (Limit ID) not authorised to use the cash-out validation feature (cashout-placement)",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-302": {
+    "code": -302,
+    "variants": [
+      {
+        "message": "\"ticket#%s has negative EUR stake %s\"",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Operator (Limit ID) not authorised to use the cash-out API feature",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-305": {
+    "code": -305,
+    "variants": [
+      {
+        "message": "Invalid value in field bet.stk",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Cash-out settings not found for Limit ID",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-306": {
+    "code": -306,
+    "variants": [
+      {
+        "message": "Stake EUR amount X is too low. Minimum allowed on Limit ID level is Y",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-307": {
+    "code": -307,
+    "variants": [
+      {
+        "message": "Currency YYY is not found in MTS",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Cash-out currency was not found in the transaction",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-308": {
+    "code": -308,
+    "variants": [
+      {
+        "message": "Max stake is too high",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-309": {
+    "code": -309,
+    "variants": [
+      {
+        "message": "Value in field timestampUtc is future time",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-310": {
+    "code": -310,
+    "variants": [
+      {
+        "message": "Value in field timestampUtc is outdated time",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-311": {
+    "code": -311,
+    "variants": [
+      {
+        "message": "Ticket#%s unit stake is null",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-312": {
+    "code": -312,
+    "variants": [
+      {
+        "message": "Currency YYY is disabled in MTS",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-313": {
+    "code": -313,
+    "variants": [
+      {
+        "message": "Selections amount 101 is higher than max allowed of 100",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-314": {
+    "code": -314,
+    "variants": [
+      {
+        "message": "Ticket %s selection '%s' has invalid line '%s', allowed values \"",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-315": {
+    "code": -315,
+    "variants": [
+      {
+        "message": "Value in field selections.eventId should be positive number, Selection: `<Selection URL>`, Match: - XXXXXXXX",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-316": {
+    "code": -316,
+    "variants": [
+      {
+        "message": "Odds value is too low. Found 0.01, allowed minimum is 1.01, Selection: `<Selection URL>`, Match: `<Event URL>`",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-317": {
+    "code": -317,
+    "variants": [
+      {
+        "message": "Invalid data in field bets.selectionRefs.banker. Found X, allowed values are [true, false], Selection Selection: `<Selection URL>`, Match: `<Event URL>`",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-319": {
+    "code": -319,
+    "variants": [
+      {
+        "message": "Deserialization failure ~~> invalid value in field sender.bookmakerId",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-320": {
+    "code": -320,
+    "variants": [
+      {
+        "message": "Chosen events or markets cannot be combined as Tournaments are related`<List of Selection URLs>`",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Cash-out calculation failed due to internal or upstream error",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-321": {
+    "code": -321,
+    "variants": [
+      {
+        "message": "Bet contains duplicate selections on same Match: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Fair odds are lower than the accepted odds. Cash-out is not permitted when expected profit/loss is negative at ticket placement time.",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-322": {
+    "code": -322,
+    "variants": [
+      {
+        "message": "Bet contains multiple selections on same Match: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-323": {
+    "code": -323,
+    "variants": [
+      {
+        "message": "Bet contains duplicate Team IDs in connected Tournaments",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-324": {
+    "code": -324,
+    "variants": [
+      {
+        "message": "\"Number of generated combinations does not match expected\"",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-325": {
+    "code": -325,
+    "variants": [
+      {
+        "message": "Ticket#%s selection %s is missing odds",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-326": {
+    "code": -326,
+    "variants": [
+      {
+        "message": "Banker selection is not allowed with non-Sportradar content",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-327": {
+    "code": -327,
+    "variants": [
+      {
+        "message": "Ticket#%s contains two selections with same event ID and selection ID",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-328": {
+    "code": -328,
+    "variants": [
+      {
+        "message": "Selection should not be allowed to be placed on accumulator bet. `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-333": {
+    "code": -333,
+    "variants": [
+      {
+        "message": "Ticket#%s contains illegal multiways",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Ticket external selections are not allowed",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-334": {
+    "code": -334,
+    "variants": [
+      {
+        "message": "\"ticket#%s has too many combinations for extended ways; max %s\"",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-335": {
+    "code": -335,
+    "variants": [
+      {
+        "message": "Could not generate bets",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-336": {
+    "code": -336,
+    "variants": [
+      {
+        "message": "Bonus value negative -XXX",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-337": {
+    "code": -337,
+    "variants": [
+      {
+        "message": "Ticket#%s has entire stake that is not positive %s",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-338": {
+    "code": -338,
+    "variants": [
+      {
+        "message": "Ticket#%s has null entire stake",
+        "category": "data_format_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-401": {
+    "code": -401,
+    "variants": [
+      {
+        "message": "Match is not found in MTS, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-402": {
+    "code": -402,
+    "variants": [
+      {
+        "message": "Match is not active in MTS, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-403": {
+    "code": -403,
+    "variants": [
+      {
+        "message": "Outcome is not found in MTS, Selection: Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-404": {
+    "code": -404,
+    "variants": [
+      {
+        "message": "Outcome is not active in MTS, Selection: Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-405": {
+    "code": -405,
+    "variants": [
+      {
+        "message": "Market is not found in MTS, Selection: Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-406": {
+    "code": -406,
+    "variants": [
+      {
+        "message": "Outright is not found in MTS, Selection: Selection: `<SelectionURL>`, Outright: `<Outright ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-407": {
+    "code": -407,
+    "variants": [
+      {
+        "message": "Outright is not active in MTS, Selection: `<SelectionURL>`, Outright: `<Outright ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-408": {
+    "code": -408,
+    "variants": [
+      {
+        "message": "Market is not active in Lines Provider, Selection: `<SelectionURL>`, Outright: `<Outright ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-409": {
+    "code": -409,
+    "variants": [
+      {
+        "message": "Outcome \"UNDER\" is not found in Lines Provider, Selection: `<SelectionURL>`, Outright: `<Outright ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-410": {
+    "code": -410,
+    "variants": [
+      {
+        "message": "Outcome !XXX is not active in Lines Provider, `<SelectionURL>`, Outright: `<Outright ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-420": {
+    "code": -420,
+    "variants": [
+      {
+        "message": "Odds not found for selection in Lines Provider",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-421": {
+    "code": -421,
+    "variants": [
+      {
+        "message": "Odds X.YZ are too high, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-422": {
+    "code": -422,
+    "variants": [
+      {
+        "message": "Market is not found, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-423": {
+    "code": -423,
+    "variants": [
+      {
+        "message": "Market/SOV expired in MTS. Selections: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-430": {
+    "code": -430,
+    "variants": [
+      {
+        "message": "Ticket odds X.YZ are different than bookmaker odds A.BC, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-431": {
+    "code": -431,
+    "variants": [
+      {
+        "message": "Ticket odds X.YZ are higher than bookmaker odds A.BC, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-432": {
+    "code": -432,
+    "variants": [
+      {
+        "message": "Ticket odds X.YZ are higher than global fair odds A.BC, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-433": {
+    "code": -433,
+    "variants": [
+      {
+        "message": "Ticket odds are higher than global fair odds X.YZ or bookmaker odds A.BC, Selection `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-440": {
+    "code": -440,
+    "variants": [
+      {
+        "message": "Custom bet is invalid. Reason: custom bet ticket has selections on different events: selection `<SelectionURL>` on event `<Event X ID>`, selection `<SelectionURL>` on event `<Event Y ID>`<br>Custom bet is invalid. Reason: custom bet ticket has system array with one element X, expected Y (number of ticket selections))",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-441": {
+    "code": -441,
+    "variants": [
+      {
+        "message": "Odds X.YZ are too high, allowed maximum from custom bet API is A.BC",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-442": {
+    "code": -442,
+    "variants": [
+      {
+        "message": "External Custom Bet API service is not available",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-443": {
+    "code": -443,
+    "variants": [
+      {
+        "message": "Custom Bet API returned a bad request: %s",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-444": {
+    "code": -444,
+    "variants": [
+      {
+        "message": "Custom Bet API returned a conflict: %s.",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-445": {
+    "code": -445,
+    "variants": [
+      {
+        "message": "Custom Bet API returned a not found error: %s.",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-446": {
+    "code": -446,
+    "variants": [
+      {
+        "message": "Custom Bet API returned an unauthorized error: %s.",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-450": {
+    "code": -450,
+    "variants": [
+      {
+        "message": "The event is booked on more than one feed provider",
+        "category": "liveodds_real_time_data_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-501": {
+    "code": -501,
+    "variants": [
+      {
+        "message": "bookmakerId `<bookmaker ID>` not active in MTS",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Tournament is not active in the admin console.",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-502": {
+    "code": -502,
+    "variants": [
+      {
+        "message": "Bookmaker settings not found for bookmakerId `<bookmaker ID>`",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Event is not active in the admin console.",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-503": {
+    "code": -503,
+    "variants": [
+      {
+        "message": "Event/Outright `<Event/Outright Name>` is not found in MTS, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Market is not active in the admin console.",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-504": {
+    "code": -504,
+    "variants": [
+      {
+        "message": "Match is not active in MTS, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-505": {
+    "code": -505,
+    "variants": [
+      {
+        "message": "Market NOT FOUND in MTS. Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-506": {
+    "code": -506,
+    "variants": [
+      {
+        "message": "Market is not active in MTS, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-507": {
+    "code": -507,
+    "variants": [
+      {
+        "message": "Tournament `<Tornament Name>` is not found in MTS, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-508": {
+    "code": -508,
+    "variants": [
+      {
+        "message": "Tournament `<Tornament Name>` is not active in MTS, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-509": {
+    "code": -509,
+    "variants": [
+      {
+        "message": "Limit settings for limitId `<LimitID>` are not found for bookmakerId `<Bookmkaer ID>`",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-511": {
+    "code": -511,
+    "variants": [
+      {
+        "message": "Payout is higher than the max payout for Limit ID `<LimitID>`. Bet payout XXX, Max payout YYY",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [
+      "Open the MTS CI Admin Console.",
+      "Go to the Admin section.",
+      "Search for the bookmaker in the dropdown menu.",
+      "Set maximum payout to 50 EUR.",
+      "Place a bet whose potential payout is higher than 50 EUR + stake.",
+      "Verify the ticket is rejected with -511."
+    ],
+    "fix_suggestions": [
+      "Punter/ticket: Lower stake or remove selections until potential payout is within the max payout limit.",
+      "Operator/MTS: Raise maximum payout for the limit ID in MTS CI Admin Console if the limit is too restrictive.",
+      "Client integration: Map -511 to a clear user-facing message instead of exposing raw MTS text.",
+      "Client integration: Support alt-stake reoffer if MTS returns one (resubmit with ref.type: alt-stake).",
+      "Client integration: Capture a frontend screenshot of the displayed rejection message for E2E sign-off."
+    ]
+  },
+  "-512": {
+    "code": -512,
+    "variants": [
+      {
+        "message": "Payout is higher than the aggregated max payout for sourceID `<SourceID>`. Bet payout XXX, Aggregated Payout is YYY, Max Payout Limit is ZZZ",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-513": {
+    "code": -513,
+    "variants": [
+      {
+        "message": "Payout is higher than the aggregated max payout on `<bookmaker\\",
+        "category": "mts_backoffice_admin_console_exceptions",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-701": {
+    "code": -701,
+    "variants": [
+      {
+        "message": "Liability EUR XXX is over Total liability limit EUR YYY on Limit ID(Bookmaker or Global) level, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "rejections_due_to_risk_management_liability_limits",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [
+      "Configure bookmaker: Max liability = 10, Bet factor (Pre-Match and Live) = 1.",
+      "Configure sub bookmaker (limit ID): Max liability = 100000, Bet factor (Pre-Match and Live) = 0.1.",
+      "Place a bet on an event you have never placed a bet on before.",
+      "Ensure the bet payout is higher than 10 EUR + stake.",
+      "Verify the ticket is rejected with -701."
+    ],
+    "fix_suggestions": [
+      "Punter/ticket: Reduce stake or liability (lower odds or fewer legs) so total liability stays under the bookmaker cap.",
+      "Operator/MTS: Increase bookmaker max liability or adjust bet factor at bookmaker or sub-bookmaker level.",
+      "Client integration: Show a customized liability-limit message to discourage repeated rejected submissions."
+    ]
+  },
+  "-702": {
+    "code": -702,
+    "variants": [
+      {
+        "message": "Liability EUR XXX is over Bet liability limit EUR YYY on Limit ID(Bookmaker or Global) level, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "rejections_due_to_risk_management_liability_limits",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [
+      "Prerequisite: Punter CCF must be set to 1 or higher.",
+      "Configure bookmaker: Max liability = 100, Bet factor (Pre-Match and Live) = 0.1.",
+      "Configure sub bookmaker (limit ID): Max liability = 30000, Bet factor (Pre-Match and Live) = 1.",
+      "Place a bet on an event you have never placed a bet on before (first ticket should be accepted).",
+      "Submit a second bet on the same event.",
+      "Verify the second ticket is rejected with -702 when the bet liability limit is breached."
+    ],
+    "fix_suggestions": [
+      "Punter/ticket: Reduce stake so single-bet liability stays within the bookmaker bet liability cap.",
+      "Operator/MTS: Raise bookmaker max liability or bet factor, or review sub-bookmaker overrides.",
+      "Client integration: Explain that the per-bet limit was hit, not total exposure.",
+      "Client integration: Offer alt-stake reoffer if returned by MTS."
+    ]
+  },
+  "-703": {
+    "code": -703,
+    "variants": [
+      {
+        "message": "Liability EUR XXX is over Total liability limit EUR YYY on Customer level, Selection: lcoo:10/1/*/1, Match: 11901644",
+        "category": "rejections_due_to_risk_management_liability_limits",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [
+      "Prerequisite: Punter CCF must be <= 1.01.",
+      "Configure bookmaker: Max liability = 30000, Bet factor (Pre-Match and Live) = 0.1.",
+      "Configure sub bookmaker (limit ID): Max liability = 100, Bet factor (Pre-Match and Live) = 0.1.",
+      "Place a small-stake bet on an event you have never placed a bet on before (should be accepted).",
+      "Keep placing bets on the same event, gradually increasing stake, until rejected with -703."
+    ],
+    "fix_suggestions": [
+      "Punter/ticket: Lower stake or stop placing additional bets on the same selection/event until exposure drops.",
+      "Operator/MTS: Review punter CCF and customer-level liability settings; adjust if warranted.",
+      "Client integration: Use messaging that signals a personal limit was reached rather than a generic error.",
+      "Client integration: Surface guidance to try a lower stake instead of raw liability figures."
+    ]
+  },
+  "-704": {
+    "code": -704,
+    "variants": [
+      {
+        "message": "Liability EUR XXX is over Total liability limit EUR YYY on Customer / event level, Selection: lcoo:10/1/*/1, Match: 11901644",
+        "category": "rejections_due_to_risk_management_liability_limits",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-711": {
+    "code": -711,
+    "variants": [
+      {
+        "message": "Liability EUR XXX is over Aggregated bookmaker Total liability limit EUR YYY on Aggregated bookmaker level, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "rejections_due_to_risk_management_liability_limits",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-712": {
+    "code": -712,
+    "variants": [
+      {
+        "message": "Liability EUR XXX is over Aggregated bookmaker Bet liability limit EUR YYY on Aggregated bookmaker level, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "rejections_due_to_risk_management_liability_limits",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-713": {
+    "code": -713,
+    "variants": [
+      {
+        "message": "Liability EUR XXX is over Customer Bet liability limit EUR YYY on Customer level, Selection: `<SelectionURL>`, Match: `<Match ID>`<br>Liability EUR XXX is over Customer Total liability limit EUR YYY on Customer level, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "rejections_due_to_risk_management_liability_limits",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-721": {
+    "code": -721,
+    "variants": [
+      {
+        "message": "Liability EUR XXX is over MTS Total liability limit on MTS level, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "rejections_due_to_risk_management_liability_limits",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-722": {
+    "code": -722,
+    "variants": [
+      {
+        "message": "Liability EUR XXX is over MTS Bet liability limit on MTS level, Selection: `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "rejections_due_to_risk_management_liability_limits",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-723": {
+    "code": -723,
+    "variants": [
+      {
+        "message": "Liability EUR XXX is over MTS Bet liability limit on Customer level\", `<SelectionURL>`, Match: `<Match ID>`",
+        "category": "rejections_due_to_risk_management_liability_limits",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-900": {
+    "code": -900,
+    "variants": [
+      {
+        "message": "Ticket is not possible to parse",
+        "category": "system_errors",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-910": {
+    "code": -910,
+    "variants": [
+      {
+        "message": "Market is not found in Exalogic market mapping",
+        "category": "system_errors",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-993": {
+    "code": -993,
+    "variants": [
+      {
+        "message": "One of examples: external service dist storage unavailable",
+        "category": "system_errors",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-994": {
+    "code": -994,
+    "variants": [
+      {
+        "message": "bookmaker '<bookmaker ID>' not authorized for vhost `<vhost>`",
+        "category": "system_errors",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-995": {
+    "code": -995,
+    "variants": [
+      {
+        "message": "Invalid duplicate ticket",
+        "category": "system_errors",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-998": {
+    "code": -998,
+    "variants": [
+      {
+        "message": "Gate node is disabled",
+        "category": "system_errors",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-999": {
+    "code": -999,
+    "variants": [
+      {
+        "message": "MTS internal system exception",
+        "category": "system_errors",
+        "operations": [
+          "ticket-placement",
+          "ticket-placement-inform",
+          "ticket-build"
+        ]
+      },
+      {
+        "message": "Internal system error",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2010": {
+    "code": -2010,
+    "variants": [
+      {
+        "message": "Ticket not found",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2011": {
+    "code": -2011,
+    "variants": [
+      {
+        "message": "Client (bookmaker) not found",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2012": {
+    "code": -2012,
+    "variants": [
+      {
+        "message": "Cannot be cancelled because ticket contains live selection",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2013": {
+    "code": -2013,
+    "variants": [
+      {
+        "message": "Ticket time for cancellation expired",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2015": {
+    "code": -2015,
+    "variants": [
+      {
+        "message": "Cannot be cancelled because ticket contains pre-match selection",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2016": {
+    "code": -2016,
+    "variants": [
+      {
+        "message": "Cannot be cancelled because particular cancellation option is not active",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2017": {
+    "code": -2017,
+    "variants": [
+      {
+        "message": "Cannot be cancelled because ticket is already settled",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2018": {
+    "code": -2018,
+    "variants": [
+      {
+        "message": "Cannot be cancelled because ticket is already cancelled",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2019": {
+    "code": -2019,
+    "variants": [
+      {
+        "message": "Cancel factor is out of bounds (when the cancellation factor is outside the allowed range of 0-100%)",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2020": {
+    "code": -2020,
+    "variants": [
+      {
+        "message": "Cancel factor is lower than existing (when the cancellation factor is lower than the previous one)",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2021": {
+    "code": -2021,
+    "variants": [
+      {
+        "message": "Cannot be cancelled because bet id was not found",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2022": {
+    "code": -2022,
+    "variants": [
+      {
+        "message": "Ticket already settled manually",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2023": {
+    "code": -2023,
+    "variants": [
+      {
+        "message": "Cannot be cancelled because ticket contains inactive market",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-2024": {
+    "code": -2024,
+    "variants": [
+      {
+        "message": "Cannot be cancelled because code is not compatible with partial cancellation",
+        "category": "ticket_cancel_rejections",
+        "operations": [
+          "ticket-cancel"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "0": {
+    "code": 0,
+    "variants": [
+      {
+        "message": "Transaction processed",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-203": {
+    "code": -203,
+    "variants": [
+      {
+        "message": "Requested cash-out is lower than the minimum allowed amount",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-220": {
+    "code": -220,
+    "variants": [
+      {
+        "message": "Requested cash-out amount differs from the current cash-out value.",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-221": {
+    "code": -221,
+    "variants": [
+      {
+        "message": "Requested cash-out amount exceeds the current cash-out value.",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-330": {
+    "code": -330,
+    "variants": [
+      {
+        "message": "Selection contains unsupported product ID",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-331": {
+    "code": -331,
+    "variants": [
+      {
+        "message": "Selection has unsupported event status",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-332": {
+    "code": -332,
+    "variants": [
+      {
+        "message": "Probabilities not found for selection",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-411": {
+    "code": -411,
+    "variants": [
+      {
+        "message": "Market suspended (offer status inactive, no PAPI fallback)",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-412": {
+    "code": -412,
+    "variants": [
+      {
+        "message": "Invalid selection status (PAPI cashout_status)",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  },
+  "-413": {
+    "code": -413,
+    "variants": [
+      {
+        "message": "Custom Bet probabilities not received",
+        "category": "cash_out_rejections",
+        "operations": [
+          "ticket-cashout",
+          "cashout-inform",
+          "cashout-build",
+          "cashout-placement",
+          "auto-cashout",
+          "auto-cashout-cancel",
+          "cashout-build-subscription"
+        ]
+      }
+    ],
+    "steps_to_reproduce": [],
+    "fix_suggestions": []
+  }
+}

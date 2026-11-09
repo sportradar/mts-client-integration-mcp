@@ -1,0 +1,5404 @@
+{
+  "$defs": {
+    "num-float-gte-1": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-float-gte-1-nullable",
+      "type": "string"
+    },
+    "num-float-gte-1-nullable": {
+      "additionalProperties": false,
+      "pattern": "^[1-9]\\d{0,7}(\\.\\d{1,8})?$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-float-gte-0-lt-1": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-float-gte-0-lt-1-nullable",
+      "type": "string"
+    },
+    "num-float-gte-0-lt-1-nullable": {
+      "additionalProperties": false,
+      "pattern": "^0(\\.\\d{1,8})?$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-float-gt-0-lt-1": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-float-gt-0-lt-1-nullable",
+      "type": "string"
+    },
+    "num-float-gt-0-lt-1-nullable": {
+      "additionalProperties": false,
+      "pattern": "^0\\.(?!0+$)\\d{1,8}$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-float-gt-0-lte-1": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-float-gt-0-lte-1-nullable",
+      "type": "string"
+    },
+    "num-float-gt-0-lte-1-nullable": {
+      "additionalProperties": false,
+      "pattern": "^(?:0\\.(?!0+$)\\d{1,8}|1(?:\\.0{1,8})?)$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-float-gte-0-lte-1": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-float-gte-0-lte-1-nullable",
+      "type": "string"
+    },
+    "num-float-gte-0-lte-1-nullable": {
+      "additionalProperties": false,
+      "pattern": "^0(\\.\\d{1,8})?|1(\\.0{1,8})?$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-float-gte-0": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-float-gte-0-nullable",
+      "type": "string"
+    },
+    "num-float-gte-0-nullable": {
+      "additionalProperties": false,
+      "pattern": "^\\d{1,16}(\\.\\d{1,8})?$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-decimal-odds": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-decimal-odds-nullable",
+      "type": "string"
+    },
+    "num-decimal-odds-nullable": {
+      "additionalProperties": false,
+      "pattern": "^(?:1\\.(?=0{0,7}[1-9])\\d{1,8}|(?:[2-9]|[1-9]\\d{1,7})(?:\\.\\d{1,8})?)$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-frac-odds": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-frac-odds-nullable",
+      "type": "string"
+    },
+    "num-frac-odds-nullable": {
+      "additionalProperties": false,
+      "pattern": "^[1-9]\\d{0,7}$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-moneyline-odds": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-moneyline-odds-nullable",
+      "type": "string"
+    },
+    "num-moneyline-odds-nullable": {
+      "additionalProperties": false,
+      "pattern": "^-?[1-9]\\d{2,7}$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-hong-kong-odds": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-hong-kong-odds-nullable",
+      "type": "string"
+    },
+    "num-hong-kong-odds-nullable": {
+      "additionalProperties": false,
+      "pattern": "^(?:0\\.(?=0{0,7}[1-9])\\d{1,8}|[1-9]\\d{0,7})(?:\\.\\d{1,8})?$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-indonesian-odds": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-indonesian-odds-nullable",
+      "type": "string"
+    },
+    "num-indonesian-odds-nullable": {
+      "additionalProperties": false,
+      "pattern": "^-?[1-9]\\d{0,7}(?:\\.\\d{1,8})?$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-malay-odds": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-malay-odds-nullable",
+      "type": "string"
+    },
+    "num-malay-odds-nullable": {
+      "additionalProperties": false,
+      "pattern": "^(?:-?0\\.(?=0{0,7}[1-9])\\d{1,8}|1(?:\\.0{1,8})?)$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "num-int-gte-0": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/num-int-gte-0-nullable",
+      "type": "integer"
+    },
+    "num-int-gte-0-nullable": {
+      "additionalProperties": false,
+      "minimum": 0,
+      "exclusiveMaximum": 2147483647,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "currency": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/currency-nullable",
+      "type": "string"
+    },
+    "currency-nullable": {
+      "additionalProperties": false,
+      "description": "3 or 4 letter currency code (4 letters only apply to mBTC)",
+      "maxLength": 4,
+      "minLength": 3,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "cancellation-code": {
+      "additionalProperties": false,
+      "description": "Cancellation code",
+      "maximum": 1000,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "cashout-code": {
+      "additionalProperties": false,
+      "description": "Cashout code",
+      "maximum": 1000,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "device-ip": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/device-ip-nullable",
+      "type": "string"
+    },
+    "device-ip-nullable": {
+      "additionalProperties": false,
+      "description": "Device ip",
+      "pattern": "^(((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])))$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "device-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/device-id-nullable",
+      "type": "string"
+    },
+    "device-id-nullable": {
+      "additionalProperties": false,
+      "description": "Device id",
+      "maxLength": 36,
+      "minLength": 1,
+      "pattern": "^[0-9A-Za-z#:\\-_]{1,36}$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "correlation-id": {
+      "additionalProperties": false,
+      "description": "Correlation id",
+      "maxLength": 32,
+      "minLength": 1,
+      "pattern": "^[0-9A-Za-z:\\-_]{1,32}$",
+      "type": "string"
+    },
+    "timestamp": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/timestamp-nullable",
+      "type": "integer"
+    },
+    "timestamp-nullable": {
+      "additionalProperties": false,
+      "description": "Timestamp (in UNIX time millis)",
+      "maximum": 9223372036854776000,
+      "minimum": 1,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "operator-id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/operator-id-integer"
+        },
+        {
+          "$ref": "#/$defs/operator-id-string"
+        }
+      ]
+    },
+    "operator-id-integer": {
+      "additionalProperties": false,
+      "type": "integer"
+    },
+    "operator-id-string": {
+      "additionalProperties": false,
+      "type": "string",
+      "maxLength": 48,
+      "minLength": 1,
+      "pattern": "^([a-z]{1,10}:[a-z]{1,20}:)?\\d{1,18}$"
+    },
+    "bet-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/bet-id-nullable",
+      "type": "string"
+    },
+    "bet-id-nullable": {
+      "additionalProperties": false,
+      "description": "Unique ticket bet id (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "casino-session-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/casino-session-id-nullable",
+      "type": "string"
+    },
+    "casino-session-id-nullable": {
+      "additionalProperties": false,
+      "description": "Unique casino session id (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "casino-game-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/casino-game-id-nullable",
+      "type": "string"
+    },
+    "casino-game-id-nullable": {
+      "additionalProperties": false,
+      "description": "Unique casino game id (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "casino-game-provider": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/casino-game-provider-nullable",
+      "type": "string"
+    },
+    "casino-game-provider-nullable": {
+      "additionalProperties": false,
+      "description": "Unique casino game provider (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "cancellation-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/cancellation-id-nullable",
+      "type": "string"
+    },
+    "cancellation-id-nullable": {
+      "additionalProperties": false,
+      "description": "Unique cancellation id (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "cashout-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/cashout-id-nullable",
+      "type": "string"
+    },
+    "cashout-id-nullable": {
+      "additionalProperties": false,
+      "description": "Unique cashout id (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "settlement-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/settlement-id-nullable",
+      "type": "string"
+    },
+    "settlement-id-nullable": {
+      "additionalProperties": false,
+      "description": "Unique settlement id (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ticket-id": {
+      "additionalProperties": false,
+      "description": "Unique ticket id (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": "string"
+    },
+    "end-customer-id": {
+      "description": "End user's unique id (in client's system)",
+      "maxLength": 36,
+      "minLength": 1,
+      "pattern": "^[0-9A-Za-z#\\-_]{1,36}$",
+      "type": [
+        "string"
+      ]
+    },
+    "shop-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/shop-id-nullable",
+      "type": "string"
+    },
+    "shop-id-nullable": {
+      "additionalProperties": false,
+      "description": "Shop id",
+      "maxLength": 36,
+      "minLength": 1,
+      "pattern": "^(N/A|[0-9A-Za-z:\\-_]{1,36})$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "terminal-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/terminal-id-nullable",
+      "type": "string"
+    },
+    "terminal-id-nullable": {
+      "additionalProperties": false,
+      "description": "Terminal id",
+      "maxLength": 36,
+      "minLength": 1,
+      "pattern": "^(N/A|[0-9A-Za-z:\\-_]{1,36})$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "payment-provider": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/payment-provider-nullable",
+      "type": "string"
+    },
+    "payment-provider-nullable": {
+      "additionalProperties": false,
+      "description": "Unique payment provider id (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "payment-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/payment-id-nullable",
+      "type": "string"
+    },
+    "payment-id-nullable": {
+      "additionalProperties": false,
+      "description": "Payment (deposit/withdrawal/...) id",
+      "maxLength": 36,
+      "minLength": 1,
+      "pattern": "^[0-9A-Za-z:\\-_]{1,36}$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "payment-status": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/payment-status-nullable",
+      "type": "string"
+    },
+    "payment-status-nullable": {
+      "additionalProperties": false,
+      "enum": [
+        "approved",
+        "rejected",
+        "pending",
+        "cancelled"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "report-id-nullable": {
+      "additionalProperties": false,
+      "description": "Unique report id (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "wallet-id-nullable": {
+      "additionalProperties": false,
+      "description": "Wallet id or type (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lang": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/lang-nullable",
+      "type": "string"
+    },
+    "lang-nullable": {
+      "additionalProperties": false,
+      "description": "ISO 639-1 language code",
+      "maxLength": 2,
+      "minLength": 2,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "trace-id": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/trace-id-nullable",
+      "type": "string"
+    },
+    "trace-id-nullable": {
+      "additionalProperties": false,
+      "description": "Trace id: to help identify the source of operation/action/state",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "signature": {
+      "additionalProperties": false,
+      "description": "Signature",
+      "maxLength": 512,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9+/=]{1,512}$",
+      "type": "string"
+    },
+    "description": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/description-nullable",
+      "type": "string"
+    },
+    "description-nullable": {
+      "additionalProperties": false,
+      "description": "Description",
+      "maxLength": 512,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "acc-rej-status": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/acc-rej-status-nullable",
+      "type": "string"
+    },
+    "acc-rej-status-nullable": {
+      "additionalProperties": false,
+      "enum": [
+        "accepted",
+        "rejected"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "response-code": {
+      "additionalProperties": false,
+      "maximum": 1000000,
+      "minimum": -1000000,
+      "type": "integer"
+    },
+    "response-message": {
+      "additionalProperties": false,
+      "description": "Human readable message",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "internal-id": {
+      "additionalProperties": false,
+      "maxLength": 128,
+      "minLength": 1,
+      "type": "string"
+    },
+    "currency-exchange-rate": {
+      "additionalProperties": false,
+      "properties": {
+        "fromCurrency": {
+          "$ref": "#/$defs/currency"
+        },
+        "toCurrency": {
+          "$ref": "#/$defs/currency"
+        },
+        "rate": {
+          "$ref": "#/$defs/num-float-gte-0"
+        }
+      },
+      "required": [
+        "fromCurrency",
+        "toCurrency",
+        "rate"
+      ],
+      "type": "object"
+    },
+    "stake-mode": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/stake-mode-nullable",
+      "type": "string"
+    },
+    "stake-mode-nullable": {
+      "additionalProperties": false,
+      "enum": [
+        "total",
+        "unit"
+      ],
+      "default": "total",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "live-time-delay": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/live-time-delay-nullable",
+      "type": "integer"
+    },
+    "live-time-delay-nullable": {
+      "additionalProperties": false,
+      "minimum": 0,
+      "maximum": 15,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "live-time-delay-negative": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/live-time-delay-negative-nullable",
+      "type": "integer"
+    },
+    "live-time-delay-negative-nullable": {
+      "additionalProperties": false,
+      "minimum": -15,
+      "maximum": 0,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "endCustomer": {
+      "additionalProperties": false,
+      "description": "Identification of the end user (customer)",
+      "properties": {
+        "confidence": {
+          "$ref": "#/$defs/num-float-gte-0-nullable",
+          "description": "Suggested CCF of the customer"
+        },
+        "id": {
+          "$ref": "#/$defs/end-customer-id"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "ticket-channel": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ticket-channel-agent"
+        },
+        {
+          "$ref": "#/$defs/ticket-channel-call-centre"
+        },
+        {
+          "$ref": "#/$defs/ticket-channel-internet"
+        },
+        {
+          "$ref": "#/$defs/ticket-channel-mobile"
+        },
+        {
+          "$ref": "#/$defs/ticket-channel-phone"
+        },
+        {
+          "$ref": "#/$defs/ticket-channel-retail"
+        },
+        {
+          "$ref": "#/$defs/ticket-channel-sms"
+        },
+        {
+          "$ref": "#/$defs/ticket-channel-terminal"
+        },
+        {
+          "$ref": "#/$defs/ticket-channel-tv-app"
+        },
+        {
+          "$ref": "#/$defs/ticket-channel-mobile-app"
+        }
+      ]
+    },
+    "ticket-channel-agent": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "agent"
+        },
+        "lang": {
+          "$ref": "#/$defs/lang"
+        }
+      },
+      "required": [
+        "type",
+        "lang"
+      ],
+      "type": "object"
+    },
+    "ticket-channel-call-centre": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "call-centre"
+        },
+        "lang": {
+          "$ref": "#/$defs/lang"
+        }
+      },
+      "required": [
+        "type",
+        "lang"
+      ],
+      "type": "object"
+    },
+    "ticket-channel-internet": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "internet"
+        },
+        "deviceId": {
+          "$ref": "#/$defs/device-id-nullable"
+        },
+        "ip": {
+          "$ref": "#/$defs/device-ip-nullable"
+        },
+        "lang": {
+          "$ref": "#/$defs/lang"
+        }
+      },
+      "required": [
+        "type",
+        "lang"
+      ],
+      "type": "object"
+    },
+    "ticket-channel-mobile": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "mobile"
+        },
+        "deviceId": {
+          "$ref": "#/$defs/device-id-nullable"
+        },
+        "ip": {
+          "$ref": "#/$defs/device-ip-nullable"
+        },
+        "lang": {
+          "$ref": "#/$defs/lang"
+        }
+      },
+      "required": [
+        "type",
+        "lang"
+      ],
+      "type": "object"
+    },
+    "ticket-channel-phone": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "phone"
+        },
+        "lang": {
+          "$ref": "#/$defs/lang"
+        }
+      },
+      "required": [
+        "type",
+        "lang"
+      ],
+      "type": "object"
+    },
+    "ticket-channel-retail": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "retail"
+        },
+        "shopId": {
+          "$ref": "#/$defs/shop-id"
+        },
+        "deviceId": {
+          "$ref": "#/$defs/device-id-nullable"
+        },
+        "lang": {
+          "$ref": "#/$defs/lang"
+        },
+        "location": {
+          "$ref": "#/$defs/location"
+        }
+      },
+      "required": [
+        "type",
+        "shopId",
+        "lang"
+      ],
+      "type": "object"
+    },
+    "ticket-channel-sms": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "sms"
+        },
+        "deviceId": {
+          "$ref": "#/$defs/device-id-nullable"
+        },
+        "lang": {
+          "$ref": "#/$defs/lang"
+        }
+      },
+      "required": [
+        "type",
+        "lang"
+      ],
+      "type": "object"
+    },
+    "ticket-channel-terminal": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "terminal"
+        },
+        "shopId": {
+          "$ref": "#/$defs/shop-id"
+        },
+        "terminalId": {
+          "$ref": "#/$defs/terminal-id"
+        },
+        "lang": {
+          "$ref": "#/$defs/lang"
+        },
+        "location": {
+          "$ref": "#/$defs/location"
+        }
+      },
+      "required": [
+        "type",
+        "shopId",
+        "terminalId",
+        "lang"
+      ],
+      "type": "object"
+    },
+    "ticket-channel-tv-app": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "tv-app"
+        },
+        "deviceId": {
+          "$ref": "#/$defs/device-id-nullable"
+        },
+        "ip": {
+          "$ref": "#/$defs/device-ip-nullable"
+        },
+        "lang": {
+          "$ref": "#/$defs/lang"
+        }
+      },
+      "required": [
+        "type",
+        "lang"
+      ],
+      "type": "object"
+    },
+    "ticket-channel-mobile-app": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "mobile-app"
+        },
+        "deviceId": {
+          "$ref": "#/$defs/device-id-nullable"
+        },
+        "ip": {
+          "$ref": "#/$defs/device-ip-nullable"
+        },
+        "lang": {
+          "$ref": "#/$defs/lang"
+        }
+      },
+      "required": [
+        "type",
+        "lang"
+      ],
+      "type": "object"
+    },
+    "account-status-reason-nullable": {
+      "additionalProperties": false,
+      "description": "The reason for the status change.",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "intervention-comment-nullable": {
+      "additionalProperties": false,
+      "description": "Optional intervention comment that provides context.",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pending-manual-bet-review": {
+      "const": true,
+      "description": "Flag whether the receiver of the reply needs to poll the API for updates to the original ticket."
+    },
+    "share-id-nullable": {
+      "additionalProperties": false,
+      "description": "Unique share id (in the client's system)",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "balance-source": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/balance-source-deposit"
+        },
+        {
+          "$ref": "#/$defs/balance-source-withdrawal"
+        },
+        {
+          "$ref": "#/$defs/balance-source-ticket"
+        }
+      ]
+    },
+    "balance-source-deposit": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "deposit"
+        },
+        "id": {
+          "$ref": "#/$defs/internal-id"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "type": "object"
+    },
+    "balance-source-withdrawal": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "withdrawal"
+        },
+        "id": {
+          "$ref": "#/$defs/internal-id"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "type": "object"
+    },
+    "balance-source-ticket": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket"
+        },
+        "id": {
+          "$ref": "#/$defs/internal-id"
+        },
+        "action": {
+          "enum": [
+            "place",
+            "payout"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "action"
+      ],
+      "type": "object"
+    },
+    "location": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/location-geo"
+        }
+      ]
+    },
+    "location-geo": {
+      "additionalProperties": false,
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "minimum": -90.0,
+          "maximum": 90.0
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180.0,
+          "maximum": 180.0
+        },
+        "type": {
+          "const": "geo"
+        }
+      },
+      "required": [
+        "type",
+        "latitude",
+        "longitude"
+      ],
+      "type": "object"
+    },
+    "ticket-bet": {
+      "additionalProperties": false,
+      "properties": {
+        "betId": {
+          "$ref": "#/$defs/bet-id-nullable"
+        },
+        "context": {
+          "$ref": "#/$defs/ticket-bet-context"
+        },
+        "selections": {
+          "items": {
+            "$ref": "#/$defs/sel"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "type": "array"
+        },
+        "stake": {
+          "items": {
+            "$ref": "#/$defs/stake"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "selections",
+        "stake"
+      ],
+      "type": "object"
+    },
+    "ticket-bet-context": {
+      "additionalProperties": false,
+      "properties": {
+        "oddsChange": {
+          "default": "none",
+          "description": "Accept change in odds (optional, default none) none: default behaviour, any: any odds change accepted, higher: accept higher odds",
+          "enum": [
+            "none",
+            "any",
+            "lower",
+            "higher"
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "payoutCap": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "shareId": {
+          "$ref": "#/$defs/share-id-nullable"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "stake": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/stake-cash"
+        },
+        {
+          "$ref": "#/$defs/stake-free"
+        },
+        {
+          "$ref": "#/$defs/stake-bonus"
+        },
+        {
+          "$ref": "#/$defs/stake-free-cash"
+        },
+        {
+          "$ref": "#/$defs/stake-free-rollover"
+        }
+      ]
+    },
+    "stake-bonus": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "mode": {
+          "$ref": "#/$defs/stake-mode-nullable"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "type": {
+          "const": "bonus"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "stake-cash": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "mode": {
+          "$ref": "#/$defs/stake-mode-nullable"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "type": {
+          "const": "cash"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "stake-free": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "mode": {
+          "$ref": "#/$defs/stake-mode-nullable"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "type": {
+          "const": "free"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "stake-free-cash": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "mode": {
+          "$ref": "#/$defs/stake-mode-nullable"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "type": {
+          "const": "free-cash"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "stake-free-rollover": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "mode": {
+          "$ref": "#/$defs/stake-mode-nullable"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "type": {
+          "const": "free-rollover"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "payout": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/payout-cash"
+        },
+        {
+          "$ref": "#/$defs/payout-free"
+        },
+        {
+          "$ref": "#/$defs/payout-withheld"
+        }
+      ]
+    },
+    "payout-cash": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "stakeOrigin": {
+          "$ref": "#/$defs/stake-origin-nullable"
+        },
+        "type": {
+          "const": "cash"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "payout-free": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "stakeOrigin": {
+          "$ref": "#/$defs/stake-origin-nullable"
+        },
+        "type": {
+          "const": "free"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "payout-withheld": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "stakeOrigin": {
+          "$ref": "#/$defs/stake-origin-nullable"
+        },
+        "type": {
+          "const": "withheld"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "payout-with-source": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/payout-with-source-cash"
+        },
+        {
+          "$ref": "#/$defs/payout-with-source-free"
+        },
+        {
+          "$ref": "#/$defs/payout-with-source-withheld"
+        }
+      ]
+    },
+    "payout-with-source-cash": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "source": {
+          "$ref": "#/$defs/payout-source"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "stakeOrigin": {
+          "$ref": "#/$defs/stake-origin-nullable"
+        },
+        "type": {
+          "const": "cash"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency",
+        "source"
+      ],
+      "type": "object"
+    },
+    "payout-with-source-free": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "source": {
+          "$ref": "#/$defs/payout-source"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "stakeOrigin": {
+          "$ref": "#/$defs/stake-origin-nullable"
+        },
+        "type": {
+          "const": "free"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency",
+        "source"
+      ],
+      "type": "object"
+    },
+    "payout-with-source-withheld": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "source": {
+          "$ref": "#/$defs/payout-source"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        },
+        "stakeOrigin": {
+          "$ref": "#/$defs/stake-origin-nullable"
+        },
+        "type": {
+          "const": "withheld"
+        }
+      },
+      "required": [
+        "amount",
+        "type",
+        "currency",
+        "source"
+      ],
+      "type": "object"
+    },
+    "payout-source": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/payout-source-nullable",
+      "type": "string"
+    },
+    "payout-source-nullable": {
+      "additionalProperties": false,
+      "enum": [
+        "cash",
+        "bonus",
+        "free",
+        "free-cash",
+        "free-rollover",
+        "odds-boost",
+        "cancel",
+        "cashout",
+        "ext-settlement",
+        "manual-cancel",
+        "manual-cashout"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stake-origin-nullable": {
+      "additionalProperties": false,
+      "enum": [
+        "cash",
+        "bonus",
+        "free",
+        "free-cash",
+        "free-rollover"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "payout-modifier-reference": {
+      "$ref": "#/$defs/signature"
+    },
+    "sel-decorator-payout-modifier": {
+      "additionalProperties": false,
+      "properties": {
+        "selection": {
+          "$ref": "#/$defs/sel"
+        },
+        "reference": {
+          "$ref": "#/$defs/payout-modifier-reference"
+        },
+        "description": {
+          "$ref": "#/$defs/description-nullable"
+        },
+        "type": {
+          "const": "payout-modifier"
+        }
+      },
+      "required": [
+        "selection",
+        "reference",
+        "type"
+      ],
+      "type": "object"
+    },
+    "payout-modifier-settlement-sel-result": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sel-result-win"
+        },
+        {
+          "$ref": "#/$defs/sel-result-lost"
+        },
+        {
+          "$ref": "#/$defs/sel-result-void"
+        }
+      ]
+    },
+    "payout-modifier-settlement-result": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "result"
+        },
+        "result": {
+          "$ref": "#/$defs/payout-modifier-settlement-sel-result"
+        }
+      },
+      "type": "object",
+      "required": [
+        "result",
+        "type"
+      ]
+    },
+    "payout-modifier-settlement-odds": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "odds"
+        },
+        "odds": {
+          "$ref": "#/$defs/odds-fixed"
+        }
+      },
+      "type": "object",
+      "required": [
+        "odds",
+        "type"
+      ]
+    },
+    "payout-modifier-settlement-settlement": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/payout-modifier-settlement-result"
+        },
+        {
+          "$ref": "#/$defs/payout-modifier-settlement-odds"
+        }
+      ]
+    },
+    "payout-modifier-settlement": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "payout-modifier-settlement"
+        },
+        "settlementId": {
+          "$ref": "#/$defs/settlement-id"
+        },
+        "reference": {
+          "$ref": "#/$defs/payout-modifier-reference"
+        },
+        "settlement": {
+          "$ref": "#/$defs/payout-modifier-settlement-settlement"
+        }
+      },
+      "type": "object",
+      "required": [
+        "settlementId",
+        "reference",
+        "settlement",
+        "type"
+      ]
+    },
+    "payout-modifier-settlement-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "payout-modifier-settlement-reply"
+        },
+        "settlementId": {
+          "$ref": "#/$defs/settlement-id"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "reference": {
+          "$ref": "#/$defs/payout-modifier-reference"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "type": "object",
+      "required": [
+        "settlementId",
+        "signature",
+        "status",
+        "reference",
+        "code",
+        "message",
+        "type"
+      ]
+    },
+    "sel-probability": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sel-probability-win"
+        },
+        {
+          "$ref": "#/$defs/sel-probability-push"
+        }
+      ]
+    },
+    "sel-probability-win": {
+      "additionalProperties": false,
+      "properties": {
+        "win": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1"
+        },
+        "type": {
+          "const": "win"
+        }
+      },
+      "required": [
+        "type",
+        "win"
+      ],
+      "type": "object"
+    },
+    "sel-probability-push": {
+      "additionalProperties": false,
+      "properties": {
+        "win": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1"
+        },
+        "halfWin": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1"
+        },
+        "refund": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1"
+        },
+        "halfLose": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1"
+        },
+        "type": {
+          "const": "push"
+        }
+      },
+      "required": [
+        "type",
+        "win",
+        "halfWin",
+        "refund",
+        "halfLose"
+      ],
+      "type": "object"
+    },
+    "casino-spin": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/casino-spin-ordinary"
+        },
+        {
+          "$ref": "#/$defs/casino-spin-free"
+        },
+        {
+          "$ref": "#/$defs/casino-spin-bonus"
+        }
+      ]
+    },
+    "casino-spin-ordinary": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "$ref": "#/$defs/num-int-gte-0-nullable"
+        },
+        "winningCount": {
+          "$ref": "#/$defs/num-int-gte-0-nullable"
+        },
+        "type": {
+          "const": "ordinary"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "casino-spin-free": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "$ref": "#/$defs/num-int-gte-0"
+        },
+        "winningCount": {
+          "$ref": "#/$defs/num-int-gte-0-nullable"
+        },
+        "type": {
+          "const": "free"
+        }
+      },
+      "required": [
+        "type",
+        "count"
+      ],
+      "type": "object"
+    },
+    "casino-spin-bonus": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "$ref": "#/$defs/num-int-gte-0-nullable"
+        },
+        "winningCount": {
+          "$ref": "#/$defs/num-int-gte-0-nullable"
+        },
+        "type": {
+          "const": "bonus"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "odds": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/odds-fixed"
+        }
+      ]
+    },
+    "odds-fixed": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/odds-fixed-decimal"
+        },
+        {
+          "$ref": "#/$defs/odds-fixed-fractional"
+        },
+        {
+          "$ref": "#/$defs/odds-fixed-moneyline"
+        },
+        {
+          "$ref": "#/$defs/odds-fixed-hong-kong"
+        },
+        {
+          "$ref": "#/$defs/odds-fixed-indonesian"
+        },
+        {
+          "$ref": "#/$defs/odds-fixed-malay"
+        }
+      ]
+    },
+    "odds-fixed-decimal": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "decimal"
+        },
+        "value": {
+          "$ref": "#/$defs/num-decimal-odds"
+        }
+      },
+      "required": [
+        "value",
+        "type"
+      ],
+      "type": "object"
+    },
+    "odds-fixed-fractional": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "fractional"
+        },
+        "numerator": {
+          "$ref": "#/$defs/num-frac-odds"
+        },
+        "denominator": {
+          "$ref": "#/$defs/num-frac-odds"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator",
+        "type"
+      ],
+      "type": "object"
+    },
+    "odds-fixed-moneyline": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "moneyline"
+        },
+        "value": {
+          "$ref": "#/$defs/num-moneyline-odds"
+        }
+      },
+      "required": [
+        "value",
+        "type"
+      ],
+      "type": "object"
+    },
+    "odds-fixed-hong-kong": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "hong-kong"
+        },
+        "value": {
+          "$ref": "#/$defs/num-hong-kong-odds"
+        }
+      },
+      "required": [
+        "value",
+        "type"
+      ],
+      "type": "object"
+    },
+    "odds-fixed-indonesian": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "indonesian"
+        },
+        "value": {
+          "$ref": "#/$defs/num-indonesian-odds"
+        }
+      },
+      "required": [
+        "value",
+        "type"
+      ],
+      "type": "object"
+    },
+    "odds-fixed-malay": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "malay"
+        },
+        "value": {
+          "$ref": "#/$defs/num-malay-odds"
+        }
+      },
+      "required": [
+        "value",
+        "type"
+      ],
+      "type": "object"
+    },
+    "sel": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sel-feed"
+        },
+        {
+          "$ref": "#/$defs/sel-combo"
+        },
+        {
+          "$ref": "#/$defs/sel-decorator"
+        }
+      ]
+    },
+    "sel-feed": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sel-feed-outcome"
+        },
+        {
+          "$ref": "#/$defs/sel-feed-advanced"
+        }
+      ]
+    },
+    "sel-feed-advanced": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sel-feed-advanced-uf-custom-bet"
+        }
+      ]
+    },
+    "sel-feed-advanced-uf-custom-bet": {
+      "additionalProperties": false,
+      "properties": {
+        "odds": {
+          "$ref": "#/$defs/odds-fixed"
+        },
+        "selections": {
+          "items": {
+            "$ref": "#/$defs/sel-feed-outcome-uf"
+          },
+          "minItems": 2,
+          "type": "array"
+        },
+        "useHarmOdds": {
+          "type": "boolean",
+          "default": false
+        },
+        "type": {
+          "const": "uf-custom-bet"
+        }
+      },
+      "required": [
+        "selections",
+        "type",
+        "odds"
+      ],
+      "not": {
+        "required": [
+          "harmOddsApplied"
+        ]
+      },
+      "type": "object"
+    },
+    "sel-feed-outcome": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sel-feed-outcome-uf"
+        },
+        {
+          "$ref": "#/$defs/sel-feed-outcome-ext"
+        }
+      ]
+    },
+    "sel-feed-outcome-ext": {
+      "additionalProperties": false,
+      "properties": {
+        "event": {
+          "maxLength": 100,
+          "minLength": 1,
+          "type": "string"
+        },
+        "expSettleTime": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "odds": {
+          "$ref": "#/$defs/odds-fixed"
+        },
+        "outcome": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": {
+          "const": "external"
+        }
+      },
+      "required": [
+        "type",
+        "event",
+        "outcome",
+        "odds",
+        "expSettleTime"
+      ],
+      "type": "object"
+    },
+    "sel-feed-outcome-uf": {
+      "additionalProperties": false,
+      "properties": {
+        "eventId": {
+          "maxLength": 100,
+          "minLength": 1,
+          "type": "string"
+        },
+        "marketId": {
+          "maxLength": 100,
+          "minLength": 1,
+          "type": "string"
+        },
+        "odds": {
+          "$ref": "#/$defs/odds-fixed"
+        },
+        "outcomeId": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "type": "string"
+        },
+        "productId": {
+          "maxLength": 5,
+          "minLength": 1,
+          "type": "string"
+        },
+        "specifiers": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "const": "uf"
+        }
+      },
+      "required": [
+        "type",
+        "productId",
+        "eventId",
+        "marketId",
+        "outcomeId",
+        "odds"
+      ],
+      "type": "object"
+    },
+    "sel-combo": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sel-combo-acc"
+        },
+        {
+          "$ref": "#/$defs/sel-combo-sys"
+        },
+        {
+          "$ref": "#/$defs/sel-combo-ways"
+        }
+      ]
+    },
+    "sel-combo-acc": {
+      "additionalProperties": false,
+      "properties": {
+        "selections": {
+          "items": {
+            "$ref": "#/$defs/sel"
+          },
+          "maxItems": 100,
+          "minItems": 2,
+          "type": "array"
+        },
+        "type": {
+          "const": "accumulator"
+        }
+      },
+      "required": [
+        "selections",
+        "type"
+      ],
+      "type": "object"
+    },
+    "sel-combo-sys": {
+      "additionalProperties": false,
+      "properties": {
+        "selections": {
+          "items": {
+            "$ref": "#/$defs/sel"
+          },
+          "maxItems": 32,
+          "minItems": 2,
+          "type": "array"
+        },
+        "size": {
+          "items": {
+            "maximum": 32,
+            "minimum": 1,
+            "type": "integer",
+            "uniqueItems": true
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "type": "array"
+        },
+        "type": {
+          "const": "system"
+        }
+      },
+      "required": [
+        "selections",
+        "type",
+        "size"
+      ],
+      "type": "object"
+    },
+    "sel-combo-ways": {
+      "additionalProperties": false,
+      "properties": {
+        "selections": {
+          "items": {
+            "$ref": "#/$defs/sel"
+          },
+          "maxItems": 30,
+          "minItems": 2,
+          "type": "array"
+        },
+        "type": {
+          "const": "ways"
+        }
+      },
+      "required": [
+        "selections",
+        "type"
+      ],
+      "type": "object"
+    },
+    "sel-decorator": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sel-decorator-odds-boost"
+        },
+        {
+          "$ref": "#/$defs/sel-decorator-payout-modifier"
+        }
+      ]
+    },
+    "sel-decorator-odds-boost": {
+      "additionalProperties": false,
+      "properties": {
+        "selection": {
+          "$ref": "#/$defs/sel"
+        },
+        "odds": {
+          "$ref": "#/$defs/odds-fixed"
+        },
+        "type": {
+          "const": "odds-boost"
+        }
+      },
+      "required": [
+        "selection",
+        "odds",
+        "type"
+      ],
+      "type": "object"
+    },
+    "sel-result": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/sel-result-unsettled"
+        },
+        {
+          "$ref": "#/$defs/sel-result-win"
+        },
+        {
+          "$ref": "#/$defs/sel-result-lost"
+        },
+        {
+          "$ref": "#/$defs/sel-result-void"
+        },
+        {
+          "$ref": "#/$defs/sel-result-cashout"
+        },
+        {
+          "$ref": "#/$defs/sel-result-cancel"
+        }
+      ]
+    },
+    "sel-result-unsettled": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "unsettled"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "sel-result-win": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "win"
+        },
+        "voidFactor": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1-nullable",
+          "description": "Void factor for the selection result"
+        },
+        "deadHeatFactor": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1-nullable",
+          "description": "Dead-heat factor for the selection result"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "sel-result-lost": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "lost"
+        },
+        "voidFactor": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1-nullable",
+          "description": "Void factor for the selection result"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "sel-result-void": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "void"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "sel-result-cashout": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "sel-result-cancel": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cancel"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "account-limit-period": {
+      "additionalProperties": false,
+      "$ref": "#/$defs/account-limit-period-nullable",
+      "type": "string"
+    },
+    "account-limit-period-nullable": {
+      "additionalProperties": false,
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "account-limit-details": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/account-limit-details-deposit"
+        },
+        {
+          "$ref": "#/$defs/account-limit-details-stake"
+        },
+        {
+          "$ref": "#/$defs/account-limit-details-loss"
+        },
+        {
+          "$ref": "#/$defs/account-limit-details-session"
+        }
+      ]
+    },
+    "account-limit-details-deposit": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "deposit"
+        },
+        "period": {
+          "$ref": "#/$defs/account-limit-period"
+        },
+        "amount": {
+          "$ref": "#/$defs/payment-amount"
+        }
+      },
+      "required": [
+        "type",
+        "period",
+        "amount"
+      ],
+      "type": "object"
+    },
+    "account-limit-details-stake": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "stake"
+        },
+        "period": {
+          "$ref": "#/$defs/account-limit-period"
+        },
+        "amount": {
+          "$ref": "#/$defs/payment-amount"
+        }
+      },
+      "required": [
+        "type",
+        "period",
+        "amount"
+      ],
+      "type": "object"
+    },
+    "account-limit-details-loss": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "loss"
+        },
+        "period": {
+          "$ref": "#/$defs/account-limit-period"
+        },
+        "amount": {
+          "$ref": "#/$defs/payment-amount"
+        }
+      },
+      "required": [
+        "type",
+        "period",
+        "amount"
+      ],
+      "type": "object"
+    },
+    "account-limit-details-session": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "session"
+        },
+        "duration": {
+          "$ref": "#/$defs/num-int-gte-0"
+        }
+      },
+      "required": [
+        "type",
+        "duration"
+      ],
+      "type": "object"
+    },
+    "channel-type": {
+      "additionalProperties": false,
+      "enum": [
+        "internet",
+        "agent",
+        "call-centre",
+        "mobile",
+        "phone",
+        "retail",
+        "sms",
+        "terminal",
+        "tv-app",
+        "mobile-app"
+      ],
+      "type": "string"
+    },
+    "product-type": {
+      "additionalProperties": false,
+      "enum": [
+        "casino",
+        "sports",
+        "live-casino",
+        "virtual-sports"
+      ],
+      "type": "string"
+    },
+    "login-method": {
+      "additionalProperties": false,
+      "enum": [
+        "password",
+        "biometric",
+        "sso",
+        "mfa"
+      ],
+      "type": "string"
+    },
+    "kyc-status": {
+      "additionalProperties": false,
+      "enum": [
+        "not-started",
+        "pending",
+        "verified",
+        "failed",
+        "expired",
+        "not-started",
+        "pending",
+        "verified",
+        "failed",
+        "expired"
+      ],
+      "type": "string"
+    },
+    "kyc-level": {
+      "additionalProperties": false,
+      "enum": [
+        "basic",
+        "standard",
+        "enhanced"
+      ],
+      "type": "string"
+    },
+    "kyc-method": {
+      "additionalProperties": false,
+      "enum": [
+        "document",
+        "biometric",
+        "manual-review",
+        "third-party"
+      ],
+      "type": "string"
+    },
+    "self-exclusion-status": {
+      "additionalProperties": false,
+      "enum": [
+        "active",
+        "expired",
+        "revoked",
+        "active",
+        "expired",
+        "revoked"
+      ],
+      "type": "string"
+    },
+    "self-exclusion-source": {
+      "additionalProperties": false,
+      "enum": [
+        "operator",
+        "regulator",
+        "player",
+        "other"
+      ],
+      "type": "string"
+    },
+    "vip-status": {
+      "additionalProperties": false,
+      "enum": [
+        "not-vip",
+        "active",
+        "suspended",
+        "revoked",
+        "not-vip",
+        "active",
+        "suspended",
+        "revoked"
+      ],
+      "type": "string"
+    },
+    "loyalty-status": {
+      "additionalProperties": false,
+      "enum": [
+        "inactive",
+        "active",
+        "suspended",
+        "inactive",
+        "active",
+        "suspended"
+      ],
+      "type": "string"
+    },
+    "kyc-details": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/kyc-status"
+        },
+        "level": {
+          "$ref": "#/$defs/kyc-level"
+        },
+        "method": {
+          "$ref": "#/$defs/kyc-method"
+        },
+        "timestampUtc": {
+          "$ref": "#/$defs/timestamp-nullable"
+        }
+      },
+      "type": "object"
+    },
+    "self-exclusion": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/self-exclusion-status"
+        },
+        "source": {
+          "$ref": "#/$defs/self-exclusion-source"
+        },
+        "timestampUtc": {
+          "$ref": "#/$defs/timestamp-nullable"
+        },
+        "startTimestampUtc": {
+          "$ref": "#/$defs/timestamp-nullable"
+        },
+        "endTimestampUtc": {
+          "$ref": "#/$defs/timestamp-nullable"
+        },
+        "indefinite": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "vip-details": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/vip-status"
+        },
+        "tier": {
+          "$ref": "#/$defs/num-int-gte-0-nullable"
+        }
+      },
+      "type": "object"
+    },
+    "loyalty-details": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/loyalty-status"
+        },
+        "tier": {
+          "$ref": "#/$defs/num-int-gte-0-nullable"
+        },
+        "pointsBalance": {
+          "type": [
+            "integer",
+            "null",
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "account-details": {
+      "additionalProperties": false,
+      "properties": {
+        "currencyCode": {
+          "$ref": "#/$defs/currency-nullable"
+        },
+        "countryCode": {
+          "$ref": "#/$defs/country-code-nullable"
+        },
+        "kyc": {
+          "$ref": "#/$defs/kyc-details"
+        },
+        "selfExclusion": {
+          "$ref": "#/$defs/self-exclusion"
+        },
+        "vip": {
+          "$ref": "#/$defs/vip-details"
+        },
+        "loyalty": {
+          "$ref": "#/$defs/loyalty-details"
+        }
+      },
+      "type": "object"
+    },
+    "country-code-nullable": {
+      "additionalProperties": false,
+      "description": "ISO-3166-1 alpha-3 country code",
+      "maxLength": 3,
+      "minLength": 3,
+      "type": [
+        "string",
+        "null",
+        "string",
+        "null"
+      ]
+    },
+    "session-id": {
+      "additionalProperties": false,
+      "description": "Session identifier",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": "string"
+    },
+    "account-status-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "account-status-inform"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "disabled",
+            "excluded"
+          ]
+        },
+        "initiator": {
+          "enum": [
+            "operator",
+            "regulator",
+            "player",
+            "other"
+          ]
+        },
+        "duration": {
+          "enum": [
+            "temporary",
+            "permanent"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/account-status-reason-nullable"
+        },
+        "periodStartUtc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "periodEndUtc": {
+          "description": "Non null for temporary status changes",
+          "$ref": "#/$defs/timestamp-nullable"
+        }
+      },
+      "required": [
+        "type",
+        "endCustomer",
+        "status",
+        "periodStartUtc"
+      ],
+      "type": "object"
+    },
+    "account-limit-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "account-limit-inform"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "limit": {
+          "$ref": "#/$defs/account-limit-details"
+        }
+      },
+      "required": [
+        "type",
+        "endCustomer",
+        "limit"
+      ],
+      "type": "object"
+    },
+    "account-limit-reached-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "account-limit-reached-inform"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "reachedLimit": {
+          "enum": [
+            "deposit",
+            "stake",
+            "loss",
+            "session"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "endCustomer",
+        "reachedLimit"
+      ],
+      "type": "object"
+    },
+    "account-intervention-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "account-intervention-inform"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "method": {
+          "enum": [
+            "pop-up",
+            "rg-messaging",
+            "email",
+            "limits-update",
+            "care-call",
+            "other"
+          ]
+        },
+        "modelInitiated": {
+          "type": "boolean"
+        },
+        "comment": {
+          "$ref": "#/$defs/intervention-comment-nullable"
+        }
+      },
+      "required": [
+        "type",
+        "endCustomer",
+        "method",
+        "modelInitiated"
+      ],
+      "type": "object"
+    },
+    "account-details-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "account-details-inform"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/product-type"
+          }
+        },
+        "account": {
+          "$ref": "#/$defs/account-details"
+        }
+      },
+      "required": [
+        "type",
+        "endCustomer",
+        "type",
+        "endCustomer"
+      ],
+      "type": "object"
+    },
+    "registration-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "registration-inform"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "channel": {
+          "$ref": "#/$defs/ticket-channel"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/product-type"
+          }
+        },
+        "account": {
+          "$ref": "#/$defs/account-details"
+        },
+        "registrationTimestampUtc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "clientContext": {
+          "$ref": "#/$defs/client-context"
+        }
+      },
+      "required": [
+        "type",
+        "endCustomer",
+        "registrationTimestampUtc",
+        "type",
+        "endCustomer",
+        "registrationTimestampUtc"
+      ],
+      "type": "object"
+    },
+    "login-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "login-inform"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/session-id"
+        },
+        "loginMethod": {
+          "$ref": "#/$defs/login-method"
+        },
+        "channel": {
+          "$ref": "#/$defs/ticket-channel"
+        },
+        "clientContext": {
+          "$ref": "#/$defs/client-context"
+        }
+      },
+      "required": [
+        "type",
+        "endCustomer",
+        "sessionId",
+        "type",
+        "endCustomer",
+        "sessionId"
+      ],
+      "type": "object"
+    },
+    "account-limit-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "account-limit-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "account-limit-reached-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "account-limit-reached-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "account-status-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "account-status-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "account-intervention-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "account-intervention-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "account-details-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "account-details-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "signature",
+        "type",
+        "code",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "registration-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "registration-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "signature",
+        "type",
+        "code",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "login-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "login-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "campaignMetadata": {
+          "items": {
+            "$ref": "#/$defs/campaign-metadata"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "signature",
+        "type",
+        "code",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "auto-cashout-threshold": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/auto-cashout-threshold-take-win"
+        },
+        {
+          "$ref": "#/$defs/auto-cashout-threshold-stop-loss"
+        }
+      ]
+    },
+    "auto-cashout-threshold-take-win": {
+      "additionalProperties": false,
+      "properties": {
+        "percentage": {
+          "$ref": "#/$defs/num-float-gt-0-lte-1"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "type": {
+          "const": "take-win"
+        }
+      },
+      "required": [
+        "type",
+        "percentage",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "auto-cashout-threshold-stop-loss": {
+      "additionalProperties": false,
+      "properties": {
+        "percentage": {
+          "$ref": "#/$defs/num-float-gt-0-lte-1"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "type": {
+          "const": "stop-loss"
+        }
+      },
+      "required": [
+        "type",
+        "percentage",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "campaign-id": {
+      "additionalProperties": false,
+      "description": "Campaign's unique id",
+      "maxLength": 128,
+      "minLength": 1,
+      "type": [
+        "string"
+      ]
+    },
+    "campaign-optin": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "campaign-optin"
+        },
+        "campaignId": {
+          "$ref": "#/$defs/campaign-id"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "walletId": {
+          "$ref": "#/$defs/wallet-id-nullable"
+        }
+      },
+      "required": [
+        "type",
+        "campaignId",
+        "endCustomer"
+      ],
+      "type": "object"
+    },
+    "campaign-optin-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "campaign-optin-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "campaignMetadata": {
+          "$ref": "#/$defs/campaign-metadata"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "campaign-optout": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "campaign-optout"
+        },
+        "campaignId": {
+          "$ref": "#/$defs/campaign-id"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "walletId": {
+          "$ref": "#/$defs/wallet-id-nullable"
+        }
+      },
+      "required": [
+        "type",
+        "campaignId",
+        "endCustomer"
+      ],
+      "type": "object"
+    },
+    "campaign-optout-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "campaign-optout-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "campaignMetadata": {
+          "$ref": "#/$defs/campaign-metadata"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "campaign-metadata": {
+      "additionalProperties": false,
+      "description": "Campaign metadata included in campaign transaction responses",
+      "properties": {
+        "campaignId": {
+          "$ref": "#/$defs/campaign-id"
+        },
+        "name": {
+          "description": "Campaign name",
+          "maxLength": 256,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "description": "Campaign status: ACTIVE, INACTIVE, EXPIRED, PENDING",
+          "maxLength": 64,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Campaign type: BONUS, FREEBET, CASHBACK, LOYALTY",
+          "maxLength": 64,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "triggeringType": {
+          "description": "Campaign triggering type",
+          "maxLength": 128,
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "manual-review-status": {
+      "additionalProperties": false,
+      "enum": [
+        "pending",
+        "rejected",
+        "accepted"
+      ],
+      "type": "string"
+    },
+    "manual-review": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "manual-review"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "type": "object",
+      "required": [
+        "type",
+        "ticketId",
+        "signature"
+      ]
+    },
+    "manual-review-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "manual-review-reply"
+        },
+        "status": {
+          "$ref": "#/$defs/manual-review-status"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "type": "object",
+      "required": [
+        "type",
+        "signature",
+        "code",
+        "status",
+        "message"
+      ]
+    },
+    "cancel-details": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/cancel-details-ticket"
+        },
+        {
+          "$ref": "#/$defs/cancel-details-ticket-partial"
+        },
+        {
+          "$ref": "#/$defs/cancel-details-bet"
+        },
+        {
+          "$ref": "#/$defs/cancel-details-bet-partial"
+        },
+        {
+          "$ref": "#/$defs/cancel-details-reoffer"
+        }
+      ]
+    },
+    "cancel-details-reoffer": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "reoffer"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "code": {
+          "$ref": "#/$defs/cancellation-code"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cancel-details-ticket": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "code": {
+          "$ref": "#/$defs/cancellation-code"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cancel-details-ticket-partial": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket-partial"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "code": {
+          "$ref": "#/$defs/cancellation-code"
+        },
+        "percentage": {
+          "$ref": "#/$defs/num-float-gt-0-lt-1"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "code",
+        "percentage"
+      ],
+      "type": "object"
+    },
+    "cancel-details-bet": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "bet"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "code": {
+          "$ref": "#/$defs/cancellation-code"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "betId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cancel-details-bet-partial": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "bet-partial"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "code": {
+          "$ref": "#/$defs/cancellation-code"
+        },
+        "percentage": {
+          "$ref": "#/$defs/num-float-gt-0-lt-1"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "betId",
+        "code",
+        "percentage"
+      ],
+      "type": "object"
+    },
+    "cancel": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cancel"
+        },
+        "cancellationId": {
+          "$ref": "#/$defs/cancellation-id-nullable"
+        },
+        "details": {
+          "$ref": "#/$defs/cancel-details"
+        }
+      },
+      "required": [
+        "type",
+        "details"
+      ],
+      "type": "object"
+    },
+    "cancel-ack": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cancel-ack"
+        },
+        "cancellationId": {
+          "$ref": "#/$defs/cancellation-id"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "cancellationSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "acknowledged": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "cancellationId",
+        "ticketId",
+        "cancellationSignature",
+        "acknowledged"
+      ],
+      "type": "object"
+    },
+    "cashout-details": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/cashout-details-ticket"
+        },
+        {
+          "$ref": "#/$defs/cashout-details-ticket-partial"
+        },
+        {
+          "$ref": "#/$defs/cashout-details-bet"
+        },
+        {
+          "$ref": "#/$defs/cashout-details-bet-partial"
+        }
+      ]
+    },
+    "cashout-details-ticket": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "code": {
+          "$ref": "#/$defs/cashout-code"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "code",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "cashout-details-ticket-partial": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket-partial"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "code": {
+          "$ref": "#/$defs/cashout-code"
+        },
+        "percentage": {
+          "$ref": "#/$defs/num-float-gt-0-lt-1"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "code",
+        "percentage",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "cashout-details-bet": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "bet"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "code": {
+          "$ref": "#/$defs/cashout-code"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "betId",
+        "code",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "cashout-details-bet-partial": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "bet-partial"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "code": {
+          "$ref": "#/$defs/cashout-code"
+        },
+        "percentage": {
+          "$ref": "#/$defs/num-float-gt-0-lt-1"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "betId",
+        "code",
+        "percentage",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "cashout-context": {
+      "additionalProperties": false,
+      "properties": {
+        "autoAcceptChange": {
+          "enum": [
+            "not-set",
+            "any",
+            "higher",
+            "none"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "cashout": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id-nullable"
+        },
+        "details": {
+          "$ref": "#/$defs/cashout-details"
+        },
+        "context": {
+          "$ref": "#/$defs/cashout-context"
+        }
+      },
+      "required": [
+        "type",
+        "details"
+      ],
+      "type": "object"
+    },
+    "cashout-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-inform"
+        },
+        "cashout": {
+          "$ref": "#/$defs/cashout"
+        },
+        "validation": {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "$ref": "#/$defs/response-code"
+            },
+            "message": {
+              "$ref": "#/$defs/response-message"
+            },
+            "rejected": {
+              "description": "Clients' indication if the cashout has been rejected on the client side",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "code",
+            "message"
+          ],
+          "type": "object"
+        },
+        "suggestionSignature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "cashout",
+        "validation"
+      ],
+      "type": "object"
+    },
+    "cashout-build": {
+      "additionalProperties": false,
+      "properties": {
+        "cashout": {
+          "$ref": "#/$defs/cashout"
+        },
+        "type": {
+          "const": "cashout-build"
+        }
+      },
+      "required": [
+        "cashout",
+        "type"
+      ],
+      "type": "object"
+    },
+    "cashout-placement": {
+      "additionalProperties": false,
+      "properties": {
+        "cashout": {
+          "$ref": "#/$defs/cashout"
+        },
+        "type": {
+          "const": "cashout-placement"
+        }
+      },
+      "required": [
+        "cashout",
+        "type"
+      ],
+      "type": "object"
+    },
+    "cashout-ack": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-ack"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "cashoutSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "acknowledged": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "cashoutId",
+        "ticketId",
+        "cashoutSignature",
+        "acknowledged"
+      ],
+      "type": "object"
+    },
+    "cashout-inform-ack": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-inform-ack"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "cashoutSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "acknowledged": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "cashoutId",
+        "ticketId",
+        "cashoutSignature",
+        "acknowledged"
+      ],
+      "type": "object"
+    },
+    "cashout-placement-ack": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-placement-ack"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "cashoutSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "acknowledged": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "cashoutId",
+        "ticketId",
+        "cashoutSignature",
+        "acknowledged"
+      ],
+      "type": "object"
+    },
+    "settlement-details": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/settlement-details-ticket"
+        },
+        {
+          "$ref": "#/$defs/settlement-details-bet"
+        }
+      ]
+    },
+    "settlement-details-ticket": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "settlement-details-bet": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "bet"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "betId",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "ext-settlement": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ext-settlement"
+        },
+        "settlementId": {
+          "$ref": "#/$defs/settlement-id"
+        },
+        "details": {
+          "$ref": "#/$defs/settlement-details"
+        }
+      },
+      "required": [
+        "type",
+        "settlementId",
+        "details"
+      ],
+      "type": "object"
+    },
+    "ext-settlement-ack": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ext-settlement-ack"
+        },
+        "settlementId": {
+          "$ref": "#/$defs/settlement-id"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "settlementSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "acknowledged": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "settlementId",
+        "ticketId",
+        "settlementSignature",
+        "acknowledged"
+      ],
+      "type": "object"
+    },
+    "ticket": {
+      "additionalProperties": false,
+      "properties": {
+        "bets": {
+          "items": {
+            "$ref": "#/$defs/ticket-bet"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "type": "array"
+        },
+        "context": {
+          "$ref": "#/$defs/ticket-context"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "type": {
+          "const": "ticket"
+        }
+      },
+      "required": [
+        "ticketId",
+        "context",
+        "bets",
+        "type"
+      ],
+      "type": "object"
+    },
+    "ticket-context": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "$ref": "#/$defs/ticket-channel"
+        },
+        "payoutCap": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "rates": {
+          "items": {
+            "$ref": "#/$defs/currency-exchange-rate"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "limitId": {
+          "description": "Client's limit id (provided by Sportradar to the client)",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "walletId": {
+          "$ref": "#/$defs/wallet-id-nullable"
+        },
+        "ref": {
+          "additionalProperties": false,
+          "properties": {
+            "ticketId": {
+              "$ref": "#/$defs/ticket-id"
+            },
+            "ticketSignature": {
+              "$ref": "#/$defs/signature"
+            },
+            "type": {
+              "enum": [
+                "alt-stake",
+                "reoffer"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "ticketId",
+            "ticketSignature"
+          ]
+        }
+      },
+      "required": [
+        "limitId",
+        "channel"
+      ],
+      "type": "object"
+    },
+    "ticket-ack": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket-ack"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "acknowledged": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "acknowledged"
+      ],
+      "type": "object"
+    },
+    "ticket-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "ticket": {
+          "$ref": "#/$defs/ticket"
+        },
+        "type": {
+          "const": "ticket-inform"
+        },
+        "betValidations": {
+          "type": "array",
+          "maxItems": 50,
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/ticket-bet-validation"
+          }
+        }
+      },
+      "required": [
+        "ticket",
+        "type",
+        "betValidations"
+      ],
+      "type": "object"
+    },
+    "ticket-build": {
+      "additionalProperties": false,
+      "properties": {
+        "ticket": {
+          "$ref": "#/$defs/ticket"
+        },
+        "type": {
+          "const": "ticket-build"
+        }
+      },
+      "required": [
+        "ticket",
+        "type"
+      ],
+      "type": "object"
+    },
+    "ticket-bet-validation": {
+      "additionalProperties": false,
+      "properties": {
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "rejected": {
+          "description": "Clients' indication if the bet has been rejected on the client side",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "type": "object"
+    },
+    "casino-sessions-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "casino-sessions-inform"
+        },
+        "reportId": {
+          "$ref": "#/$defs/report-id-nullable"
+        },
+        "context": {
+          "additionalProperties": false,
+          "properties": {
+            "channel": {
+              "$ref": "#/$defs/ticket-channel"
+            },
+            "endCustomer": {
+              "$ref": "#/$defs/endCustomer"
+            },
+            "walletId": {
+              "$ref": "#/$defs/wallet-id-nullable"
+            },
+            "rates": {
+              "items": {
+                "$ref": "#/$defs/currency-exchange-rate"
+              },
+              "maxItems": 5,
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "channel",
+            "endCustomer"
+          ],
+          "type": "object"
+        },
+        "sessions": {
+          "type": "array",
+          "maxItems": 50,
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/casino-session"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "context",
+        "sessions"
+      ],
+      "type": "object"
+    },
+    "casino-session": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/casino-session-id-nullable"
+        },
+        "game": {
+          "$ref": "#/$defs/casino-game"
+        },
+        "startUtc": {
+          "$ref": "#/$defs/timestamp-nullable"
+        },
+        "endUtc": {
+          "$ref": "#/$defs/timestamp-nullable"
+        },
+        "spins": {
+          "items": {
+            "$ref": "#/$defs/casino-spin"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "stake": {
+          "items": {
+            "$ref": "#/$defs/stake"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "game",
+        "stake",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "casino-game": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/casino-game-id-nullable"
+        },
+        "provider": {
+          "$ref": "#/$defs/casino-game-provider"
+        }
+      },
+      "required": [
+        "id",
+        "provider"
+      ],
+      "type": "object"
+    },
+    "payment-amount": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "$ref": "#/$defs/num-float-gte-0"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ]
+    },
+    "balance-change-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "balance-change-inform"
+        },
+        "balanceChangeId": {
+          "$ref": "#/$defs/payment-id"
+        },
+        "walletId": {
+          "$ref": "#/$defs/wallet-id-nullable"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "amount": {
+          "$ref": "#/$defs/payment-amount"
+        },
+        "executedAtUtc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "status": {
+          "enum": [
+            "valid",
+            "invalid"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/balance-source"
+        }
+      },
+      "required": [
+        "type",
+        "balanceChangeId",
+        "endCustomer",
+        "amount",
+        "executedAtUtc",
+        "status",
+        "source"
+      ],
+      "type": "object"
+    },
+    "deposit-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "deposit-inform"
+        },
+        "depositId": {
+          "$ref": "#/$defs/payment-id"
+        },
+        "walletId": {
+          "$ref": "#/$defs/wallet-id-nullable"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "status": {
+          "$ref": "#/$defs/payment-status"
+        },
+        "gateway": {
+          "$ref": "#/$defs/payment-gateway"
+        },
+        "amount": {
+          "$ref": "#/$defs/payment-amount"
+        },
+        "initiatedAtUtc": {
+          "$ref": "#/$defs/timestamp-nullable"
+        },
+        "executedAtUtc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        }
+      },
+      "required": [
+        "type",
+        "depositId",
+        "endCustomer",
+        "status",
+        "amount",
+        "executedAtUtc"
+      ],
+      "type": "object"
+    },
+    "withdrawal-inform": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "withdrawal-inform"
+        },
+        "withdrawalId": {
+          "$ref": "#/$defs/payment-id"
+        },
+        "walletId": {
+          "$ref": "#/$defs/wallet-id-nullable"
+        },
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "status": {
+          "$ref": "#/$defs/payment-status"
+        },
+        "gateway": {
+          "$ref": "#/$defs/payment-gateway"
+        },
+        "amount": {
+          "$ref": "#/$defs/payment-amount"
+        },
+        "initiatedAtUtc": {
+          "$ref": "#/$defs/timestamp-nullable"
+        },
+        "executedAtUtc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "traceId": {
+          "$ref": "#/$defs/trace-id-nullable"
+        }
+      },
+      "required": [
+        "type",
+        "withdrawalId",
+        "endCustomer",
+        "status",
+        "amount",
+        "executedAtUtc"
+      ],
+      "type": "object"
+    },
+    "payment-gateway": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "$ref": "#/$defs/payment-provider"
+        },
+        "referenceId": {
+          "$ref": "#/$defs/payment-id"
+        },
+        "method": {
+          "enum": [
+            "credit-card",
+            "debit-card",
+            "prepaid-card",
+            "bank-transfer",
+            "e-wallet"
+          ]
+        },
+        "initiatedAtUtc": {
+          "$ref": "#/$defs/timestamp-nullable"
+        },
+        "executedAtUtc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "provider",
+        "referenceId",
+        "method",
+        "executedAtUtc"
+      ]
+    },
+    "max-stake": {
+      "additionalProperties": false,
+      "properties": {
+        "ticket": {
+          "$ref": "#/$defs/ticket"
+        },
+        "type": {
+          "const": "max-stake"
+        }
+      },
+      "required": [
+        "ticket",
+        "type"
+      ],
+      "type": "object"
+    },
+    "auto-cashout-details": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/auto-cashout-details-ticket"
+        },
+        {
+          "$ref": "#/$defs/auto-cashout-details-bet"
+        }
+      ]
+    },
+    "auto-cashout-details-ticket": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "threshold": {
+          "items": {
+            "$ref": "#/$defs/auto-cashout-threshold"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "threshold"
+      ],
+      "type": "object"
+    },
+    "auto-cashout-details-bet": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "bet"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "threshold": {
+          "items": {
+            "$ref": "#/$defs/auto-cashout-threshold"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "betId",
+        "threshold"
+      ],
+      "type": "object"
+    },
+    "auto-cashout": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "auto-cashout"
+        },
+        "autoCashoutId": {
+          "$ref": "#/$defs/cashout-id-nullable"
+        },
+        "details": {
+          "$ref": "#/$defs/auto-cashout-details"
+        }
+      },
+      "required": [
+        "type",
+        "details"
+      ],
+      "type": "object"
+    },
+    "auto-cashout-cancel-details": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/auto-cashout-cancel-details-ticket"
+        },
+        {
+          "$ref": "#/$defs/auto-cashout-cancel-details-bet"
+        }
+      ]
+    },
+    "auto-cashout-cancel-details-ticket": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature"
+      ],
+      "type": "object"
+    },
+    "auto-cashout-cancel-details-bet": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "bet"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "betId"
+      ],
+      "type": "object"
+    },
+    "auto-cashout-cancel": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "auto-cashout-cancel"
+        },
+        "cancellationId": {
+          "$ref": "#/$defs/cancellation-id-nullable"
+        },
+        "details": {
+          "$ref": "#/$defs/auto-cashout-cancel-details"
+        }
+      },
+      "required": [
+        "type",
+        "details"
+      ],
+      "type": "object"
+    },
+    "cashout-build-subscription": {
+      "additionalProperties": false,
+      "properties": {
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id"
+        },
+        "details": {
+          "$ref": "#/$defs/cashout-details-subscription"
+        },
+        "type": {
+          "const": "cashout-build-subscription"
+        }
+      },
+      "required": [
+        "cashoutId",
+        "details",
+        "type"
+      ],
+      "type": "object"
+    },
+    "cashout-details-ticket-subscription": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "code": {
+          "$ref": "#/$defs/cashout-code"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 0,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "code",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "cashout-details-ticket-partial-subscription": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket-partial"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "code": {
+          "$ref": "#/$defs/cashout-code"
+        },
+        "percentage": {
+          "$ref": "#/$defs/num-float-gt-0-lt-1"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 0,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "code",
+        "percentage",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "cashout-details-bet-subscription": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "bet"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "code": {
+          "$ref": "#/$defs/cashout-code"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 0,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "betId",
+        "code",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "cashout-details-bet-partial-subscription": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "bet-partial"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "ticketSignature": {
+          "$ref": "#/$defs/signature"
+        },
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "code": {
+          "$ref": "#/$defs/cashout-code"
+        },
+        "percentage": {
+          "$ref": "#/$defs/num-float-gt-0-lt-1"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 0,
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "ticketId",
+        "ticketSignature",
+        "betId",
+        "code",
+        "percentage",
+        "payout"
+      ],
+      "type": "object"
+    },
+    "cashout-details-subscription": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/cashout-details-ticket-subscription"
+        },
+        {
+          "$ref": "#/$defs/cashout-details-ticket-partial-subscription"
+        },
+        {
+          "$ref": "#/$defs/cashout-details-bet-subscription"
+        },
+        {
+          "$ref": "#/$defs/cashout-details-bet-partial-subscription"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-cancel"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/cancel"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-cancel-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/cancel-ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-cashout"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/cashout"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-cashout-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/cashout-ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-inform-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/cashout-inform-ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-placement-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/cashout-placement-ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-placement"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/ticket"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-placement-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/ticket-ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-ext-settlement"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/ext-settlement"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-ext-settlement-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/ext-settlement-ack"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-placement-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/ticket-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-build"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/ticket-build"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "casino-sessions-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/casino-sessions-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "balance-change-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/balance-change-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "balance-deposit-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/deposit-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "balance-withdrawal-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/withdrawal-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/cashout-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-build"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/cashout-build"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-placement"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/cashout-placement"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "max-stake"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/max-stake"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "account-limit-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/account-limit-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "account-limit-reached-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/account-limit-reached-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "account-status-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/account-status-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "account-intervention-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/account-intervention-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "payout-modifier-settlement"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/payout-modifier-settlement"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "auto-cashout"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/auto-cashout"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "auto-cashout-cancel"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/auto-cashout-cancel"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "campaign-optin"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/campaign-optin"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "campaign-optout"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/campaign-optout"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "account-details-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/account-details-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "registration-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/registration-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "login-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/login-inform"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "manual-review"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/manual-review"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-build-subscription"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/cashout-build-subscription"
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "operatorId": {
+      "$ref": "#/$defs/operator-id"
+    },
+    "content": {},
+    "correlationId": {
+      "$ref": "#/$defs/correlation-id"
+    },
+    "timestampUtc": {
+      "$ref": "#/$defs/timestamp"
+    },
+    "operation": {
+      "enum": [
+        "ticket-placement",
+        "ticket-cancel",
+        "ticket-cashout",
+        "ticket-ext-settlement",
+        "ticket-placement-ack",
+        "ticket-cancel-ack",
+        "ticket-cashout-ack",
+        "ticket-ext-settlement-ack",
+        "ticket-placement-inform",
+        "ticket-build",
+        "casino-sessions-inform",
+        "balance-change-inform",
+        "balance-deposit-inform",
+        "balance-withdrawal-inform",
+        "cashout-inform",
+        "cashout-build",
+        "cashout-placement",
+        "max-stake",
+        "account-limit-inform",
+        "account-limit-reached-inform",
+        "account-status-inform",
+        "account-intervention-inform",
+        "payout-modifier-settlement",
+        "auto-cashout",
+        "auto-cashout-cancel",
+        "campaign-optin",
+        "campaign-optout",
+        "account-details-inform",
+        "registration-inform",
+        "login-inform",
+        "cashout-inform-ack",
+        "cashout-placement-ack",
+        "manual-review",
+        "cashout-build-subscription"
+      ],
+      "type": "string"
+    },
+    "version": {
+      "const": "3.0"
+    }
+  },
+  "required": [
+    "operatorId",
+    "content",
+    "correlationId",
+    "timestampUtc",
+    "operation",
+    "version"
+  ],
+  "type": "object"
+}

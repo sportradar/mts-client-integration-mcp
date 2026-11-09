@@ -1,0 +1,84 @@
+[project]
+name = "mts-client-integration-mcp"
+version = "0.1.0"
+description = "Local MCP server for MTS Transaction 3.0 client integration."
+readme = "README.md"
+requires-python = ">=3.14"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Sportradar AG" }]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.14",
+    "Typing :: Typed",
+]
+dependencies = [
+    "fastmcp>=4.0.5",
+    "jsonschema>=4.26.0",
+    "pydantic>=2.13.5",
+    "referencing>=0.37.0",
+    "websockets>=17.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/sportradar/mts-client-integration-mcp"
+Repository = "https://github.com/sportradar/mts-client-integration-mcp"
+Issues = "https://github.com/sportradar/mts-client-integration-mcp/issues"
+
+[project.scripts]
+mts-mcp-server = "mts_client_integration.tools.mcp_server:main"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.1",
+    "pre-commit>=4.6.2",
+    "pytest>=9.1.1",
+    "ruff>=0.16.8",
+    "types-jsonschema>=4.26.0.20260518",
+]
+
+[tool.uv]
+package = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mts_client_integration"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/mts_client_integration/data/rejection_codes.json" = "mts_client_integration/data/rejection_codes.json"
+"src/mts_client_integration/data/session_state.md" = "mts_client_integration/data/session_state.md"
+"src/mts_client_integration/models/ticket3/schemas/request.json" = "mts_client_integration/models/ticket3/schemas/request.json"
+"src/mts_client_integration/models/ticket3/schemas/response.json" = "mts_client_integration/models/ticket3/schemas/response.json"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["src/tests"]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+src = ["src", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "S", "ASYNC"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/mts_client_integration/models/ticket3/_generated.py" = ["E501", "S105"]
+"src/tests/**" = ["S101"]
+"scripts/regenerate_ticket3_models.py" = ["S603"]
+
+[tool.mypy]
+python_version = "3.14"
+mypy_path = "src"
+files = ["src", "scripts"]
+strict = true
+
+[[tool.mypy.overrides]]
+module = "mts_client_integration.models.ticket3._generated"
+ignore_errors = true

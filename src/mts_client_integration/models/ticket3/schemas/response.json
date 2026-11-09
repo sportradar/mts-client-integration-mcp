@@ -1,0 +1,2040 @@
+{
+  "$defs": {
+    "cancel-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cancel-reply"
+        },
+        "cancellationId": {
+          "$ref": "#/$defs/cancellation-id-nullable"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cancel-ack-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cancel-ack-reply"
+        },
+        "cancellationId": {
+          "$ref": "#/$defs/cancellation-id"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "cancellationId",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cashout-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-reply"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id-nullable"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cashout-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-inform-reply"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id-nullable"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cashout-build-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-build-reply"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id-nullable"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "ltd": {
+          "$ref": "#/$defs/live-time-delay-suggestions"
+        },
+        "cashout": {
+          "$ref": "#/$defs/cashout-suggestions"
+        },
+        "endCustomerSuggestions": {
+          "$ref": "#/$defs/end-customer-suggestions"
+        },
+        "channelSuggestions": {
+          "$ref": "#/$defs/channel-suggestions"
+        },
+        "betDetails": {
+          "items": {
+            "$ref": "#/$defs/ticket-build-reply-bet-detail"
+          },
+          "type": "array"
+        },
+        "exchangeRate": {
+          "items": {
+            "$ref": "#/$defs/currency-exchange-rate"
+          },
+          "type": "array"
+        },
+        "cashoutChanges": {
+          "$ref": "#/$defs/cashout-changes"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cashout-placement-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-placement-reply"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id-nullable"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "cashoutChanges": {
+          "$ref": "#/$defs/cashout-changes"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cashout-ack-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-ack-reply"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "cashoutId",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cashout-inform-ack-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-inform-ack-reply"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "cashoutId",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cashout-placement-ack-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-placement-ack-reply"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "cashoutId",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "ext-settlement-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ext-settlement-reply"
+        },
+        "settlementId": {
+          "$ref": "#/$defs/settlement-id"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "settlementId",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "ext-settlement-ack-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ext-settlement-ack-reply"
+        },
+        "settlementId": {
+          "$ref": "#/$defs/settlement-id"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "settlementId",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "ticket-reply-bet-detail-suggestion": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ticket-reply-bet-detail-suggestion-reoffer"
+        },
+        {
+          "$ref": "#/$defs/ticket-reply-bet-detail-suggestion-alt-stake"
+        }
+      ]
+    },
+    "ticket-reply-bet-detail-suggestion-reoffer": {
+      "additionalProperties": false,
+      "properties": {
+        "stake": {
+          "items": {
+            "$ref": "#/$defs/stake"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "mode": {
+          "enum": [
+            "manual",
+            "automatic"
+          ],
+          "type": "string"
+        },
+        "type": {
+          "const": "reoffer"
+        }
+      },
+      "required": [
+        "stake",
+        "type"
+      ],
+      "type": "object"
+    },
+    "ticket-reply-bet-detail-suggestion-alt-stake": {
+      "additionalProperties": false,
+      "properties": {
+        "stake": {
+          "items": {
+            "$ref": "#/$defs/stake"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "type": {
+          "const": "alt-stake"
+        }
+      },
+      "required": [
+        "stake",
+        "type"
+      ],
+      "type": "object"
+    },
+    "ticket-reply-bet-detail": {
+      "additionalProperties": false,
+      "properties": {
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "selectionDetails": {
+          "items": {
+            "$ref": "#/$defs/ticket-reply-selection-detail"
+          },
+          "type": "array"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "suggestion": {
+          "$ref": "#/$defs/ticket-reply-bet-detail-suggestion"
+        }
+      },
+      "required": [
+        "code",
+        "selectionDetails"
+      ],
+      "type": "object"
+    },
+    "ticket-reply-selection-detail": {
+      "additionalProperties": false,
+      "properties": {
+        "selection": {
+          "$ref": "#/$defs/sel"
+        },
+        "autoAcceptedOdds": {
+          "$ref": "#/$defs/odds-fixed"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "code",
+        "selection"
+      ],
+      "type": "object"
+    },
+    "ticket-build-reply-bet-detail": {
+      "additionalProperties": false,
+      "properties": {
+        "betId": {
+          "$ref": "#/$defs/bet-id"
+        },
+        "selectionDetails": {
+          "items": {
+            "$ref": "#/$defs/ticket-build-reply-selection-detail"
+          },
+          "type": "array"
+        },
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout-with-source"
+          },
+          "description": "Sum of previous payouts on the bet. Only applicable for cashout build!",
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "settledPercentage": {
+          "$ref": "#/$defs/num-float-gte-0-lt-1",
+          "description": "Percentage of currently settled stake. Only applicable for cashout build!"
+        }
+      },
+      "required": [
+        "selectionDetails"
+      ],
+      "type": "object"
+    },
+    "ticket-build-reply-selection-detail": {
+      "additionalProperties": false,
+      "properties": {
+        "selection": {
+          "$ref": "#/$defs/sel"
+        },
+        "appliedEventRating": {
+          "$ref": "#/$defs/num-int-gte-0",
+          "description": "Applied event rating for the selection"
+        },
+        "suggestedEventRating": {
+          "$ref": "#/$defs/num-int-gte-0",
+          "description": "Suggested event rating for the selection"
+        },
+        "configuredLtd": {
+          "$ref": "#/$defs/live-time-delay",
+          "description": "Configured LTD calculated from event coverage or explicit LTD setting"
+        },
+        "suggestedLtd": {
+          "$ref": "#/$defs/live-time-delay",
+          "description": "Suggested LTD calculated from event data latency model"
+        },
+        "appliedMarketFactor": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1-nullable",
+          "description": "Applied market factor for the selection"
+        },
+        "currentProbability": {
+          "$ref": "#/$defs/sel-probability",
+          "description": "Current probabilities for the selection"
+        },
+        "currentResult": {
+          "$ref": "#/$defs/sel-result",
+          "description": "Current result for the selection"
+        }
+      },
+      "required": [
+        "selection"
+      ],
+      "type": "object"
+    },
+    "ticket-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket-reply"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "pendingManualBetReview": {
+          "$ref": "#/$defs/pending-manual-bet-review"
+        },
+        "betDetails": {
+          "items": {
+            "$ref": "#/$defs/ticket-reply-bet-detail"
+          },
+          "type": "array"
+        },
+        "exchangeRate": {
+          "items": {
+            "$ref": "#/$defs/currency-exchange-rate"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "ticket-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket-inform-reply"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "betDetails": {
+          "items": {
+            "$ref": "#/$defs/ticket-reply-bet-detail"
+          },
+          "type": "array"
+        },
+        "exchangeRate": {
+          "items": {
+            "$ref": "#/$defs/currency-exchange-rate"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "ticket-build-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket-build-reply"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "ltd": {
+          "$ref": "#/$defs/live-time-delay-suggestions"
+        },
+        "endCustomerSuggestions": {
+          "$ref": "#/$defs/end-customer-suggestions"
+        },
+        "channelSuggestions": {
+          "$ref": "#/$defs/channel-suggestions"
+        },
+        "betDetails": {
+          "items": {
+            "$ref": "#/$defs/ticket-build-reply-bet-detail"
+          },
+          "type": "array"
+        },
+        "previousPayout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "exchangeRate": {
+          "items": {
+            "$ref": "#/$defs/currency-exchange-rate"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "ticket-ack-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "ticket-ack-reply"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "casino-sessions-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "casino-sessions-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "message",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "balance-change-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "balance-change-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "message",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "deposit-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "deposit-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "message",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "withdrawal-inform-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "withdrawal-inform-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "message",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "end-customer-suggestions": {
+      "additionalProperties": false,
+      "description": "Multiple suggestions for the end user (customer)",
+      "properties": {
+        "endCustomer": {
+          "$ref": "#/$defs/endCustomer"
+        },
+        "appliedConfidence": {
+          "$ref": "#/$defs/num-float-gte-0-nullable",
+          "description": "Applied CCF of the customer"
+        },
+        "suggestedConfidence": {
+          "$ref": "#/$defs/num-float-gte-0-nullable",
+          "description": "Suggested CCF of the customer"
+        },
+        "suggestedLateBetScore": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1-nullable",
+          "description": "Suggested LBS of the customer"
+        },
+        "suggestedMarkerScore": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1-nullable",
+          "description": "Suggested Marker score of the customer"
+        },
+        "suggestedBotScore": {
+          "$ref": "#/$defs/num-float-gte-0-lte-1-nullable",
+          "description": "Suggested Bot score of the customer"
+        }
+      },
+      "required": [
+        "endCustomer"
+      ],
+      "type": "object"
+    },
+    "channel-suggestions": {
+      "additionalProperties": false,
+      "description": "Multiple suggestions for the channel",
+      "properties": {
+        "channel": {
+          "$ref": "#/$defs/ticket-channel"
+        },
+        "appliedConfidence": {
+          "$ref": "#/$defs/num-float-gte-0-nullable",
+          "description": "Applied CCF of the channel"
+        },
+        "suggestedConfidence": {
+          "$ref": "#/$defs/num-float-gte-0-nullable",
+          "description": "Suggested CCF of the customer"
+        },
+        "suggestedLateBetScore": {
+          "$ref": "#/$defs/num-float-gte-0-nullable",
+          "description": "Suggested LBS of the customer"
+        }
+      },
+      "required": [
+        "channel"
+      ],
+      "type": "object"
+    },
+    "model-suggested-ltd": {
+      "additionalProperties": false,
+      "enum": [
+        "Delay",
+        "Skip",
+        "None"
+      ],
+      "default": "Delay",
+      "type": "string"
+    },
+    "cashout-type": {
+      "additionalProperties": false,
+      "enum": [
+        "ticket",
+        "bet"
+      ],
+      "default": "ticket",
+      "type": "string"
+    },
+    "live-time-delay-suggestions": {
+      "additionalProperties": false,
+      "description": "Live time delay suggestions",
+      "properties": {
+        "modelSuggestedLtd": {
+          "$ref": "#/$defs/model-suggested-ltd",
+          "description": "Model Suggested LTD action"
+        },
+        "configuredLtd": {
+          "$ref": "#/$defs/live-time-delay",
+          "description": "Configured LTD calculated from event coverage or explicit LTD setting"
+        },
+        "suggestedLtd": {
+          "$ref": "#/$defs/live-time-delay",
+          "description": "Suggested LTD calculated from event data latency model"
+        },
+        "accountLbsLtdOffset": {
+          "$ref": "#/$defs/live-time-delay",
+          "description": "LTD offset derived from account LBS"
+        },
+        "liveSelectionLtdOffset": {
+          "$ref": "#/$defs/live-time-delay-negative",
+          "description": "LTD offset derived from the number of live selections"
+        },
+        "appliedLtd": {
+          "$ref": "#/$defs/live-time-delay",
+          "description": "Total calculated (from model, coverage and all offsets) and applied suggested LTD"
+        }
+      },
+      "type": "object"
+    },
+    "cashout-changes": {
+      "additionalProperties": false,
+      "description": "Cashout changes, compared to requested cashout",
+      "properties": {
+        "payout": {
+          "items": {
+            "$ref": "#/$defs/payout"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "cashout-suggestions": {
+      "additionalProperties": false,
+      "description": "Cashout suggestions",
+      "properties": {
+        "cashoutType": {
+          "$ref": "#/$defs/cashout-type",
+          "description": "Cashout type"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id-nullable",
+          "description": "Cashout ID"
+        },
+        "maxPayout": {
+          "items": {
+            "$ref": "#/$defs/payout-with-source"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "fairCashout": {
+          "items": {
+            "$ref": "#/$defs/payout-with-source"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        },
+        "cashout": {
+          "items": {
+            "$ref": "#/$defs/payout-with-source"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "error-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "error-reply"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "max-stake-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "max-stake-reply"
+        },
+        "bets": {
+          "items": {
+            "$ref": "#/$defs/ticket-bet"
+          },
+          "maxItems": 50,
+          "minItems": 1,
+          "type": "array"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "signature"
+      ],
+      "type": "object"
+    },
+    "auto-cashout-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "auto-cashout-reply"
+        },
+        "autoCashoutId": {
+          "$ref": "#/$defs/cashout-id-nullable"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "auto-cashout-cancel-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "auto-cashout-cancel-reply"
+        },
+        "cancellationId": {
+          "$ref": "#/$defs/cancellation-id-nullable"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "status",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    },
+    "cashout-build-subscription-reply": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "cashout-build-subscription-reply"
+        },
+        "cashoutId": {
+          "$ref": "#/$defs/cashout-id-nullable"
+        },
+        "signature": {
+          "$ref": "#/$defs/signature"
+        },
+        "status": {
+          "$ref": "#/$defs/acc-rej-status"
+        },
+        "ticketId": {
+          "$ref": "#/$defs/ticket-id"
+        },
+        "code": {
+          "$ref": "#/$defs/response-code"
+        },
+        "message": {
+          "$ref": "#/$defs/response-message"
+        },
+        "ltd": {
+          "$ref": "#/$defs/live-time-delay-suggestions"
+        },
+        "cashout": {
+          "$ref": "#/$defs/cashout-suggestions"
+        },
+        "endCustomerSuggestions": {
+          "$ref": "#/$defs/end-customer-suggestions"
+        },
+        "channelSuggestions": {
+          "$ref": "#/$defs/channel-suggestions"
+        },
+        "betDetails": {
+          "items": {
+            "$ref": "#/$defs/ticket-build-reply-bet-detail"
+          },
+          "type": "array"
+        },
+        "exchangeRate": {
+          "items": {
+            "$ref": "#/$defs/currency-exchange-rate"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "signature",
+        "ticketId",
+        "code"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-cancel"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/cancel-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-cancel-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/cancel-ack-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-cashout"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/cashout-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-cashout-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/cashout-ack-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-inform-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/cashout-inform-ack-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-placement-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/cashout-placement-ack-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/cashout-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-build"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/cashout-build-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-placement"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/cashout-placement-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-placement"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/ticket-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-placement-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/ticket-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-build"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/ticket-build-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-placement-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/ticket-ack-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-ext-settlement"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/ext-settlement-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "ticket-ext-settlement-ack"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/ext-settlement-ack-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "casino-sessions-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/casino-sessions-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "balance-change-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/balance-change-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "balance-deposit-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/deposit-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "balance-withdrawal-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/withdrawal-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "max-stake"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/max-stake-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "account-limit-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/account-limit-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "account-limit-reached-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/account-limit-reached-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "account-status-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/account-status-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "account-intervention-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/account-intervention-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "payout-modifier-settlement"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "$ref": "#/$defs/payout-modifier-settlement-reply"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "auto-cashout"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/auto-cashout-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "auto-cashout-cancel"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/auto-cashout-cancel-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "campaign-optin"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/campaign-optin-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "campaign-optout"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/campaign-optout-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "account-details-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/account-details-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "registration-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/registration-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "login-inform"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/login-inform-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "manual-review"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/manual-review-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "cashout-build-subscription"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/cashout-build-subscription-reply"
+              },
+              {
+                "$ref": "#/$defs/error-reply"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "content": {},
+    "correlationId": {
+      "$ref": "#/$defs/correlation-id"
+    },
+    "timestampUtc": {
+      "$ref": "#/$defs/timestamp"
+    },
+    "operation": {
+      "enum": [
+        "ticket-placement",
+        "ticket-cancel",
+        "ticket-cashout",
+        "ticket-ext-settlement",
+        "ticket-placement-ack",
+        "ticket-cancel-ack",
+        "ticket-cashout-ack",
+        "ticket-ext-settlement-ack",
+        "ticket-placement-inform",
+        "ticket-build",
+        "casino-sessions-inform",
+        "balance-change-inform",
+        "balance-deposit-inform",
+        "balance-withdrawal-inform",
+        "cashout-inform",
+        "cashout-build",
+        "cashout-placement",
+        "max-stake",
+        "account-limit-inform",
+        "account-limit-reached-inform",
+        "account-status-inform",
+        "account-intervention-inform",
+        "payout-modifier-settlement",
+        "auto-cashout",
+        "auto-cashout-cancel",
+        "campaign-optin",
+        "campaign-optout",
+        "account-details-inform",
+        "registration-inform",
+        "login-inform",
+        "cashout-inform-ack",
+        "cashout-placement-ack",
+        "manual-review",
+        "cashout-build-subscription"
+      ]
+    },
+    "version": {
+      "const": "3.0"
+    }
+  },
+  "required": [
+    "content",
+    "correlationId",
+    "timestampUtc",
+    "operation",
+    "version"
+  ],
+  "type": "object"
+}
