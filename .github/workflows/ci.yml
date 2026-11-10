@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_PYTHON: "3.14"
+
+jobs:
+  lint:
+    name: Lint and type-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: ${{ env.UV_PYTHON }}
+          enable-cache: true
+      - name: Lockfile uses public PyPI only
+        run: |
+          if grep -q cdproxy.sportradar.online uv.lock; then
+            echo "::error::uv.lock must not reference cdproxy; regenerate with PyPI (see CONTRIBUTING.md)"
+            exit 1
+          fi
+      - run: uv sync --locked
+      - run: uv run ruff check --output-format=github src scripts
+      - run: uv run ruff format --check src scripts
+      - run: uv run mypy
+
+  test:
+    name: Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: ${{ env.UV_PYTHON }}
+          enable-cache: true
+      - run: uv sync --locked
+      - name: pytest with coverage gate
+        run: uv run pytest --cov --cov-report=term
+      - name: Coverage summary
+        if: always() && runner.os == 'Linux'
+        run: uv run coverage report --format=markdown >> "$GITHUB_STEP_SUMMARY"
+
+  mutation:
+    name: Mutation testing
+    # Linux only: on macOS, forking after the simulator tests start threads crashes mutants.
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: ${{ env.UV_PYTHON }}
+          enable-cache: true
+      - run: uv sync --locked
+      - name: Run mutmut
+        run: uv run mutmut run
+      - name: Mutation score gate
+        run: |
+          uv run mutmut export-cicd-stats
+          uv run python scripts/check_mutation_score.py
+      - name: Surviving mutants per module
+        if: always()
+        run: |
+          {
+            echo '```'
+            uv run mutmut results | grep survived | sed -E 's/\.x_.*//; s/^[[:space:]]+//' \
+              | sort | uniq -c | sort -rn
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
