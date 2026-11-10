@@ -16,11 +16,11 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "fastmcp>=4.0.5",
+    "fastmcp>=4.1.6",
     "jsonschema>=4.26.0",
-    "pydantic>=2.13.5",
+    "pydantic>=2.14.2",
     "referencing>=0.37.0",
-    "websockets>=17.1",
+    "websockets>=17.4",
 ]
 
 [project.urls]
@@ -33,15 +33,24 @@ mts-mcp-server = "mts_client_integration.tools.mcp_server:main"
 
 [dependency-groups]
 dev = [
-    "mypy>=2.3.1",
-    "pre-commit>=4.6.2",
-    "pytest>=9.1.1",
-    "ruff>=0.16.8",
-    "types-jsonschema>=4.26.0.20260518",
+    "anyio>=4.16.0",
+    "mutmut>=3.8.1",
+    "mypy>=2.4.1",
+    "pre-commit>=4.7.0",
+    "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.3",
+    "types-jsonschema>=4.26.0.20261006",
 ]
 
 [tool.uv]
 package = true
+
+# Public PyPI for committed uv.lock (CI and external contributors).
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/mts_client_integration"]
@@ -59,6 +68,32 @@ build-backend = "hatchling.build"
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["src/tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+xfail_strict = true
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+branch = true
+source = ["mts_client_integration"]
+omit = ["src/mts_client_integration/__main__.py"]
+
+[tool.coverage.report]
+fail_under = 86
+show_missing = true
+skip_covered = true
+exclude_also = ['if __name__ == "__main__":']
+
+[tool.mutmut]
+source_paths = ["src/"]
+only_mutate = [
+    "src/mts_client_integration/services/business_rules/*",
+    "src/mts_client_integration/services/ack_state_machine.py",
+]
+pytest_add_cli_args_test_selection = ["src/tests/"]
+mutate_only_covered_lines = true
+
+[tool.mutation-gate]
+fail_under = 60
 
 [tool.ruff]
 target-version = "py314"
