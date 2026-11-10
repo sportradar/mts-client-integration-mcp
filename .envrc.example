@@ -1,0 +1,7 @@
+# Optional local direnv overrides (not committed).
+# Usage: cp .envrc.example .envrc && direnv allow
+#
+# Default PyPI index. Override if your network requires a corporate mirror, e.g.:
+#   export UV_DEFAULT_INDEX=https://cdproxy.sportradar.online/pypi/simple
+
+export UV_DEFAULT_INDEX=

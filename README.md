@@ -26,6 +26,9 @@ cd mts-client-integration-mcp
 uv sync
 ```
 
+If you need a non-default package index, use `.envrc.example` → `.envrc` and
+`direnv allow` — see [Contributing](CONTRIBUTING.md#development-setup).
+
 ## MCP client setup
 
 ### Cursor
@@ -643,10 +646,13 @@ uv run pre-commit install   # optional
 uv run ruff check src scripts
 uv run ruff format --check src scripts
 uv run mypy
-uv run pytest
+uv run pytest --cov            # fails below the coverage threshold in pyproject.toml
+uv run mutmut run              # mutation testing (business rules + ACK state machine; Linux)
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request expectations.
+CI runs these checks, including the mutation score gate, on every pull request
+(`.github/workflows/ci.yml`). See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request
+expectations.
 
 ## License
 

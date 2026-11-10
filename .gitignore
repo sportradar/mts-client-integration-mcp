@@ -4,6 +4,11 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+mutants/
 dist/
 *.egg-info/
 
@@ -12,6 +17,9 @@ dist/
 # IDE-local project metadata.
 .idea/
 .cursor/mcp.json
+
+# Local direnv overrides (optional index URL, etc.).
+.envrc
 
 # macOS
 .DS_Store
