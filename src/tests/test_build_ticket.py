@@ -28,7 +28,6 @@ from mts_client_integration.services.template_builder import (
 )
 from mts_client_integration.services.ticket_presets import PRESETS
 from mts_client_integration.services.validation import validate_request_payload
-from mts_client_integration.tools import build_ticket as tool_build_ticket
 
 
 def _selection(event_id: str, odds: str = "1.32") -> dict[str, Any]:
@@ -42,7 +41,7 @@ def _selection(event_id: str, odds: str = "1.32") -> dict[str, Any]:
 
 
 def _e2e_channel() -> dict[str, Any]:
-    return {"type": "internet", "ip": "212.7.5.2", "lang": "en"}
+    return {"type": "internet", "ip": "127.0.0.1", "lang": "en"}
 
 
 def _placement_base(**overrides: Any) -> dict[str, Any]:
@@ -381,12 +380,10 @@ def test_wrong_builder_tool_raises() -> None:
         )
 
 
-def test_tool_build_placement_matches_service() -> None:
+def test_build_placement_produces_expected_shape() -> None:
     raw = _example_params_for("single_prematch")
     raw["selections"] = [_selection("sr:match:99")]
-    result = tool_build_ticket.build_placement(
-        "single_prematch", PlacementBuildParams.model_validate(raw)
-    )
+    result = build_placement("single_prematch", PlacementBuildParams.model_validate(raw))
     assert result.shape == "single_prematch"
     assert result.payload["operation"] == "ticket-placement"
 

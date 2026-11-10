@@ -5,20 +5,19 @@ from __future__ import annotations
 from copy import deepcopy
 
 from mts_client_integration.services.validation import validate_request_payload
-from mts_client_integration.tools.validate_ticket import validate_ticket_request
 
 VALID_SINGLE_TICKET: dict[str, object] = {
     "operatorId": "9985",
     "content": {
         "type": "ticket",
-        "ticketId": "Ticket_3691",
+        "ticketId": "Ticket_0001",
         "bets": [
             {
                 "selections": [
                     {
                         "type": "uf",
                         "productId": "3",
-                        "eventId": "sr:match:15050881",
+                        "eventId": "sr:match:10000001",
                         "marketId": "1",
                         "outcomeId": "2",
                         "odds": {"type": "decimal", "value": "1.32"},
@@ -28,12 +27,12 @@ VALID_SINGLE_TICKET: dict[str, object] = {
             }
         ],
         "context": {
-            "channel": {"type": "internet", "ip": "212.7.5.2", "lang": "EN"},
-            "endCustomer": {"id": "user_3454"},
+            "channel": {"type": "internet", "ip": "127.0.0.1", "lang": "EN"},
+            "endCustomer": {"id": "user_0001"},
             "limitId": 1409,
         },
     },
-    "correlationId": "H293vAko5E",
+    "correlationId": "CRL0000001",
     "timestampUtc": 1678876155000,
     "operation": "ticket-placement",
     "version": "3.0",
@@ -70,7 +69,7 @@ def test_operation_content_mismatch_fails_envelope() -> None:
             "cancellationId": "cancel-1",
             "details": {
                 "type": "ticket",
-                "ticketId": "Ticket_3691",
+                "ticketId": "Ticket_0001",
                 "code": 103,
             },
         },
@@ -101,7 +100,7 @@ def test_invalid_json_string() -> None:
 
 
 def test_validate_ticket_request_tool_returns_response_dict() -> None:
-    result = validate_ticket_request(VALID_SINGLE_TICKET)
+    result = validate_request_payload(VALID_SINGLE_TICKET)
     response = result.to_response_dict()
 
     assert response["schema_ok"] is True
