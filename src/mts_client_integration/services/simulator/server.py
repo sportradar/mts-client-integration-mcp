@@ -9,7 +9,7 @@ import threading
 import time
 import uuid
 from dataclasses import dataclass, field
-from typing import Any, Literal
+from typing import Any
 
 from websockets.asyncio.server import Server, ServerConnection, serve
 from websockets.exceptions import ConnectionClosed
@@ -19,6 +19,8 @@ from mts_client_integration.services.simulator.catalog import (
     DEFAULT_WS_PORT,
     INJECT_EVENTS,
     RATE_LIMIT_RPS,
+    AuthMode,
+    RateLimitProfile,
     expand_scenarios,
     valid_scenario_ids,
 )
@@ -31,9 +33,6 @@ from mts_client_integration.services.simulator.session import (
 )
 
 logger = logging.getLogger(__name__)
-
-AuthMode = Literal["lenient", "strict"]
-RateLimitProfile = Literal["integration", "production"]
 
 _MANAGER_CALL_TIMEOUT_SECONDS = 10
 _THREAD_JOIN_TIMEOUT_SECONDS = 5

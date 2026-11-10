@@ -3,11 +3,29 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any, Literal, TypedDict
 
 ScenarioMode = Literal["passive", "reactive"]
+RateLimitProfile = Literal["integration", "production"]
+AuthMode = Literal["lenient", "strict"]
+InjectEvent = Literal[
+    "connection_blocked",
+    "connection_unblocked",
+    "force_disconnect",
+    "fast_forward_timer",
+]
 
-LEAF_SCENARIOS: dict[str, dict[str, Any]] = {
+
+class ScenarioLeaf(TypedDict):
+    mode: ScenarioMode
+    description: str
+
+
+class ScenarioLeafListing(ScenarioLeaf):
+    id: str
+
+
+LEAF_SCENARIOS: dict[str, ScenarioLeaf] = {
     "frame_split": {
         "mode": "passive",
         "description": (
@@ -122,7 +140,7 @@ def expand_scenarios(requested: list[str] | None) -> ExpandedScenarios:
     return ExpandedScenarios(requested=names, active=frozenset(active), invalid=tuple(invalid))
 
 
-def list_scenario_leaves() -> list[dict[str, Any]]:
+def list_scenario_leaves() -> list[ScenarioLeafListing]:
     return [{"id": sid, **meta} for sid, meta in LEAF_SCENARIOS.items()]
 
 

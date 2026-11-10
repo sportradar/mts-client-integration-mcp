@@ -7,14 +7,18 @@ import json
 import socket
 import time
 from collections.abc import Generator
-from typing import Any, cast
+from typing import Any, cast, get_args
 
 import pytest
 import websockets
 
 from mts_client_integration.models.templates import CashoutBuildParams, PlacementBuildParams
 from mts_client_integration.services.preset_catalog import get_preset
-from mts_client_integration.services.simulator.catalog import expand_scenarios
+from mts_client_integration.services.simulator.catalog import (
+    INJECT_EVENTS,
+    InjectEvent,
+    expand_scenarios,
+)
 from mts_client_integration.services.simulator.server import MockServerError, MockServerManager
 from mts_client_integration.services.template_builder import build_cashout, build_placement
 from mts_client_integration.services.validation import validate_request_payload
@@ -94,6 +98,10 @@ def busy_port() -> Generator[int]:
 def _json_reply(raw: str | bytes) -> dict[str, Any]:
     text = raw.decode() if isinstance(raw, bytes) else raw
     return cast(dict[str, Any], json.loads(text))
+
+
+def test_inject_event_literal_matches_catalog() -> None:
+    assert tuple(sorted(get_args(InjectEvent))) == tuple(sorted(INJECT_EVENTS))
 
 
 def test_expand_scenarios_bundle() -> None:
