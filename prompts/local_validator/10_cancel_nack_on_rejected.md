@@ -20,7 +20,7 @@ I sent this ticket-cancel to MTS (code 103):
   "content": {
     "type": "cancel",
     "cancellationId": "can-2",
-    "details": {"type": "ticket", "ticketId": "2337926713", "ticketSignature": "sigT", "code": 103}
+    "details": {"type": "ticket", "ticketId": "1000000001", "ticketSignature": "sigT", "code": 103}
   },
   "correlationId": "cancel-x2",
   "timestampUtc": 1745311871018,
@@ -33,7 +33,7 @@ MTS rejected it and replied with:
 
 ```json
 {
-  "content": {"type": "cancel-reply", "cancellationId": "can-2", "ticketId": "2337926713", "status": "rejected", "code": -2001, "signature": "respSig2"},
+  "content": {"type": "cancel-reply", "cancellationId": "can-2", "ticketId": "1000000001", "status": "rejected", "code": -2001, "signature": "respSig2"},
   "correlationId": "cancel-x2",
   "timestampUtc": 1745311871018,
   "operation": "ticket-cancel",

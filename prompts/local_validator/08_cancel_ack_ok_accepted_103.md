@@ -21,7 +21,7 @@ I sent this ticket-cancel to MTS (code 103):
   "content": {
     "type": "cancel",
     "cancellationId": "can-1",
-    "details": {"type": "ticket", "ticketId": "2337926713", "ticketSignature": "sigT", "code": 103}
+    "details": {"type": "ticket", "ticketId": "1000000001", "ticketSignature": "sigT", "code": 103}
   },
   "correlationId": "cancel-x1",
   "timestampUtc": 1745311871018,
@@ -34,7 +34,7 @@ MTS accepted it and replied with:
 
 ```json
 {
-  "content": {"type": "cancel-reply", "cancellationId": "can-1", "ticketId": "2337926713", "status": "accepted", "code": 0, "signature": "respSig1"},
+  "content": {"type": "cancel-reply", "cancellationId": "can-1", "ticketId": "1000000001", "status": "accepted", "code": 0, "signature": "respSig1"},
   "correlationId": "cancel-x1",
   "timestampUtc": 1745311871018,
   "operation": "ticket-cancel",
@@ -50,7 +50,7 @@ Now I'm sending this ticket-cancel-ack. Is it correct?
   "content": {
     "type": "cancel-ack",
     "cancellationId": "can-1",
-    "ticketId": "2337926713",
+    "ticketId": "1000000001",
     "cancellationSignature": "respSig1",
     "acknowledged": true
   },

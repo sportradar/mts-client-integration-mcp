@@ -313,12 +313,12 @@ Valid ticket (minimal single):
     "operatorId": "9985",
     "content": {
       "type": "ticket",
-      "ticketId": "Ticket_3691",
+      "ticketId": "Ticket_0001",
       "bets": [{
         "selections": [{
           "type": "uf",
           "productId": "3",
-          "eventId": "sr:match:15050881",
+          "eventId": "sr:match:10000001",
           "marketId": "1",
           "outcomeId": "2",
           "odds": {"type": "decimal", "value": "1.32"}
@@ -326,12 +326,12 @@ Valid ticket (minimal single):
         "stake": [{"type": "cash", "currency": "EUR", "amount": "10"}]
       }],
       "context": {
-        "channel": {"type": "internet", "ip": "212.7.5.2", "lang": "EN"},
-        "endCustomer": {"id": "user_3454"},
+        "channel": {"type": "internet", "ip": "127.0.0.1", "lang": "EN"},
+        "endCustomer": {"id": "user_0001"},
         "limitId": 1409
       }
     },
-    "correlationId": "H293vAko5E",
+    "correlationId": "CRL0000001",
     "timestampUtc": 1678876155000,
     "operation": "ticket-placement",
     "version": "3.0"
@@ -480,7 +480,7 @@ Each tool takes a **shape** (preset id) and a **typed params object** validated 
   "params": {
     "operator_id": "<your-operator-id>",
     "limit_id": 123,
-    "channel": {"type": "internet", "ip": "203.0.113.1", "lang": "en"},
+    "channel": {"type": "internet", "ip": "127.0.0.1", "lang": "en"},
     "selections": [
       {"event_id": "sr:match:1", "market_id": "1", "outcome_id": "1", "odds": "1.5", "product_id": "3"},
       {"event_id": "sr:match:2", "market_id": "1", "outcome_id": "1", "odds": "1.8", "product_id": "3"},

@@ -8,7 +8,7 @@ from mts_client_integration.models.business_rules import PREDEFINED_SYSTEM_SIZES
 from mts_client_integration.models.templates import ShapePreset
 
 _EXAMPLE_SELECTION: dict[str, Any] = {
-    "event_id": "sr:match:15050881",
+    "event_id": "sr:match:10000001",
     "market_id": "1",
     "outcome_id": "2",
     "odds": "1.32",
@@ -18,21 +18,21 @@ _EXAMPLE_SELECTION: dict[str, Any] = {
 _EXAMPLE_LIVE: dict[str, Any] = {**_EXAMPLE_SELECTION, "product_id": "1"}
 
 _EXAMPLE_SELECTIONS: list[dict[str, Any]] = [
-    {**_EXAMPLE_SELECTION, "event_id": "sr:match:15050881"},
-    {**_EXAMPLE_SELECTION, "event_id": "sr:match:15050882", "odds": "1.45"},
-    {**_EXAMPLE_SELECTION, "event_id": "sr:match:15050883", "odds": "1.60"},
+    {**_EXAMPLE_SELECTION, "event_id": "sr:match:10000001"},
+    {**_EXAMPLE_SELECTION, "event_id": "sr:match:10000002", "odds": "1.45"},
+    {**_EXAMPLE_SELECTION, "event_id": "sr:match:10000003", "odds": "1.60"},
 ]
 
 _WAYS_PAIR: list[dict[str, Any]] = [
     {
-        "event_id": "sr:match:15050890",
+        "event_id": "sr:match:10000010",
         "market_id": "3",
         "outcome_id": "5",
         "odds": "1.21",
         "product_id": "3",
     },
     {
-        "event_id": "sr:match:15050890",
+        "event_id": "sr:match:10000010",
         "market_id": "1",
         "outcome_id": "2",
         "odds": "2.08",
@@ -59,7 +59,7 @@ _OUTRIGHT_SELECTION: dict[str, Any] = {
 
 _LIVE_PREMATCH_MIXED: list[dict[str, Any]] = [
     {
-        "event_id": "sr:match:14938771",
+        "event_id": "sr:match:10000101",
         "market_id": "223",
         "outcome_id": "1715",
         "odds": "1.1",
@@ -67,7 +67,7 @@ _LIVE_PREMATCH_MIXED: list[dict[str, Any]] = [
         "specifiers": "hcp=1.5",
     },
     {
-        "event_id": "sr:match:15163591",
+        "event_id": "sr:match:10000102",
         "market_id": "1",
         "outcome_id": "2",
         "odds": "1.48",
@@ -97,7 +97,7 @@ _E2E_INTEGRATION: dict[str, Any] = {
     "channel": {
         "type": "internet",
         "lang": "en",
-        "ip": "212.7.5.2",
+        "ip": "127.0.0.1",
     },
     "stake": "10",
     "currency": "EUR",
@@ -481,7 +481,7 @@ PRESETS: dict[str, ShapePreset] = {
         defaults={"partial": True},
         example_params={
             "operator_id": "9985",
-            "ticket_id": "2337926713",
+            "ticket_id": "1000000001",
             "ticket_signature": "sigAbc",
             "code": 0,
             "percentage": "0.8",
@@ -498,7 +498,7 @@ PRESETS: dict[str, ShapePreset] = {
         defaults={"partial": False},
         example_params={
             "operator_id": "9985",
-            "ticket_id": "2337926713",
+            "ticket_id": "1000000001",
             "ticket_signature": "sigAbc",
             "partial": False,
             "code": 0,

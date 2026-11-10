@@ -29,17 +29,17 @@ I placed this ticket to MTS:
   "operatorId": "9985",
   "content": {
     "type": "ticket",
-    "ticketId": "2337926713",
+    "ticketId": "1000000001",
     "bets": [
       {
         "selections": [
-          {"type": "uf", "productId": "3", "eventId": "sr:match:15050881", "marketId": "1", "outcomeId": "2", "odds": {"type": "decimal", "value": "1.32"}}
+          {"type": "uf", "productId": "3", "eventId": "sr:match:10000001", "marketId": "1", "outcomeId": "2", "odds": {"type": "decimal", "value": "1.32"}}
         ],
         "stake": [{"type": "cash", "currency": "EUR", "amount": "10"}]
       }
     ],
     "context": {
-      "channel": {"type": "internet", "ip": "212.7.5.2", "lang": "en"},
+      "channel": {"type": "internet", "ip": "127.0.0.1", "lang": "en"},
       "endCustomer": {"id": "user3454"},
       "limitId": 1409
     }
@@ -61,7 +61,7 @@ MTS accepted the ticket. Then I cashed out 50% with:
     "cashoutId": "co-1",
     "details": {
       "type": "ticket-partial",
-      "ticketId": "2337926713",
+      "ticketId": "1000000001",
       "ticketSignature": "sigAbc",
       "code": 0,
       "percentage": "0.5",
@@ -86,7 +86,7 @@ The customer now wants to cash out another 30%, so I'm about to send
     "cashoutId": "co-2",
     "details": {
       "type": "ticket-partial",
-      "ticketId": "2337926713",
+      "ticketId": "1000000001",
       "ticketSignature": "sigAbc",
       "code": 0,
       "percentage": "0.3",

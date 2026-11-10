@@ -21,14 +21,14 @@ why MTS would reject it?
   "operatorId": "9985",
   "content": {
     "type": "ticket",
-    "ticketId": "2337926713",
+    "ticketId": "1000000001",
     "bets": [
       {
         "selections": [
           {
             "type": "uf",
             "productId": "3",
-            "eventId": "sr:match:15050881",
+            "eventId": "sr:match:10000001",
             "marketId": "1",
             "outcomeId": "2",
             "odds": {"type": "decimal", "value": "1.32"}
@@ -38,11 +38,11 @@ why MTS would reject it?
       }
     ],
     "context": {
-      "channel": {"type": "internet", "ip": "212.7.5.2", "lang": "en"},
+      "channel": {"type": "internet", "ip": "127.0.0.1", "lang": "en"},
       "endCustomer": {"id": "user3454"}
     }
   },
-  "correlationId": "H293vAko5E",
+  "correlationId": "CRL0000001",
   "timestampUtc": 1745311871018,
   "operation": "ticket-placement",
   "version": "3.0"

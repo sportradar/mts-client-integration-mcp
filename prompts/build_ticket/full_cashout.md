@@ -1,7 +1,7 @@
 My accumulator was accepted by MTS and I want to cash out the full ticket now.
 
 Ticket details:
-- ticket_id: `2337926713`
+- ticket_id: `1000000001`
 - ticket_signature: `sigAbc`
 
 Expected payout 18 EUR, currency EUR. Non-partial (full cash-out).
