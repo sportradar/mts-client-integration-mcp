@@ -5,7 +5,7 @@ envelopes (see the external DTOs): inbound response ``status``/``code``/
 ``signature`` are paired by ``correlationId`` with the originating outbound
 request (to recover the cancellation code) and with any subsequent outbound ACK
 (matched by ``cancellationId``/``cashoutId``/``ticketId``). The cancellation ACK
-cancellation ACK matrix is:
+matrix is:
 
 * codes 101/103/104/105 accepted  -> ACK required (``acknowledged: true``)
 * codes 301/302 accepted          -> no ACK may be sent
@@ -456,9 +456,10 @@ def _find_ack(
         for ack in family_acks:
             if ack.primary_id == primary_id:
                 return ack
+        return None
     if ticket_id:
         for ack in family_acks:
-            if ack.ticket_id == ticket_id:
+            if ack.primary_id is None and ack.ticket_id == ticket_id:
                 return ack
     return None
 

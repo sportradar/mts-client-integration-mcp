@@ -431,6 +431,108 @@ def test_ticket_ack_missing_signature_is_shape_error() -> None:
 
 
 # --------------------------------------------------------------------------- #
+# Cash-out ACK pairing (multiple partial cashouts on one ticket)
+# --------------------------------------------------------------------------- #
+
+
+def _cashout_request(
+    cashout_id: str, *, ticket_id: str = "T1", corr: str = "req"
+) -> dict[str, Any]:
+    return {
+        "operatorId": "9985",
+        "content": {
+            "type": "cashout",
+            "cashoutId": cashout_id,
+            "details": {
+                "type": "ticket-partial",
+                "ticketId": ticket_id,
+                "ticketSignature": "orig-sig",
+                "code": 0,
+                "percentage": "0.3",
+                "payout": [{"type": "cash", "currency": "EUR", "amount": "5"}],
+            },
+        },
+        "correlationId": corr,
+        "timestampUtc": 1,
+        "operation": "ticket-cashout",
+        "version": "3.0",
+    }
+
+
+def _cashout_reply(
+    cashout_id: str,
+    *,
+    ticket_id: str = "T1",
+    signature: str = "sig",
+    corr: str = "rep",
+) -> dict[str, Any]:
+    return {
+        "content": {
+            "type": "cashout-reply",
+            "cashoutId": cashout_id,
+            "ticketId": ticket_id,
+            "status": "accepted",
+            "signature": signature,
+        },
+        "correlationId": corr,
+        "timestampUtc": 2,
+        "operation": "ticket-cashout",
+        "version": "3.0",
+    }
+
+
+def _cashout_ack(
+    cashout_id: str,
+    *,
+    ticket_id: str = "T1",
+    signature: str = "sig",
+    corr: str = "ack",
+) -> dict[str, Any]:
+    return {
+        "operatorId": "9985",
+        "content": {
+            "type": "cashout-ack",
+            "cashoutId": cashout_id,
+            "ticketId": ticket_id,
+            "cashoutSignature": signature,
+            "acknowledged": True,
+        },
+        "correlationId": corr,
+        "timestampUtc": 3,
+        "operation": "ticket-cashout-ack",
+        "version": "3.0",
+    }
+
+
+def test_multiple_partial_cashouts_do_not_pair_wrong_ack() -> None:
+    """ACK for cashout co-1 must not match accepted replies for co-2 / co-3 via ticketId."""
+    issues = _ack_issues(
+        [
+            {"direction": "outbound", "message": _cashout_request("co-1", corr="req-1")},
+            {"direction": "outbound", "message": _cashout_request("co-2", corr="req-2")},
+            {"direction": "outbound", "message": _cashout_request("co-3", corr="req-3")},
+            {
+                "direction": "inbound",
+                "message": _cashout_reply("co-1", signature="sig-1", corr="rep-1"),
+            },
+            {
+                "direction": "outbound",
+                "message": _cashout_ack("co-1", signature="sig-1", corr="ack-1"),
+            },
+            {
+                "direction": "inbound",
+                "message": _cashout_reply("co-2", signature="sig-2", corr="rep-2"),
+            },
+            {
+                "direction": "inbound",
+                "message": _cashout_reply("co-3", signature="sig-3", corr="rep-3"),
+            },
+        ]
+    )
+    assert "ack_matches_response_signature" not in _rule_ids(issues)
+
+
+# --------------------------------------------------------------------------- #
 # Session-state parsing
 # --------------------------------------------------------------------------- #
 
