@@ -3,24 +3,25 @@
 from __future__ import annotations
 
 import asyncio
+import copy
+import functools
 import json
 import socket
-import time
-from collections.abc import Generator
 from typing import Any, cast, get_args
 
 import pytest
 import websockets
 
-from mts_client_integration.models.templates import CashoutBuildParams, PlacementBuildParams
-from mts_client_integration.services.preset_catalog import get_preset
+from mts_client_integration.models.templates import CashoutBuildParams
+from mts_client_integration.services.simulator import server as server_module
 from mts_client_integration.services.simulator.catalog import (
     INJECT_EVENTS,
     InjectEvent,
     expand_scenarios,
 )
+from mts_client_integration.services.simulator.handlers import RateLimiter
 from mts_client_integration.services.simulator.server import MockServerError, MockServerManager
-from mts_client_integration.services.template_builder import build_cashout, build_placement
+from mts_client_integration.services.template_builder import build_cashout
 from mts_client_integration.services.validation import validate_request_payload
 from mts_client_integration.tools.mock_server import (
     inject_mock,
@@ -28,27 +29,32 @@ from mts_client_integration.tools.mock_server import (
     start_mock,
     stop_mock,
 )
+from tests.factories import FIXED_TIMESTAMP_MS, example_params_for, placement_payload
+
+_REPLY_TIMEOUT_SECONDS = 5
 
 
-def _example_params_for(shape: str) -> dict[str, Any]:
-    preset = get_preset(shape)
-    if preset.example_params is not None:
-        return dict(preset.example_params)
-    return dict(preset.defaults)
+def _start(manager: MockServerManager, *scenarios: str, **kwargs: Any) -> str:
+    """Start the mock on ephemeral ports and return its ``ws_url``."""
+    started = start_mock(manager, scenarios=list(scenarios), ws_port=0, oauth_port=0, **kwargs)
+    assert started["ok"] is True
+    return str(started["ws_url"])
 
 
-def _placement_payload() -> dict[str, Any]:
-    raw = _example_params_for("single_prematch")
-    result = build_placement("single_prematch", PlacementBuildParams.model_validate(raw))
-    return result.payload
+def _ws_exchange(ws_url: str, frames: list[str]) -> list[dict[str, Any]]:
+    """Send raw frames on one WebSocket connection, returning one JSON reply per frame."""
 
+    async def _run() -> list[dict[str, Any]]:
+        replies: list[dict[str, Any]] = []
+        async with websockets.connect(ws_url) as ws:
+            for frame in frames:
+                await ws.send(frame)
+                raw = await asyncio.wait_for(ws.recv(), timeout=_REPLY_TIMEOUT_SECONDS)
+                text = raw.decode() if isinstance(raw, bytes) else raw
+                replies.append(cast(dict[str, Any], json.loads(text)))
+        return replies
 
-@pytest.fixture
-def mock_manager() -> Generator[MockServerManager]:
-    manager = MockServerManager()
-    yield manager
-    if manager.is_running:
-        manager.stop()
+    return asyncio.run(_run())
 
 
 def _cancel_envelope(ticket_id: str, code: int) -> dict[str, Any]:
@@ -64,16 +70,15 @@ def _cancel_envelope(ticket_id: str, code: int) -> dict[str, Any]:
             },
         },
         "correlationId": f"corr-cancel-{code}",
-        "timestampUtc": int(time.time() * 1000),
+        "timestampUtc": FIXED_TIMESTAMP_MS,
         "operation": "ticket-cancel",
         "version": "3.0",
     }
 
 
 def _partial_cashout_envelope(ticket_id: str, percentage: str, corr: str) -> dict[str, Any]:
-    raw = _example_params_for("partial_cashout_with_aggregator")
     raw = {
-        **raw,
+        **example_params_for("partial_cashout_with_aggregator"),
         "ticket_id": ticket_id,
         "ticket_signature": "sig",
         "percentage": percentage,
@@ -87,17 +92,21 @@ def _partial_cashout_envelope(ticket_id: str, percentage: str, corr: str) -> dic
     return result.payload
 
 
-@pytest.fixture
-def busy_port() -> Generator[int]:
-    with socket.socket() as sock:
-        sock.bind(("127.0.0.1", 0))
-        sock.listen()
-        yield int(sock.getsockname()[1])
+def _alt_stake_resubmit(first: dict[str, Any], reject: dict[str, Any]) -> dict[str, Any]:
+    """Resubmit ``first`` referencing the alt-stake offer carried by ``reject``."""
+    resubmit = copy.deepcopy(first)
+    resubmit["content"]["context"]["ref"] = {
+        "type": "alt-stake",
+        "ticketId": reject["content"]["ticketId"],
+        "ticketSignature": reject["content"]["signature"],
+    }
+    resubmit["correlationId"] = "resubmit-alt-stake"
+    return resubmit
 
 
-def _json_reply(raw: str | bytes) -> dict[str, Any]:
-    text = raw.decode() if isinstance(raw, bytes) else raw
-    return cast(dict[str, Any], json.loads(text))
+# --------------------------------------------------------------------------- #
+# Catalog
+# --------------------------------------------------------------------------- #
 
 
 def test_inject_event_literal_matches_catalog() -> None:
@@ -109,35 +118,67 @@ def test_expand_scenarios_bundle() -> None:
     assert expanded.active == frozenset({"frame_split", "rate_limit"})
 
 
+# --------------------------------------------------------------------------- #
+# Rate limiter (token bucket)
+# --------------------------------------------------------------------------- #
+
+
+class _FakeClock:
+    def __init__(self) -> None:
+        self.now = 0.0
+
+    def __call__(self) -> float:
+        return self.now
+
+
+def test_rate_limiter_allows_burst_then_rejects() -> None:
+    limiter = RateLimiter(10.0, burst=3, clock=_FakeClock())
+    assert [limiter.allow() for _ in range(4)] == [True, True, True, False]
+
+
+def test_rate_limiter_refills_at_rps() -> None:
+    clock = _FakeClock()
+    limiter = RateLimiter(10.0, burst=1, clock=clock)
+    assert limiter.allow() is True
+    clock.now += 0.05
+    assert limiter.allow() is False
+    clock.now += 0.05
+    assert limiter.allow() is True
+
+
+def test_rate_limiter_refill_is_capped_at_burst() -> None:
+    clock = _FakeClock()
+    limiter = RateLimiter(10.0, burst=2, clock=clock)
+    limiter.allow()
+    clock.now += 60
+    assert [limiter.allow() for _ in range(3)] == [True, True, False]
+
+
+def test_rate_limiter_default_burst_equals_rps() -> None:
+    limiter = RateLimiter(5.0, clock=_FakeClock())
+    assert sum(limiter.allow() for _ in range(10)) == 5
+
+
+# --------------------------------------------------------------------------- #
+# Wire behaviour (real WebSocket against the background mock)
+# --------------------------------------------------------------------------- #
+
+
 def test_start_and_stop_placement_roundtrip(mock_manager: MockServerManager) -> None:
-    started = start_mock(mock_manager, scenarios=["realistic_mix"], ws_port=0, oauth_port=0)
-    assert started["ok"] is True
-    ws_url = str(started["ws_url"])
+    ws_url = _start(mock_manager, "realistic_mix")
 
-    async def _roundtrip() -> dict[str, Any]:
-        payload = _placement_payload()
-        async with websockets.connect(ws_url) as ws:
-            await ws.send(json.dumps(payload))
-            raw = await asyncio.wait_for(ws.recv(), timeout=5)
-            return _json_reply(raw)
-
-    reply = asyncio.run(_roundtrip())
+    (reply,) = _ws_exchange(ws_url, [json.dumps(placement_payload())])
     assert reply["content"]["type"] == "ticket-reply"
     assert reply["content"]["status"] == "accepted"
 
     stopped = stop_mock(mock_manager)
     assert stopped["ok"] is True
-    assert len(stopped["wire_log"]) >= 2
-    directions = [e["direction"] for e in stopped["wire_log"]]
-    assert "outbound" in directions
-    assert "inbound" in directions
+    assert [e["direction"] for e in stopped["wire_log"]] == ["outbound", "inbound"]
 
 
 def test_frame_split_rejects_oversized_single_frame(mock_manager: MockServerManager) -> None:
-    started = start_mock(mock_manager, scenarios=["frame_split"], ws_port=0, oauth_port=0)
-    ws_url = str(started["ws_url"])
-    payload = _placement_payload()
-    huge = json.dumps(payload) + (" " * (33 * 1024))
+    ws_url = _start(mock_manager, "frame_split")
+    huge = json.dumps(placement_payload()) + (" " * (33 * 1024))
 
     async def _send() -> int | None:
         async with websockets.connect(ws_url) as ws:
@@ -148,144 +189,92 @@ def test_frame_split_rejects_oversized_single_frame(mock_manager: MockServerMana
                 return None
             return ws.close_code
 
-    close_code = asyncio.run(_send())
-    stop_mock(mock_manager)
-    assert close_code == 1009
+    assert asyncio.run(_send()) == 1009
 
 
-def test_rate_limit_rejects_burst(mock_manager: MockServerManager) -> None:
-    started = start_mock(
-        mock_manager,
-        scenarios=["rate_limit"],
-        rate_limit_profile="integration",
-        ws_port=0,
-        oauth_port=0,
-    )
-    ws_url = str(started["ws_url"])
-    payload = _placement_payload()
+def test_rate_limit_rejects_burst(
+    mock_manager: MockServerManager, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    frozen = functools.partial(RateLimiter, clock=lambda: 0.0)
+    monkeypatch.setattr(server_module, "RateLimiter", frozen)
+    ws_url = _start(mock_manager, "rate_limit", rate_limit_profile="integration")
 
-    async def _burst() -> list[dict[str, Any]]:
-        replies: list[dict[str, Any]] = []
-        async with websockets.connect(ws_url) as ws:
-            for _ in range(15):
-                await ws.send(json.dumps(payload))
-                raw = await asyncio.wait_for(ws.recv(), timeout=5)
-                replies.append(_json_reply(raw))
-        return replies
-
-    replies = asyncio.run(_burst())
+    replies = _ws_exchange(ws_url, [json.dumps(placement_payload())] * 15)
     stopped = stop_mock(mock_manager)
-    rejected = [r for r in replies if r["content"].get("status") == "rejected"]
-    assert len(rejected) >= 3
-    assert stopped["metrics"]["rate_limit_rejections"] >= 3
+
+    statuses = [r["content"]["status"] for r in replies]
+    # Integration profile is 10 r/s with burst 10; a frozen clock never refills.
+    assert statuses == ["accepted"] * 10 + ["rejected"] * 5
+    assert stopped["metrics"]["rate_limit_rejections"] == 5
 
 
 def test_alt_stake_offer_flow(mock_manager: MockServerManager) -> None:
-    started = start_mock(mock_manager, scenarios=["alt_stake_offer"], ws_port=0, oauth_port=0)
-    ws_url = str(started["ws_url"])
-    first = _placement_payload()
+    ws_url = _start(mock_manager, "alt_stake_offer")
+    first = placement_payload()
 
     async def _flow() -> tuple[dict[str, Any], dict[str, Any]]:
         async with websockets.connect(ws_url) as ws:
             await ws.send(json.dumps(first))
-            reject_raw = await asyncio.wait_for(ws.recv(), timeout=5)
-            reject = _json_reply(reject_raw)
-            sig = reject["content"]["signature"]
-            ticket_id = reject["content"]["ticketId"]
-            resubmit = json.loads(json.dumps(first))
-            ctx = resubmit.setdefault("content", {}).setdefault("context", {})
-            ctx["ref"] = {
-                "type": "alt-stake",
-                "ticketId": ticket_id,
-                "ticketSignature": sig,
-            }
-            resubmit["correlationId"] = "resubmit-alt-stake"
-            await ws.send(json.dumps(resubmit))
-            accept_raw = await asyncio.wait_for(ws.recv(), timeout=5)
-            return reject, _json_reply(accept_raw)
+            reject = json.loads(await asyncio.wait_for(ws.recv(), _REPLY_TIMEOUT_SECONDS))
+            await ws.send(json.dumps(_alt_stake_resubmit(first, reject)))
+            accept = json.loads(await asyncio.wait_for(ws.recv(), _REPLY_TIMEOUT_SECONDS))
+            return reject, accept
 
     reject, accept = asyncio.run(_flow())
-    stop_mock(mock_manager)
     assert reject["content"]["status"] == "rejected"
     assert "altStake" in reject["content"]
     assert accept["content"]["status"] == "accepted"
 
 
-def test_cancellation_matrix_accepts(mock_manager: MockServerManager) -> None:
-    started = start_mock(mock_manager, scenarios=["cancellation_matrix"], ws_port=0, oauth_port=0)
-    ws_url = str(started["ws_url"])
-    ticket_id = _placement_payload()["content"]["ticketId"]
+@pytest.mark.parametrize("code", [101, 103, 301])
+def test_cancellation_matrix_accepts(mock_manager: MockServerManager, code: int) -> None:
+    ws_url = _start(mock_manager, "cancellation_matrix")
+    ticket_id = placement_payload()["content"]["ticketId"]
 
-    async def _cancel(code: int) -> dict[str, Any]:
-        async with websockets.connect(ws_url) as ws:
-            await ws.send(json.dumps(_cancel_envelope(ticket_id, code)))
-            raw = await asyncio.wait_for(ws.recv(), timeout=5)
-            return _json_reply(raw)
-
-    for code in (101, 103, 301):
-        reply = asyncio.run(_cancel(code))
-        assert reply["content"]["type"] == "cancel-reply"
-        assert reply["content"]["status"] == "accepted"
-    stop_mock(mock_manager)
+    (reply,) = _ws_exchange(ws_url, [json.dumps(_cancel_envelope(ticket_id, code))])
+    assert reply["content"]["type"] == "cancel-reply"
+    assert reply["content"]["status"] == "accepted"
 
 
 def test_cancellation_matrix_reject_code_103(mock_manager: MockServerManager) -> None:
-    started = start_mock(
+    _start(
         mock_manager,
-        scenarios=["cancellation_matrix"],
-        ws_port=0,
-        oauth_port=0,
+        "cancellation_matrix",
         scenario_params={"cancellation_matrix": {"reject_code_103": True}},
     )
-    assert started["ok"] is True
-    ticket_id = _placement_payload()["content"]["ticketId"]
+    ticket_id = placement_payload()["content"]["ticketId"]
     cancels = [_cancel_envelope(ticket_id, 103), _cancel_envelope(ticket_id, 101)]
     assert all(validate_request_payload(c).schema_ok for c in cancels)
 
     result = send_to_mock(mock_manager, messages=cancels)
-    stop_mock(mock_manager)
 
     statuses = [ex["reply"]["content"]["status"] for ex in result["exchanges"]]
     assert statuses == ["rejected", "accepted"]
 
 
 def test_partial_cashout_rejects_delta_percentage(mock_manager: MockServerManager) -> None:
-    started = start_mock(
-        mock_manager, scenarios=["partial_cashout_aggregator"], ws_port=0, oauth_port=0
-    )
-    ws_url = str(started["ws_url"])
+    _start(mock_manager, "partial_cashout_aggregator")
     ticket_id = "cashout-ticket-1"
+    cashouts = [
+        _partial_cashout_envelope(ticket_id, "0.5", "c1"),
+        _partial_cashout_envelope(ticket_id, "0.3", "c2"),
+        _partial_cashout_envelope(ticket_id, "0.8", "c3"),
+    ]
 
-    def _cashout(pct: str, corr: str) -> dict[str, Any]:
-        envelope = _partial_cashout_envelope(ticket_id, pct, corr)
+    result = send_to_mock(mock_manager, messages=cashouts, reuse_connection=False)
 
-        async def _send() -> dict[str, Any]:
-            async with websockets.connect(ws_url) as ws:
-                await ws.send(json.dumps(envelope))
-                raw = await asyncio.wait_for(ws.recv(), timeout=5)
-                return _json_reply(raw)
-
-        return asyncio.run(_send())
-
-    first = _cashout("0.5", "c1")
-    assert first["content"]["status"] == "accepted"
-    bad = _cashout("0.3", "c2")
-    assert bad["content"]["status"] == "rejected"
-    good = _cashout("0.8", "c3")
-    assert good["content"]["status"] == "accepted"
-    stop_mock(mock_manager)
+    statuses = [ex["reply"]["content"]["status"] for ex in result["exchanges"]]
+    assert statuses == ["accepted", "rejected", "accepted"]
 
 
 def test_cancel_and_cashout_replies_echo_request_ids(mock_manager: MockServerManager) -> None:
-    started = start_mock(mock_manager, scenarios=["transaction_suite"], ws_port=0, oauth_port=0)
-    assert started["ok"] is True
+    _start(mock_manager, "transaction_suite")
     cancel = _cancel_envelope("T-cancel", 101)
     cashout = _partial_cashout_envelope("T-cashout", "0.5", "corr-co")
     assert validate_request_payload(cancel).schema_ok
     assert validate_request_payload(cashout).schema_ok
 
     result = send_to_mock(mock_manager, messages=[cancel, cashout])
-    stop_mock(mock_manager)
 
     cancel_reply, cashout_reply = (ex["reply"]["content"] for ex in result["exchanges"])
     assert cancel_reply["ticketId"] == "T-cancel"
@@ -295,90 +284,62 @@ def test_cancel_and_cashout_replies_echo_request_ids(mock_manager: MockServerMan
 
 
 def test_connection_blocked_inject(mock_manager: MockServerManager) -> None:
-    started = start_mock(mock_manager, scenarios=["realistic_mix"], ws_port=0, oauth_port=0)
-    ws_url = str(started["ws_url"])
+    ws_url = _start(mock_manager, "realistic_mix")
 
     async def _try_send() -> bool:
         try:
             async with websockets.connect(ws_url, open_timeout=2) as ws:
-                await ws.send(json.dumps(_placement_payload()))
+                await ws.send(json.dumps(placement_payload()))
                 await asyncio.wait_for(ws.recv(), timeout=3)
                 return True
-        except (
-            OSError,
-            TimeoutError,
-            websockets.exceptions.ConnectionClosed,
-            websockets.exceptions.ConnectionClosedError,
-            websockets.exceptions.ConnectionClosedOK,
-        ):
+        except OSError, TimeoutError, websockets.exceptions.ConnectionClosed:
             return False
 
     assert asyncio.run(_try_send()) is True
-    blocked = inject_mock(mock_manager, "connection_blocked")
-    assert blocked["ok"] is True
+    assert inject_mock(mock_manager, "connection_blocked")["ok"] is True
     assert asyncio.run(_try_send()) is False
-    unblocked = inject_mock(mock_manager, "connection_unblocked")
-    assert unblocked["ok"] is True
+    assert inject_mock(mock_manager, "connection_unblocked")["ok"] is True
     assert asyncio.run(_try_send()) is True
-    stop_mock(mock_manager)
+
+
+# --------------------------------------------------------------------------- #
+# send_to_mock helper and manager lifecycle
+# --------------------------------------------------------------------------- #
 
 
 def test_send_to_mock_placement_roundtrip(mock_manager: MockServerManager) -> None:
-    started = start_mock(mock_manager, scenarios=["realistic_mix"], ws_port=0, oauth_port=0)
-    assert started["ok"] is True
+    ws_url = _start(mock_manager, "realistic_mix")
 
-    result = send_to_mock(mock_manager, payload=_placement_payload())
+    result = send_to_mock(mock_manager, payload=placement_payload())
     assert result["ok"] is True
-    assert len(result["exchanges"]) == 1
-    reply = result["exchanges"][0]["reply"]
-    assert isinstance(reply, dict)
-    assert reply["content"]["type"] == "ticket-reply"
-    assert reply["content"]["status"] == "accepted"
+    (exchange,) = result["exchanges"]
+    assert exchange["reply"]["content"]["type"] == "ticket-reply"
+    assert exchange["reply"]["content"]["status"] == "accepted"
 
     status = mock_manager.status()
     assert status["running"] is True
-    assert status["ws_url"] == started["ws_url"]
+    assert status["ws_url"] == ws_url
 
     stopped = stop_mock(mock_manager)
-    assert stopped["ok"] is True
-    assert len(stopped["wire_log"]) >= 2
+    assert [e["direction"] for e in stopped["wire_log"]] == ["outbound", "inbound"]
 
 
 def test_send_to_mock_requires_running_mock(mock_manager: MockServerManager) -> None:
     with pytest.raises(MockServerError, match="start_mock"):
-        send_to_mock(mock_manager, payload=_placement_payload())
+        send_to_mock(mock_manager, payload=placement_payload())
 
 
 def test_send_to_mock_alt_stake_multi_message(mock_manager: MockServerManager) -> None:
-    started = start_mock(mock_manager, scenarios=["alt_stake_offer"], ws_port=0, oauth_port=0)
-    assert started["ok"] is True
-    first = _placement_payload()
+    _start(mock_manager, "alt_stake_offer")
+    first = placement_payload()
 
-    reject_result = send_to_mock(mock_manager, payload=first)
-    assert reject_result["ok"] is True
-    reject = reject_result["exchanges"][0]["reply"]
-    assert isinstance(reject, dict)
-    assert reject["content"]["status"] == "rejected"
+    (probe,) = send_to_mock(mock_manager, payload=first)["exchanges"]
+    resubmit = _alt_stake_resubmit(first, probe["reply"])
 
-    resubmit = json.loads(json.dumps(first))
-    ctx = resubmit.setdefault("content", {}).setdefault("context", {})
-    ctx["ref"] = {
-        "type": "alt-stake",
-        "ticketId": reject["content"]["ticketId"],
-        "ticketSignature": reject["content"]["signature"],
-    }
-    resubmit["correlationId"] = "resubmit-alt-stake"
+    result = send_to_mock(mock_manager, messages=[first, resubmit], reuse_connection=True)
 
-    accept_result = send_to_mock(
-        mock_manager,
-        messages=[first, resubmit],
-        reuse_connection=True,
-    )
-    assert accept_result["ok"] is True
-    assert len(accept_result["exchanges"]) == 2
-    assert accept_result["exchanges"][0]["reply"]["content"]["status"] == "rejected"
-    assert accept_result["exchanges"][1]["reply"]["content"]["status"] == "accepted"
-    stop_mock(mock_manager)
+    statuses = [ex["reply"]["content"]["status"] for ex in result["exchanges"]]
+    assert statuses == ["rejected", "accepted"]
 
 
 def test_start_mock_on_busy_ws_port_returns_error_and_allows_restart(
@@ -389,9 +350,8 @@ def test_start_mock_on_busy_ws_port_returns_error_and_allows_restart(
         start_mock(mock_manager, scenarios=["frame_split"], ws_port=busy_port, oauth_port=0)
     assert mock_manager.is_running is False
 
-    restarted = start_mock(mock_manager, scenarios=["frame_split"], ws_port=0, oauth_port=0)
-    assert restarted["ok"] is True
-    stop_mock(mock_manager)
+    _start(mock_manager, "frame_split")
+    assert mock_manager.is_running is True
 
 
 def test_start_mock_on_busy_oauth_port_releases_ws_port(
@@ -405,8 +365,10 @@ def test_start_mock_on_busy_oauth_port_releases_ws_port(
     with pytest.raises(MockServerError):
         start_mock(mock_manager, scenarios=["frame_split"], ws_port=ws_port, oauth_port=busy_port)
 
+    # Rebinding only succeeds if the failed start closed the WS listener it had opened.
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", ws_port))
+        assert sock.getsockname()[1] == ws_port
 
 
 def test_unknown_scenario_fails(mock_manager: MockServerManager) -> None:

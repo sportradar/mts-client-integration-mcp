@@ -12,23 +12,17 @@ from mts_client_integration.services.catalog import RejectionCatalog, normalize_
 from mts_client_integration.tools.lookup_rejection import perform_rejection_lookup
 
 
-@pytest.fixture
-def catalog() -> RejectionCatalog:
-    return RejectionCatalog.load()
-
-
-def test_normalize_code_positive_becomes_negative() -> None:
-    assert normalize_code(101) == -101
-    assert normalize_code(-101) == -101
+@pytest.mark.parametrize(("raw", "expected"), [(101, -101), (-101, -101)])
+def test_normalize_code_is_always_negative(raw: int, expected: int) -> None:
+    assert normalize_code(raw) == expected
 
 
 def test_lookup_normalizes_positive_code(catalog: RejectionCatalog) -> None:
-    via_catalog = catalog.lookup(101, operation="ticket-cashout")
-    via_tool = perform_rejection_lookup(catalog, 101, operation="ticket-cashout")
-    assert via_catalog.code == -101
-    assert via_tool.code == -101
-    assert via_tool.found is True
-    assert "bookmaker" in (via_tool.message or "").lower()
+    positive = perform_rejection_lookup(catalog, 101, operation="ticket-cashout")
+    negative = perform_rejection_lookup(catalog, -101, operation="ticket-cashout")
+    assert positive.found is True
+    assert positive.code == -101
+    assert positive.message == negative.message
 
 
 def test_lookup_operation_picks_variant(catalog: RejectionCatalog) -> None:
@@ -41,9 +35,14 @@ def test_lookup_operation_picks_variant(catalog: RejectionCatalog) -> None:
 
 def test_lookup_without_operation_ambiguous_multi_variant(catalog: RejectionCatalog) -> None:
     result = perform_rejection_lookup(catalog, -101)
+    placement = perform_rejection_lookup(catalog, -101, operation="ticket-placement")
+    cashout = perform_rejection_lookup(catalog, -101, operation="ticket-cashout")
     assert result.found is True
     assert result.ambiguous is True
-    assert "|" in (result.message or "")
+    assert {"ticket-placement", "ticket-cashout"} <= set(result.operations)
+    for variant in (placement.message, cashout.message):
+        assert variant is not None
+        assert variant in (result.message or "")
 
 
 def test_lookup_unknown_code(catalog: RejectionCatalog) -> None:
@@ -54,18 +53,20 @@ def test_lookup_unknown_code(catalog: RejectionCatalog) -> None:
     assert response["found"] is False
 
 
-def test_resolve_operation_precedence() -> None:
-    assert (
-        resolve_operation(operation="ticket-placement", ticket_context=None) == "ticket-placement"
-    )
-    assert (
-        resolve_operation(
-            operation=None,
-            ticket_context=TicketContext(operation="ticket-cashout"),
-        )
-        == "ticket-cashout"
-    )
-    assert resolve_operation(operation="a", ticket_context=TicketContext(operation="b")) == "a"
+@pytest.mark.parametrize(
+    ("operation", "context_operation", "expected"),
+    [
+        pytest.param("ticket-placement", None, "ticket-placement", id="operation-only"),
+        pytest.param(None, "ticket-cashout", "ticket-cashout", id="context-only"),
+        pytest.param("a", "b", "a", id="operation-wins-over-context"),
+        pytest.param(None, None, None, id="neither"),
+    ],
+)
+def test_resolve_operation_precedence(
+    operation: str | None, context_operation: str | None, expected: str | None
+) -> None:
+    context = TicketContext(operation=context_operation) if context_operation else None
+    assert resolve_operation(operation=operation, ticket_context=context) == expected
 
 
 def test_catalog_load_from_env_path(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:

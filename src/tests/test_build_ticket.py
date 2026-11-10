@@ -14,12 +14,7 @@ from mts_client_integration.models.templates import (
     PlacementBuildParams,
     PresetUnavailableError,
 )
-from mts_client_integration.services.preset_catalog import (
-    available_preset_ids,
-    get_preset,
-    list_shapes,
-    resolve_buildable_preset,
-)
+from mts_client_integration.services.preset_catalog import available_preset_ids, list_shapes
 from mts_client_integration.services.preset_docs import describe_shape
 from mts_client_integration.services.template_builder import (
     build_cashout,
@@ -28,32 +23,7 @@ from mts_client_integration.services.template_builder import (
 )
 from mts_client_integration.services.ticket_presets import PRESETS
 from mts_client_integration.services.validation import validate_request_payload
-
-
-def _selection(event_id: str, odds: str = "1.32") -> dict[str, Any]:
-    return {
-        "event_id": event_id,
-        "market_id": "1",
-        "outcome_id": "2",
-        "odds": odds,
-        "product_id": "3",
-    }
-
-
-def _e2e_channel() -> dict[str, Any]:
-    return {"type": "internet", "ip": "127.0.0.1", "lang": "en"}
-
-
-def _placement_base(**overrides: Any) -> dict[str, Any]:
-    base = {
-        "operator_id": "9985",
-        "limit_id": 1409,
-        "channel": _e2e_channel(),
-        "stake": "10",
-        "currency": "EUR",
-    }
-    base.update(overrides)
-    return base
+from tests.factories import builder_selection, example_params_for, placement_params
 
 
 def _assert_builds_clean(payload: dict[str, Any], *, operation: str) -> None:
@@ -63,16 +33,9 @@ def _assert_builds_clean(payload: dict[str, Any], *, operation: str) -> None:
     assert result.business_rules_ok is True
 
 
-def _example_params_for(shape: str) -> dict[str, Any]:
-    preset = get_preset(shape)
-    if preset.example_params is not None:
-        return dict(preset.example_params)
-    return dict(preset.defaults)
-
-
 def _build_for_shape(shape: str) -> BuildResult:
     preset = PRESETS[shape]
-    raw = _example_params_for(shape)
+    raw = example_params_for(shape)
     if preset.builder == "placement":
         return build_placement(shape, PlacementBuildParams.model_validate(raw))
     if preset.builder == "cashout":
@@ -80,10 +43,9 @@ def _build_for_shape(shape: str) -> BuildResult:
     return build_ext_settlement(shape, ExtSettlementBuildParams.model_validate(raw))
 
 
-def test_all_available_presets_are_registered() -> None:
-    available = available_preset_ids()
-    assert len(available) == 34
-    assert all(PRESETS[name].status == "available" for name in available)
+def test_preset_registry_keys_match_shape_names() -> None:
+    mismatched = {key: preset.shape for key, preset in PRESETS.items() if key != preset.shape}
+    assert mismatched == {}
 
 
 def test_list_shapes_available_only_returns_buildable_set() -> None:
@@ -96,10 +58,15 @@ def test_list_shapes_available_only_returns_buildable_set() -> None:
 def test_each_available_shape_builds_schema_valid_ticket(shape: str) -> None:
     result = _build_for_shape(shape)
     assert result.shape == shape
-    validation = validate_request_payload(result.payload, operation=result.operation)
-    assert validation.schema_ok is True
-    assert validation.envelope_ok is True
-    assert validation.business_rules_ok is True
+    _assert_builds_clean(result.payload, operation=result.operation)
+
+
+@pytest.mark.parametrize("shape", available_preset_ids())
+def test_describe_shape_has_schema_and_tool(shape: str) -> None:
+    doc = describe_shape(shape)
+    assert doc["tool"]
+    assert "params_json_schema" in doc
+    assert doc["example_params"]
 
 
 def test_preset_defaults_hold_no_integration_or_selection_data() -> None:
@@ -126,11 +93,11 @@ def test_trixie_builds_system_nest() -> None:
     result = build_placement(
         "trixie",
         PlacementBuildParams.model_validate(
-            _placement_base(
+            placement_params(
                 selections=[
-                    _selection("sr:match:a"),
-                    _selection("sr:match:b"),
-                    _selection("sr:match:c"),
+                    builder_selection("sr:match:a"),
+                    builder_selection("sr:match:b"),
+                    builder_selection("sr:match:c"),
                 ]
             )
         ),
@@ -143,7 +110,7 @@ def test_trixie_builds_system_nest() -> None:
 def test_multiple_ways_appends_ways_nest() -> None:
     result = build_placement(
         "multiple_ways",
-        PlacementBuildParams.model_validate(_example_params_for("multiple_ways")),
+        PlacementBuildParams.model_validate(example_params_for("multiple_ways")),
     )
     selections = result.payload["content"]["bets"][0]["selections"]
     assert selections[-1]["type"] == "ways"
@@ -153,7 +120,7 @@ def test_multiple_ways_appends_ways_nest() -> None:
 def test_ways_system_bankers_matches_e2e_nesting() -> None:
     result = build_placement(
         "ways_system_bankers",
-        PlacementBuildParams.model_validate(_example_params_for("ways_system_bankers")),
+        PlacementBuildParams.model_validate(example_params_for("ways_system_bankers")),
     )
     selections = result.payload["content"]["bets"][0]["selections"]
     assert selections[0]["type"] == "system"
@@ -165,7 +132,7 @@ def test_ways_system_bankers_matches_e2e_nesting() -> None:
 def test_banker_system_places_banker_after_system() -> None:
     result = build_placement(
         "banker_system",
-        PlacementBuildParams.model_validate(_example_params_for("banker_system")),
+        PlacementBuildParams.model_validate(example_params_for("banker_system")),
     )
     selections = result.payload["content"]["bets"][0]["selections"]
     assert selections[0]["type"] == "system"
@@ -182,10 +149,12 @@ def test_own_selections_without_required_params_raise(shape: str) -> None:
     preset = PRESETS[shape]
     params_dict = {
         key: value
-        for key, value in _example_params_for(shape).items()
+        for key, value in example_params_for(shape).items()
         if key not in preset.required_params
     }
-    params_dict.setdefault("selections", [_selection("sr:match:1"), _selection("sr:match:2")])
+    params_dict.setdefault(
+        "selections", [builder_selection("sr:match:1"), builder_selection("sr:match:2")]
+    )
 
     with pytest.raises(ValueError, match=preset.required_params[0]):
         build_placement(shape, PlacementBuildParams.model_validate(params_dict))
@@ -193,7 +162,7 @@ def test_own_selections_without_required_params_raise(shape: str) -> None:
 
 def test_own_bets_multibet() -> None:
     own_bet = {
-        "selections": [_selection("sr:match:1"), _selection("sr:match:2")],
+        "selections": [builder_selection("sr:match:1"), builder_selection("sr:match:2")],
         "bet_type": "accumulator",
         "stake": "10",
         "currency": "EUR",
@@ -201,7 +170,7 @@ def test_own_bets_multibet() -> None:
     result = build_placement(
         "multibet",
         PlacementBuildParams.model_validate(
-            _placement_base(
+            placement_params(
                 bets=[
                     own_bet,
                     {
@@ -230,7 +199,7 @@ def test_own_bets_multibet() -> None:
 
 
 def test_stake_override_on_system_preset() -> None:
-    ex = _example_params_for("trixie")
+    ex = example_params_for("trixie")
     ex["stake"] = "5"
     result = build_placement("trixie", PlacementBuildParams.model_validate(ex))
     system = result.payload["content"]["bets"][0]["selections"][-1]
@@ -243,12 +212,12 @@ def test_stake_override_on_system_preset() -> None:
     [([3], "out of range"), ([-1], "out of range"), ([1, 1], "duplicates")],
 )
 def test_invalid_banker_indexes_raise(indexes: list[int], message: str) -> None:
-    selections = [_selection(f"sr:match:{i}") for i in range(3)]
+    selections = [builder_selection(f"sr:match:{i}") for i in range(3)]
     with pytest.raises(ValueError, match=message):
         build_placement(
             "banker_system",
             PlacementBuildParams.model_validate(
-                _placement_base(
+                placement_params(
                     selections=selections,
                     banker_selection_indexes=indexes,
                     size=[2],
@@ -258,21 +227,21 @@ def test_invalid_banker_indexes_raise(indexes: list[int], message: str) -> None:
 
 
 def test_banker_indexes_on_non_system_bet_type_raise() -> None:
-    selections = [_selection("sr:match:1"), _selection("sr:match:2")]
+    selections = [builder_selection("sr:match:1"), builder_selection("sr:match:2")]
     with pytest.raises(ValueError, match="only supported for bet_type 'system'"):
         build_placement(
             "accumulator",
             PlacementBuildParams.model_validate(
-                _placement_base(selections=selections, banker_selection_indexes=[0])
+                placement_params(selections=selections, banker_selection_indexes=[0])
             ),
         )
 
 
 _WAYS = [
-    {**_selection("sr:match:777"), "market_id": "3", "outcome_id": "5"},
-    _selection("sr:match:777", odds="2.08"),
+    {**builder_selection("sr:match:777"), "market_id": "3", "outcome_id": "5"},
+    builder_selection("sr:match:777", odds="2.08"),
 ]
-_TWO_SELECTIONS = [_selection("sr:match:1"), _selection("sr:match:2")]
+_TWO_SELECTIONS = [builder_selection("sr:match:1"), builder_selection("sr:match:2")]
 
 
 @pytest.mark.parametrize(
@@ -281,21 +250,21 @@ _TWO_SELECTIONS = [_selection("sr:match:1"), _selection("sr:match:2")]
         (
             "accumulator",
             {
-                **_placement_base(),
+                **placement_params(),
                 "selections": _TWO_SELECTIONS,
-                "outer_selections": [_selection("sr:match:3")],
+                "outer_selections": [builder_selection("sr:match:3")],
             },
             "outer_selections requires ways_selections",
         ),
         (
             "accumulator",
-            {**_placement_base(), "selections": _TWO_SELECTIONS, "ways_selections": _WAYS},
+            {**placement_params(), "selections": _TWO_SELECTIONS, "ways_selections": _WAYS},
             "ways_selections requires bet_type 'single' or 'system'",
         ),
         (
             "ways_system",
             {
-                **_placement_base(),
+                **placement_params(),
                 "selections": _TWO_SELECTIONS,
                 "ways_selections": _WAYS,
                 "banker_selection_indexes": [0],
@@ -306,7 +275,7 @@ _TWO_SELECTIONS = [_selection("sr:match:1"), _selection("sr:match:2")]
         (
             "multibet",
             {
-                **_placement_base(stake="10"),
+                **placement_params(stake="10"),
                 "bets": [
                     {
                         "selections": _TWO_SELECTIONS[:1],
@@ -321,7 +290,7 @@ _TWO_SELECTIONS = [_selection("sr:match:1"), _selection("sr:match:2")]
         ),
         (
             "multiple_ways",
-            {**_placement_base(), "selections": _TWO_SELECTIONS, "ways_selections": _WAYS[:1]},
+            {**placement_params(), "selections": _TWO_SELECTIONS, "ways_selections": _WAYS[:1]},
             "at least two same-event selections",
         ),
     ],
@@ -337,7 +306,7 @@ def test_inconsistent_composite_params_raise(
 
 def test_full_cashout_is_non_partial() -> None:
     result = build_cashout(
-        "full_cashout", CashoutBuildParams.model_validate(_example_params_for("full_cashout"))
+        "full_cashout", CashoutBuildParams.model_validate(example_params_for("full_cashout"))
     )
     assert result.payload["content"]["details"]["type"] == "ticket"
 
@@ -345,7 +314,7 @@ def test_full_cashout_is_non_partial() -> None:
 def test_external_settlement_builds_bet_level_envelope() -> None:
     result = build_ext_settlement(
         "external_settlement",
-        ExtSettlementBuildParams.model_validate(_example_params_for("external_settlement")),
+        ExtSettlementBuildParams.model_validate(example_params_for("external_settlement")),
     )
     assert result.operation == "ticket-ext-settlement"
     content = result.payload["content"]
@@ -360,50 +329,37 @@ def test_unknown_shape_raises_with_available_list() -> None:
     with pytest.raises(PresetUnavailableError) as exc_info:
         build_placement(
             "not_a_shape",
-            PlacementBuildParams.model_validate(_example_params_for("single_prematch")),
+            PlacementBuildParams.model_validate(example_params_for("single_prematch")),
         )
     err = exc_info.value
     assert "does not exist" in err.message
     assert len(err.available_presets) == len(available_preset_ids())
 
 
-def test_resolve_buildable_preset_ok() -> None:
-    preset = resolve_buildable_preset("single_prematch", builder="placement")
-    assert preset.shape == "single_prematch"
-
-
 def test_wrong_builder_tool_raises() -> None:
     with pytest.raises(PresetUnavailableError, match="uses builder"):
         build_placement(
             "full_cashout",
-            PlacementBuildParams.model_validate(_example_params_for("single_prematch")),
+            PlacementBuildParams.model_validate(example_params_for("single_prematch")),
         )
 
 
-def test_build_placement_produces_expected_shape() -> None:
-    raw = _example_params_for("single_prematch")
-    raw["selections"] = [_selection("sr:match:99")]
+def test_own_selections_replace_example_selections() -> None:
+    raw = example_params_for("single_prematch")
+    raw["selections"] = [builder_selection("sr:match:99")]
     result = build_placement("single_prematch", PlacementBuildParams.model_validate(raw))
-    assert result.shape == "single_prematch"
-    assert result.payload["operation"] == "ticket-placement"
+    (selection,) = result.payload["content"]["bets"][0]["selections"]
+    assert selection["eventId"] == "sr:match:99"
 
 
 def test_placement_missing_operator_id_validation_error() -> None:
-    bad = {k: v for k, v in _example_params_for("single_prematch").items() if k != "operator_id"}
+    bad = {k: v for k, v in example_params_for("single_prematch").items() if k != "operator_id"}
     with pytest.raises(ValidationError):
         PlacementBuildParams.model_validate(bad)
 
 
-def test_describe_shape_has_schema_and_tool() -> None:
-    for shape in available_preset_ids():
-        doc = describe_shape(shape)
-        assert doc["tool"]
-        assert "params_json_schema" in doc
-        assert doc["example_params"]
-
-
 def test_end_customer_omitted_from_payload() -> None:
-    ex = _example_params_for("single_prematch")
+    ex = example_params_for("single_prematch")
     ex.pop("end_customer_id", None)
     result = build_placement("single_prematch", PlacementBuildParams.model_validate(ex))
     ctx = result.payload["content"]["context"]

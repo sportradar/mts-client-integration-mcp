@@ -9,11 +9,14 @@ from __future__ import annotations
 from decimal import Decimal
 from typing import Any
 
+import pytest
+
 from mts_client_integration.models.business_rules import PriorState
 from mts_client_integration.services.ack_state_machine import evaluate_ack_state_machine
 from mts_client_integration.services.business_rules import evaluate_business_rules
 from mts_client_integration.services.session_state import parse_session_state
 from mts_client_integration.services.validation import validate_request_payload
+from tests.factories import bet, single_ticket_envelope, ticket_envelope, uf_selection
 
 
 def _rule_ids(issues: list[Any]) -> set[str]:
@@ -27,133 +30,137 @@ def _severity(issues: list[Any], rule_id: str) -> str | None:
     return None
 
 
+def _error_rule_ids(issues: list[Any]) -> list[str]:
+    return sorted(issue.rule_id for issue in issues if issue.severity == "error")
+
+
 # --------------------------------------------------------------------------- #
 # Payload business rules
 # --------------------------------------------------------------------------- #
 
 
-def _ticket(bets: list[dict[str, Any]]) -> dict[str, Any]:
-    return {
-        "operatorId": "9985",
-        "content": {
-            "type": "ticket",
-            "ticketId": "T1",
-            "bets": bets,
-            "context": {
-                "channel": {"type": "internet", "ip": "1.2.3.4", "lang": "en"},
-                "endCustomer": {"id": "user1"},
-                "limitId": 1,
-            },
-        },
-        "correlationId": "corr-1",
-        "timestampUtc": 1678876155000,
-        "operation": "ticket-placement",
-        "version": "3.0",
-    }
+def _three_uf() -> list[dict[str, Any]]:
+    return [uf_selection(f"sr:match:{i}") for i in (1, 2, 3)]
 
 
-def _uf(event: str, market: str = "1", outcome: str = "1", odds: str = "1.5") -> dict[str, Any]:
-    return {
-        "type": "uf",
-        "productId": "3",
-        "eventId": event,
-        "marketId": market,
-        "outcomeId": outcome,
-        "odds": {"type": "decimal", "value": odds},
-    }
+_EXTERNAL_SELECTION = {
+    "type": "external",
+    "event": "bg:match:9",
+    "outcome": "home",
+    "odds": {"type": "decimal", "value": "2.0"},
+    "expSettleTime": 1678999999000,
+}
 
 
-def _bet(selections: list[dict[str, Any]], amount: str = "10") -> dict[str, Any]:
-    return {
-        "selections": selections,
-        "stake": [{"type": "cash", "currency": "EUR", "amount": amount}],
-    }
+def test_valid_single_bet_has_no_errors() -> None:
+    assert _error_rule_ids(evaluate_business_rules(single_ticket_envelope())) == []
 
 
-def test_positive_stake_and_min_odds() -> None:
-    bet = _bet([_uf("sr:match:1", odds="1.00")], amount="0")
-    issues = evaluate_business_rules(_ticket([bet]))
-    ids = _rule_ids(issues)
-    assert "positive_stake" in ids
-    assert "min_odds_1_01" in ids
-
-
-def test_bad_currency_flagged() -> None:
-    bet = _bet([_uf("sr:match:1")])
-    bet["stake"][0]["currency"] = "EURO"
-    issues = evaluate_business_rules(_ticket([bet]))
-    assert "currency_format" in _rule_ids(issues)
-
-
-def test_selection_cap_exceeded() -> None:
-    selections = [_uf(f"sr:match:{i}") for i in range(101)]
-    bet = _bet([{"type": "accumulator", "selections": selections}])
-    issues = evaluate_business_rules(_ticket([bet]))
-    assert "max_selections_100" in _rule_ids(issues)
-
-
-def test_predefined_system_trixie_is_info() -> None:
-    system = {
-        "type": "system",
-        "size": [2, 3],
-        "selections": [_uf("sr:match:1"), _uf("sr:match:2"), _uf("sr:match:3")],
-    }
-    issues = evaluate_business_rules(_ticket([_bet([system])]))
-    assert _severity(issues, "predefined_system_sizes") == "info"
-
-
-def test_system_size_out_of_range_is_error() -> None:
-    system = {
-        "type": "system",
-        "size": [5],
-        "selections": [_uf("sr:match:1"), _uf("sr:match:2"), _uf("sr:match:3")],
-    }
-    issues = evaluate_business_rules(_ticket([_bet([system])]))
-    assert _severity(issues, "system_size_valid") == "error"
-
-
-def test_ways_must_share_event() -> None:
-    ways = {"type": "ways", "selections": [_uf("sr:match:1"), _uf("sr:match:2")]}
-    issues = evaluate_business_rules(_ticket([_bet([ways])]))
-    assert _severity(issues, "ways_same_event") == "error"
-
-
-def test_non_sr_in_system_forbidden() -> None:
-    external = {
-        "type": "external",
-        "event": "bg:match:9",
-        "outcome": "home",
-        "odds": {"type": "decimal", "value": "2.0"},
-        "expSettleTime": 1678999999000,
-    }
-    system = {
-        "type": "system",
-        "size": [2],
-        "selections": [_uf("sr:match:1"), _uf("sr:match:2"), external],
-    }
-    issues = evaluate_business_rules(_ticket([_bet([system])]))
-    assert _severity(issues, "non_sr_in_system_forbidden") == "error"
-
-
-def test_same_event_accumulator_requires_ways() -> None:
-    bet = _bet([_uf("sr:match:1", market="1"), _uf("sr:match:1", market="2")])
-    issues = evaluate_business_rules(_ticket([bet]))
-    assert "accumulator_no_same_event_without_ways" in _rule_ids(issues)
-
-
-def test_custom_bet_odds_must_not_be_product() -> None:
-    inner = [_uf("sr:match:1", odds="2.0"), _uf("sr:match:1", market="2", odds="3.0")]
-    custom = {
-        "type": "uf-custom-bet",
-        "selections": inner,
-        "odds": {"type": "decimal", "value": "6.0"},
-    }
-    issues = evaluate_business_rules(_ticket([_bet([custom])]))
-    assert _severity(issues, "custom_bet_odds_not_product") == "error"
+@pytest.mark.parametrize(
+    ("bet_node", "rule_id", "severity"),
+    [
+        pytest.param(
+            bet([uf_selection("sr:match:1")], amount="0"),
+            "positive_stake",
+            "error",
+            id="zero-stake",
+        ),
+        pytest.param(
+            bet([uf_selection("sr:match:1", odds="1.00")]),
+            "min_odds_1_01",
+            "error",
+            id="odds-below-1.01",
+        ),
+        pytest.param(
+            bet([uf_selection("sr:match:1")], currency="EURO"),
+            "currency_format",
+            "error",
+            id="four-letter-currency",
+        ),
+        pytest.param(
+            bet(
+                [
+                    {
+                        "type": "accumulator",
+                        "selections": [uf_selection(f"sr:match:{i}") for i in range(101)],
+                    }
+                ]
+            ),
+            "max_selections_100",
+            "error",
+            id="101-selections",
+        ),
+        pytest.param(
+            bet([{"type": "system", "size": [2, 3], "selections": _three_uf()}]),
+            "predefined_system_sizes",
+            "info",
+            id="trixie-is-predefined",
+        ),
+        pytest.param(
+            bet([{"type": "system", "size": [5], "selections": _three_uf()}]),
+            "system_size_valid",
+            "error",
+            id="system-size-exceeds-selections",
+        ),
+        pytest.param(
+            bet(
+                [
+                    {
+                        "type": "ways",
+                        "selections": [uf_selection("sr:match:1"), uf_selection("sr:match:2")],
+                    }
+                ]
+            ),
+            "ways_same_event",
+            "error",
+            id="ways-across-events",
+        ),
+        pytest.param(
+            bet(
+                [
+                    {
+                        "type": "system",
+                        "size": [2],
+                        "selections": [*_three_uf()[:2], _EXTERNAL_SELECTION],
+                    }
+                ]
+            ),
+            "non_sr_in_system_forbidden",
+            "error",
+            id="external-selection-in-system",
+        ),
+        pytest.param(
+            bet([uf_selection("sr:match:1", market="1"), uf_selection("sr:match:1", market="2")]),
+            "accumulator_no_same_event_without_ways",
+            "error",
+            id="same-event-accumulator",
+        ),
+        pytest.param(
+            bet(
+                [
+                    {
+                        "type": "uf-custom-bet",
+                        "selections": [
+                            uf_selection("sr:match:1", odds="2.0"),
+                            uf_selection("sr:match:1", market="2", odds="3.0"),
+                        ],
+                        "odds": {"type": "decimal", "value": "6.0"},
+                    }
+                ]
+            ),
+            "custom_bet_odds_not_product",
+            "error",
+            id="custom-bet-odds-multiplied",
+        ),
+    ],
+)
+def test_payload_rule_flagged(bet_node: dict[str, Any], rule_id: str, severity: str) -> None:
+    issues = evaluate_business_rules(ticket_envelope([bet_node]))
+    assert _severity(issues, rule_id) == severity
 
 
 def test_frame_size_limit_error_for_huge_payload() -> None:
-    issues = evaluate_business_rules(_ticket([_bet([_uf("sr:match:1")])]), serialized_bytes=200_000)
+    issues = evaluate_business_rules(single_ticket_envelope(), serialized_bytes=200_000)
     assert _severity(issues, "frame_size_limit") == "error"
 
 
@@ -190,10 +197,8 @@ def test_partial_cashout_increment_bug_flagged() -> None:
         _cashout_payload("0.3"),
         prior_state=_prior_with_cashout("0.5"),
     )
-    ids = _rule_ids(issues)
-    assert "cashout_percentage_monotonic" in ids
     assert _severity(issues, "cashout_percentage_monotonic") == "error"
-    assert "cashout_cumulative_percentage" in ids
+    assert "cashout_cumulative_percentage" in _rule_ids(issues)
 
 
 def test_partial_cashout_cumulative_value_ok() -> None:
@@ -202,7 +207,7 @@ def test_partial_cashout_cumulative_value_ok() -> None:
         _cashout_payload("0.8"),
         prior_state=_prior_with_cashout("0.5"),
     )
-    assert "cashout_percentage_monotonic" not in _rule_ids(issues)
+    assert _error_rule_ids(issues) == []
     assert _severity(issues, "cashout_cumulative_percentage") == "warning"
 
 
@@ -214,8 +219,21 @@ def test_cashout_currency_mismatch() -> None:
 
 
 # --------------------------------------------------------------------------- #
-# Cancellation ACK matrix
+# ACK / nACK state machine
 # --------------------------------------------------------------------------- #
+
+
+def _out(message: dict[str, Any]) -> dict[str, Any]:
+    return {"direction": "outbound", "message": message}
+
+
+def _in(message: dict[str, Any]) -> dict[str, Any]:
+    return {"direction": "inbound", "message": message}
+
+
+def _ack_issues(session_state: list[dict[str, Any]]) -> list[Any]:
+    parsed = parse_session_state(session_state)
+    return evaluate_ack_state_machine(parsed.entries)
 
 
 def _cancel_request(code: int, corr: str = "x1") -> dict[str, Any]:
@@ -272,69 +290,6 @@ def _cancel_ack(acknowledged: bool, signature: str = "resp-sig") -> dict[str, An
     }
 
 
-def _ack_issues(session_state: list[dict[str, Any]]) -> list[Any]:
-    parsed = parse_session_state(session_state)
-    return evaluate_ack_state_machine(parsed.entries)
-
-
-def test_accepted_cancel_103_requires_ack() -> None:
-    issues = _ack_issues(
-        [
-            {"direction": "outbound", "message": _cancel_request(103)},
-            {"direction": "inbound", "message": _cancel_reply("accepted")},
-        ]
-    )
-    assert "cancel_ack_required_101_103_104_105" in _rule_ids(issues)
-
-
-def test_accepted_cancel_103_with_ack_passes() -> None:
-    issues = _ack_issues(
-        [
-            {"direction": "outbound", "message": _cancel_request(103)},
-            {"direction": "inbound", "message": _cancel_reply("accepted")},
-            {"direction": "outbound", "message": _cancel_ack(True)},
-        ]
-    )
-    assert "cancel_ack_required_101_103_104_105" not in _rule_ids(issues)
-
-
-def test_accepted_cancel_301_must_not_ack() -> None:
-    issues = _ack_issues(
-        [
-            {"direction": "outbound", "message": _cancel_request(301)},
-            {"direction": "inbound", "message": _cancel_reply("accepted")},
-            {"direction": "outbound", "message": _cancel_ack(True)},
-        ]
-    )
-    assert _severity(issues, "cancel_no_ack_301_302") == "error"
-
-
-def test_rejected_cancel_requires_nack() -> None:
-    issues = _ack_issues(
-        [
-            {"direction": "outbound", "message": _cancel_request(103)},
-            {"direction": "inbound", "message": _cancel_reply("rejected")},
-        ]
-    )
-    assert "cancel_nack_on_rejected" in _rule_ids(issues)
-
-
-def test_ack_signature_mismatch_detected() -> None:
-    issues = _ack_issues(
-        [
-            {"direction": "outbound", "message": _cancel_request(103)},
-            {"direction": "inbound", "message": _cancel_reply("accepted", signature="A")},
-            {"direction": "outbound", "message": _cancel_ack(True, signature="B")},
-        ]
-    )
-    assert "ack_matches_response_signature" in _rule_ids(issues)
-
-
-# --------------------------------------------------------------------------- #
-# Ticket-placement ACK (ticket-reply -> ticket-ack)
-# --------------------------------------------------------------------------- #
-
-
 def _ticket_reply(status: str, signature: str = "tsig", corr: str = "p1") -> dict[str, Any]:
     return {
         "content": {
@@ -351,15 +306,17 @@ def _ticket_reply(status: str, signature: str = "tsig", corr: str = "p1") -> dic
     }
 
 
-def _ticket_ack(acknowledged: bool, signature: str = "tsig") -> dict[str, Any]:
+def _ticket_ack(acknowledged: bool, signature: str | None = "tsig") -> dict[str, Any]:
+    content: dict[str, Any] = {
+        "type": "ticket-ack",
+        "ticketId": "T1",
+        "acknowledged": acknowledged,
+    }
+    if signature is not None:
+        content["ticketSignature"] = signature
     return {
         "operatorId": "9985",
-        "content": {
-            "type": "ticket-ack",
-            "ticketId": "T1",
-            "ticketSignature": signature,
-            "acknowledged": acknowledged,
-        },
+        "content": content,
         "correlationId": "p9",
         "timestampUtc": 3,
         "operation": "ticket-placement-ack",
@@ -367,67 +324,98 @@ def _ticket_ack(acknowledged: bool, signature: str = "tsig") -> dict[str, Any]:
     }
 
 
-def test_accepted_ticket_without_ack_is_info() -> None:
-    issues = _ack_issues(
-        [
-            {"direction": "inbound", "message": _ticket_reply("accepted")},
-        ]
-    )
-    assert _severity(issues, "ticket_ack_on_accepted") == "info"
+@pytest.mark.parametrize(
+    ("session", "rule_id", "severity"),
+    [
+        pytest.param(
+            [_out(_cancel_request(103)), _in(_cancel_reply("accepted"))],
+            "cancel_ack_required_101_103_104_105",
+            "error",
+            id="cancel-103-accepted-without-ack",
+        ),
+        pytest.param(
+            [
+                _out(_cancel_request(301)),
+                _in(_cancel_reply("accepted")),
+                _out(_cancel_ack(True)),
+            ],
+            "cancel_no_ack_301_302",
+            "error",
+            id="cancel-301-accepted-but-acked",
+        ),
+        pytest.param(
+            [_out(_cancel_request(103)), _in(_cancel_reply("rejected"))],
+            "cancel_nack_on_rejected",
+            "error",
+            id="cancel-rejected-without-nack",
+        ),
+        pytest.param(
+            [
+                _out(_cancel_request(103)),
+                _in(_cancel_reply("accepted", signature="A")),
+                _out(_cancel_ack(True, signature="B")),
+            ],
+            "ack_matches_response_signature",
+            "error",
+            id="cancel-ack-signature-mismatch",
+        ),
+        pytest.param(
+            [_in(_ticket_reply("accepted"))],
+            "ticket_ack_on_accepted",
+            "info",
+            id="ticket-accepted-without-ack",
+        ),
+        pytest.param(
+            [_in(_ticket_reply("accepted")), _out(_ticket_ack(False))],
+            "ticket_nack_failed_booking",
+            "info",
+            id="ticket-accepted-then-nacked",
+        ),
+        pytest.param(
+            [_in(_ticket_reply("rejected")), _out(_ticket_ack(True))],
+            "ticket_no_ack_on_rejected",
+            "warning",
+            id="ticket-rejected-but-acked",
+        ),
+        pytest.param(
+            [_in(_ticket_reply("accepted", signature="A")), _out(_ticket_ack(True, signature="B"))],
+            "ack_matches_response_signature",
+            "error",
+            id="ticket-ack-signature-mismatch",
+        ),
+        pytest.param(
+            [_in(_ticket_reply("accepted")), _out(_ticket_ack(True, signature=None))],
+            "ticket_ack_payload_shape",
+            "error",
+            id="ticket-ack-missing-signature",
+        ),
+    ],
+)
+def test_ack_state_machine_flags(
+    session: list[dict[str, Any]], rule_id: str, severity: str
+) -> None:
+    assert _severity(_ack_issues(session), rule_id) == severity
 
 
-def test_accepted_ticket_with_ack_passes() -> None:
-    issues = _ack_issues(
-        [
-            {"direction": "inbound", "message": _ticket_reply("accepted")},
-            {"direction": "outbound", "message": _ticket_ack(True)},
-        ]
-    )
-    ids = _rule_ids(issues)
-    assert "ticket_ack_on_accepted" not in ids
-    assert "ack_matches_response_signature" not in ids
-
-
-def test_accepted_ticket_nack_signals_failed_booking() -> None:
-    issues = _ack_issues(
-        [
-            {"direction": "inbound", "message": _ticket_reply("accepted")},
-            {"direction": "outbound", "message": _ticket_ack(False)},
-        ]
-    )
-    assert _severity(issues, "ticket_nack_failed_booking") == "info"
-
-
-def test_rejected_ticket_should_not_be_acked() -> None:
-    issues = _ack_issues(
-        [
-            {"direction": "inbound", "message": _ticket_reply("rejected")},
-            {"direction": "outbound", "message": _ticket_ack(True)},
-        ]
-    )
-    assert _severity(issues, "ticket_no_ack_on_rejected") == "warning"
-
-
-def test_ticket_ack_signature_mismatch_detected() -> None:
-    issues = _ack_issues(
-        [
-            {"direction": "inbound", "message": _ticket_reply("accepted", signature="A")},
-            {"direction": "outbound", "message": _ticket_ack(True, signature="B")},
-        ]
-    )
-    assert "ack_matches_response_signature" in _rule_ids(issues)
-
-
-def test_ticket_ack_missing_signature_is_shape_error() -> None:
-    bad_ack = _ticket_ack(True)
-    del bad_ack["content"]["ticketSignature"]
-    issues = _ack_issues(
-        [
-            {"direction": "inbound", "message": _ticket_reply("accepted")},
-            {"direction": "outbound", "message": bad_ack},
-        ]
-    )
-    assert _severity(issues, "ticket_ack_payload_shape") == "error"
+@pytest.mark.parametrize(
+    "session",
+    [
+        pytest.param(
+            [
+                _out(_cancel_request(103)),
+                _in(_cancel_reply("accepted")),
+                _out(_cancel_ack(True)),
+            ],
+            id="cancel-103-accepted-and-acked",
+        ),
+        pytest.param(
+            [_in(_ticket_reply("accepted")), _out(_ticket_ack(True))],
+            id="ticket-accepted-and-acked",
+        ),
+    ],
+)
+def test_ack_state_machine_correct_flow_has_no_issues(session: list[dict[str, Any]]) -> None:
+    assert _ack_issues(session) == []
 
 
 # --------------------------------------------------------------------------- #
@@ -508,28 +496,18 @@ def test_multiple_partial_cashouts_do_not_pair_wrong_ack() -> None:
     """ACK for cashout co-1 must not match accepted replies for co-2 / co-3 via ticketId."""
     issues = _ack_issues(
         [
-            {"direction": "outbound", "message": _cashout_request("co-1", corr="req-1")},
-            {"direction": "outbound", "message": _cashout_request("co-2", corr="req-2")},
-            {"direction": "outbound", "message": _cashout_request("co-3", corr="req-3")},
-            {
-                "direction": "inbound",
-                "message": _cashout_reply("co-1", signature="sig-1", corr="rep-1"),
-            },
-            {
-                "direction": "outbound",
-                "message": _cashout_ack("co-1", signature="sig-1", corr="ack-1"),
-            },
-            {
-                "direction": "inbound",
-                "message": _cashout_reply("co-2", signature="sig-2", corr="rep-2"),
-            },
-            {
-                "direction": "inbound",
-                "message": _cashout_reply("co-3", signature="sig-3", corr="rep-3"),
-            },
+            _out(_cashout_request("co-1", corr="req-1")),
+            _out(_cashout_request("co-2", corr="req-2")),
+            _out(_cashout_request("co-3", corr="req-3")),
+            _in(_cashout_reply("co-1", signature="sig-1", corr="rep-1")),
+            _out(_cashout_ack("co-1", signature="sig-1", corr="ack-1")),
+            _in(_cashout_reply("co-2", signature="sig-2", corr="rep-2")),
+            _in(_cashout_reply("co-3", signature="sig-3", corr="rep-3")),
         ]
     )
-    assert "ack_matches_response_signature" not in _rule_ids(issues)
+    assert _error_rule_ids(issues) == []
+    # co-2 and co-3 were accepted without their own ACK; only those two get the hint.
+    assert [i.rule_id for i in issues] == ["cashout_ack_optional_on_accepted"] * 2
 
 
 # --------------------------------------------------------------------------- #
@@ -565,11 +543,7 @@ def test_log_paste_mode_extracts_and_infers() -> None:
 
 
 def test_unmatched_inbound_reported() -> None:
-    parsed = parse_session_state(
-        [
-            {"direction": "inbound", "message": _cancel_reply("accepted", corr="orphan")},
-        ]
-    )
+    parsed = parse_session_state([_in(_cancel_reply("accepted", corr="orphan"))])
     assert any("orphan" in err.message for err in parsed.errors)
 
 
@@ -579,14 +553,10 @@ def test_unmatched_inbound_reported() -> None:
 
 
 def test_end_to_end_cashout_with_session_state() -> None:
-    placement = _ticket([_bet([_uf("sr:match:1")])])
     first_cashout = _cashout_payload("0.5")
     result = validate_request_payload(
         _cashout_payload("0.3"),
-        session_state=[
-            {"direction": "outbound", "message": placement},
-            {"direction": "outbound", "message": first_cashout},
-        ],
+        session_state=[_out(single_ticket_envelope()), _out(first_cashout)],
     )
     assert result.business_rules_ok is False
     assert "cashout_percentage_monotonic" in _rule_ids(list(result.business_rules))
