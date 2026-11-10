@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import time
+from collections.abc import Callable
 from typing import Any
 
 from mts_client_integration.services.simulator.fixtures import (
@@ -22,14 +23,21 @@ from mts_client_integration.services.ticket_tree import as_dict
 class RateLimiter:
     """Token-bucket rate limiter."""
 
-    def __init__(self, rps: float, *, burst: int | None = None) -> None:
+    def __init__(
+        self,
+        rps: float,
+        *,
+        burst: int | None = None,
+        clock: Callable[[], float] = time.monotonic,
+    ) -> None:
         self._rps = rps
         self._burst = float(burst if burst is not None else max(int(rps), 1))
         self._tokens = self._burst
+        self._clock = clock
         self._last_mono: float | None = None
 
     def allow(self) -> bool:
-        now = time.monotonic()
+        now = self._clock()
         elapsed = 0.0 if self._last_mono is None else now - self._last_mono
         self._last_mono = now
         self._tokens = min(self._burst, self._tokens + elapsed * self._rps)
