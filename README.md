@@ -406,27 +406,27 @@ with the placement and first cash-out supplied via `session_state`:
 **Example agent prompts**
 
 Copy-paste integrator-style prompts for exercising `validate_ticket_request` live in
-[`prompts/local_validator/`](prompts/local_validator/). Each file includes the
+[`examples/prompts/local_validator/`](examples/prompts/local_validator/). Each file includes the
 full chat message, prior exchange context where needed, and the expected
 validator output.
 
 | # | Prompt example | Exercises |
 |---|----------------|-----------|
-| 01 | [`01_schema_pass.md`](prompts/local_validator/01_schema_pass.md) | Valid ticket-placement → all layers green |
-| 02 | [`02_schema_fail.md`](prompts/local_validator/02_schema_fail.md) | Missing required field → `schema_ok: false` |
-| 03 | [`03_business_rules_stake_odds_currency.md`](prompts/local_validator/03_business_rules_stake_odds_currency.md) | Positive stake, min odds, currency format |
-| 04 | [`04_business_rules_system_ways.md`](prompts/local_validator/04_business_rules_system_ways.md) | Predefined system, ways same-event, non-SR-in-system |
-| 05 | [`05_cashout_cumulative_bug.md`](prompts/local_validator/05_cashout_cumulative_bug.md) | Partial cash-out sent as increment (`0.5` → `0.3`) |
-| 06 | [`06_cashout_cumulative_ok.md`](prompts/local_validator/06_cashout_cumulative_ok.md) | Partial cash-out sent cumulatively (`0.5` → `0.8`) |
-| 07 | [`07_cancel_ack_required_accepted_103.md`](prompts/local_validator/07_cancel_ack_required_accepted_103.md) | Accepted cancel 103, ACK missing |
-| 08 | [`08_cancel_ack_ok_accepted_103.md`](prompts/local_validator/08_cancel_ack_ok_accepted_103.md) | Accepted cancel 103, ACK present |
-| 09 | [`09_cancel_no_ack_accepted_301.md`](prompts/local_validator/09_cancel_no_ack_accepted_301.md) | Accepted cancel 301, ACK must NOT be sent |
-| 10 | [`10_cancel_nack_on_rejected.md`](prompts/local_validator/10_cancel_nack_on_rejected.md) | Rejected cancel requires nACK |
-| 11 | [`11_cancel_ack_signature_mismatch.md`](prompts/local_validator/11_cancel_ack_signature_mismatch.md) | ACK signature ≠ response signature |
-| 12 | [`12_ticket_ack_required_accepted.md`](prompts/local_validator/12_ticket_ack_required_accepted.md) | Accepted ticket, ACK missing (info) |
-| 13 | [`13_ticket_ack_ok_accepted.md`](prompts/local_validator/13_ticket_ack_ok_accepted.md) | Accepted ticket, ACK present |
-| 14 | [`14_ticket_nack_failed_booking.md`](prompts/local_validator/14_ticket_nack_failed_booking.md) | Accepted ticket, nACK signals failed booking |
-| 15 | [`15_ticket_ack_on_rejected_warning.md`](prompts/local_validator/15_ticket_ack_on_rejected_warning.md) | Rejected ticket should not be ACKed |
+| 01 | [`01_schema_pass.md`](examples/prompts/local_validator/01_schema_pass.md) | Valid ticket-placement → all layers green |
+| 02 | [`02_schema_fail.md`](examples/prompts/local_validator/02_schema_fail.md) | Missing required field → `schema_ok: false` |
+| 03 | [`03_business_rules_stake_odds_currency.md`](examples/prompts/local_validator/03_business_rules_stake_odds_currency.md) | Positive stake, min odds, currency format |
+| 04 | [`04_business_rules_system_ways.md`](examples/prompts/local_validator/04_business_rules_system_ways.md) | Predefined system, ways same-event, non-SR-in-system |
+| 05 | [`05_cashout_cumulative_bug.md`](examples/prompts/local_validator/05_cashout_cumulative_bug.md) | Partial cash-out sent as increment (`0.5` → `0.3`) |
+| 06 | [`06_cashout_cumulative_ok.md`](examples/prompts/local_validator/06_cashout_cumulative_ok.md) | Partial cash-out sent cumulatively (`0.5` → `0.8`) |
+| 07 | [`07_cancel_ack_required_accepted_103.md`](examples/prompts/local_validator/07_cancel_ack_required_accepted_103.md) | Accepted cancel 103, ACK missing |
+| 08 | [`08_cancel_ack_ok_accepted_103.md`](examples/prompts/local_validator/08_cancel_ack_ok_accepted_103.md) | Accepted cancel 103, ACK present |
+| 09 | [`09_cancel_no_ack_accepted_301.md`](examples/prompts/local_validator/09_cancel_no_ack_accepted_301.md) | Accepted cancel 301, ACK must NOT be sent |
+| 10 | [`10_cancel_nack_on_rejected.md`](examples/prompts/local_validator/10_cancel_nack_on_rejected.md) | Rejected cancel requires nACK |
+| 11 | [`11_cancel_ack_signature_mismatch.md`](examples/prompts/local_validator/11_cancel_ack_signature_mismatch.md) | ACK signature ≠ response signature |
+| 12 | [`12_ticket_ack_required_accepted.md`](examples/prompts/local_validator/12_ticket_ack_required_accepted.md) | Accepted ticket, ACK missing (info) |
+| 13 | [`13_ticket_ack_ok_accepted.md`](examples/prompts/local_validator/13_ticket_ack_ok_accepted.md) | Accepted ticket, ACK present |
+| 14 | [`14_ticket_nack_failed_booking.md`](examples/prompts/local_validator/14_ticket_nack_failed_booking.md) | Accepted ticket, nACK signals failed booking |
+| 15 | [`15_ticket_ack_on_rejected_warning.md`](examples/prompts/local_validator/15_ticket_ack_on_rejected_warning.md) | Rejected ticket should not be ACKed |
 
 The agent should call `validate_ticket_request` with the envelope JSON from the prompt
 as `payload`. For multi-message scenarios (cash-out follow-ups, cancel/ticket
@@ -436,7 +436,7 @@ layer and severity: `error` flips the corresponding `*_ok` flag;
 `warning`/`info` findings are advisory. Use the linked file's **Expected
 result** section when verifying behavior.
 
-See also [`prompts/local_validator/README.md`](prompts/local_validator/README.md)
+See also [`examples/prompts/local_validator/README.md`](examples/prompts/local_validator/README.md)
 for notes on fixed timestamps in the samples.
 
 ---
@@ -530,8 +530,8 @@ or `inject(event="fast_forward_timer")` after connect.
 **Partial cash-out:** `start_mock(scenarios=["partial_cashout_aggregator"])`, send `0.5` then
 `0.8` (accept); `0.3` after `0.5` (reject).
 
-Example agent prompts live under [`prompts/simulator/`](prompts/simulator/) and
-[`prompts/build_ticket/`](prompts/build_ticket/).
+Example agent prompts live under [`examples/prompts/simulator/`](examples/prompts/simulator/) and
+[`examples/prompts/build_ticket/`](examples/prompts/build_ticket/).
 
 ```bash
 uv run pytest src/tests/test_simulator.py
@@ -635,7 +635,8 @@ Then run `uv run ruff check src/mts_client_integration/models/ticket3` and
 │   │       ├── business_rules.py     # rule dataclasses + reference tables
 │   │       └── ticket3/              # Ticket 3.0 request models
 │   └── tests/
-├── prompts/                      # example agent prompts
+├── examples/
+│   └── prompts/                  # example agent prompts (docs, not MCP prompts)
 └── LICENSE
 ```
 
