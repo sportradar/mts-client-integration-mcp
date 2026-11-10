@@ -32,6 +32,24 @@ def _timestamp_utc_ms(requested: int | None) -> int:
     return int(time.time() * 1000) if requested is None else requested
 
 
+def _envelope(
+    *,
+    operator_id: str,
+    content: dict[str, Any],
+    operation: str,
+    correlation_id: str | None,
+    timestamp_utc_ms: int | None,
+) -> dict[str, Any]:
+    return {
+        "operatorId": operator_id,
+        "content": content,
+        "correlationId": correlation_id or new_id("corr-"),
+        "timestampUtc": _timestamp_utc_ms(timestamp_utc_ms),
+        "operation": operation,
+        "version": "3.0",
+    }
+
+
 def build_channel(channel: ChannelParams) -> dict[str, Any]:
     node: dict[str, Any] = {"type": channel.type, "lang": channel.lang}
     if channel.ip:
@@ -206,14 +224,13 @@ def build_placement_envelope(params: PlacementBuildParams) -> dict[str, Any]:
         "context": context,
     }
 
-    return {
-        "operatorId": params.operator_id,
-        "content": content,
-        "correlationId": params.correlation_id or new_id("corr-"),
-        "timestampUtc": _timestamp_utc_ms(params.timestamp_utc_ms),
-        "operation": "ticket-placement",
-        "version": "3.0",
-    }
+    return _envelope(
+        operator_id=params.operator_id,
+        content=content,
+        operation="ticket-placement",
+        correlation_id=params.correlation_id,
+        timestamp_utc_ms=params.timestamp_utc_ms,
+    )
 
 
 def build_cashout_envelope(params: CashoutBuildParams) -> dict[str, Any]:
@@ -239,14 +256,13 @@ def build_cashout_envelope(params: CashoutBuildParams) -> dict[str, Any]:
     if params.cashout_id is not None:
         content["cashoutId"] = params.cashout_id
 
-    return {
-        "operatorId": params.operator_id,
-        "content": content,
-        "correlationId": params.correlation_id or new_id("corr-"),
-        "timestampUtc": _timestamp_utc_ms(params.timestamp_utc_ms),
-        "operation": "ticket-cashout",
-        "version": "3.0",
-    }
+    return _envelope(
+        operator_id=params.operator_id,
+        content=content,
+        operation="ticket-cashout",
+        correlation_id=params.correlation_id,
+        timestamp_utc_ms=params.timestamp_utc_ms,
+    )
 
 
 def build_ext_settlement_envelope(params: ExtSettlementBuildParams) -> dict[str, Any]:
@@ -273,14 +289,13 @@ def build_ext_settlement_envelope(params: ExtSettlementBuildParams) -> dict[str,
         "details": details,
     }
 
-    return {
-        "operatorId": params.operator_id,
-        "content": content,
-        "correlationId": params.correlation_id or new_id("corr-"),
-        "timestampUtc": _timestamp_utc_ms(params.timestamp_utc_ms),
-        "operation": "ticket-ext-settlement",
-        "version": "3.0",
-    }
+    return _envelope(
+        operator_id=params.operator_id,
+        content=content,
+        operation="ticket-ext-settlement",
+        correlation_id=params.correlation_id,
+        timestamp_utc_ms=params.timestamp_utc_ms,
+    )
 
 
 def _ref_dict(ref: RefParams) -> dict[str, Any]:
